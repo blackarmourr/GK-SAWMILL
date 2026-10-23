@@ -55,6 +55,7 @@ import {
 } from '../data/vattaInvoiceSettings.js'
 import { generateVattaInvoicePdf } from '../utils/vattaInvoicePdfGenerator.js'
 import { formatInvoiceGrandTotalWords } from '../utils/numberToWords.js'
+import { getNextSuggestedInvoice } from '../utils/invoiceSequenceHelper.js'
 
 export default function VattaInvoiceGenerator({
   onBack,
@@ -146,6 +147,11 @@ export default function VattaInvoiceGenerator({
       roundOffMode: invoiceForm.roundOffMode || 'exact'
     })
   }, [products, invoiceForm])
+
+  // Cross-module Financial Year sequential invoice tracker
+  const suggestedSequence = useMemo(() => {
+    return getNextSuggestedInvoice(invoiceForm.invoiceDate || new Date())
+  }, [invoiceForm.invoiceDate, savedInvoices])
 
   // Select Receiver from dropdown
   const handleSelectReceiver = (id) => {
@@ -727,9 +733,26 @@ export default function VattaInvoiceGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
-                  Invoice Number *
-                </label>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
+                    Invoice Number *
+                  </label>
+                  {suggestedSequence && (
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 700,
+                        background: '#eaf3ed',
+                        color: '#166534',
+                        padding: '0.1rem 0.4rem',
+                        borderRadius: '4px'
+                      }}
+                      title="Indian Financial Year runs from April 1 to March 31. Series resets to A-1 on April 1st."
+                    >
+                      FY {suggestedSequence.currentFy}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   value={invoiceForm.invoiceNo}
@@ -737,6 +760,48 @@ export default function VattaInvoiceGenerator({
                   placeholder="e.g. A-20"
                   style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
                 />
+                {suggestedSequence && (
+                  <div
+                    style={{
+                      marginTop: '0.35rem',
+                      fontSize: '0.7rem',
+                      color: '#475569',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                      gap: '0.25rem'
+                    }}
+                  >
+                    <span>
+                      {suggestedSequence.lastInvoice ? (
+                        <>
+                          Last: <strong>{suggestedSequence.lastInvoice.invoiceNo}</strong> ({suggestedSequence.lastInvoice.typeLabel === 'Vatta Wood' ? 'Vatta' : 'Timber'})
+                        </>
+                      ) : (
+                        <span>Fresh FY start</span>
+                      )}
+                    </span>
+                    {invoiceForm.invoiceNo !== suggestedSequence.suggestedInvoiceNo && (
+                      <button
+                        type="button"
+                        onClick={() => handleFieldChange('invoiceNo', suggestedSequence.suggestedInvoiceNo)}
+                        style={{
+                          background: '#eaf3ed',
+                          border: '1px solid #b7d6c2',
+                          color: '#1e3a2b',
+                          borderRadius: '4px',
+                          padding: '0.15rem 0.45rem',
+                          fontSize: '0.7rem',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Suggest: {suggestedSequence.suggestedInvoiceNo}
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div>

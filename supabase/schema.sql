@@ -145,7 +145,49 @@ CREATE INDEX IF NOT EXISTS idx_credit_notes_receiver ON public.credit_notes(rece
 CREATE INDEX IF NOT EXISTS idx_credit_notes_date ON public.credit_notes(credit_note_date DESC);
 
 -- ------------------------------------------------------------------------
--- 3. BUSINESS PARTIES DIRECTORY TABLE (Receivers & Despatched Parties)
+-- 3. DEBIT NOTES TABLE (Incentive & Annual Bonus Billing)
+-- ------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.debit_notes (
+  id TEXT PRIMARY KEY,
+  debit_note_no TEXT NOT NULL,
+  debit_note_date DATE NOT NULL,
+  reference_no TEXT,
+
+  -- Receiver Details
+  receiver_name TEXT NOT NULL,
+  receiver_address TEXT,
+  receiver_state TEXT,
+  receiver_state_code TEXT,
+  receiver_gstin TEXT,
+
+  -- Incentive / Goods Description
+  goods_description TEXT NOT NULL,
+  hsn_code TEXT NOT NULL DEFAULT '44219140',
+
+  -- Quantities & Financial Totals
+  total_bags INTEGER NOT NULL DEFAULT 0,
+  taxable_amount NUMERIC(14, 2) NOT NULL DEFAULT 0.00,
+  tax_treatment TEXT DEFAULT 'IGST',
+  gst_rate NUMERIC(5, 2) DEFAULT 5.00,
+  gst_amount NUMERIC(14, 2) NOT NULL DEFAULT 0.00,
+  total_dn_amount NUMERIC(14, 2) NOT NULL DEFAULT 0.00,
+  total_in_words TEXT NOT NULL,
+
+  -- Multi-bill line items payload
+  items_payload JSONB NOT NULL DEFAULT '[]'::jsonb,
+  full_payload JSONB NOT NULL DEFAULT '{}'::jsonb,
+
+  created_by UUID REFERENCES auth.users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_debit_notes_dn_no ON public.debit_notes(debit_note_no);
+CREATE INDEX IF NOT EXISTS idx_debit_notes_receiver ON public.debit_notes(receiver_name);
+CREATE INDEX IF NOT EXISTS idx_debit_notes_date ON public.debit_notes(debit_note_date DESC);
+
+-- ------------------------------------------------------------------------
+-- 4. BUSINESS PARTIES DIRECTORY TABLE (Receivers & Despatched Parties)
 -- ------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.business_parties (
   id TEXT PRIMARY KEY,
@@ -168,6 +210,7 @@ CREATE TABLE IF NOT EXISTS public.business_parties (
 -- ------------------------------------------------------------------------
 ALTER TABLE public.vatta_invoices ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.credit_notes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.debit_notes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.business_parties ENABLE ROW LEVEL SECURITY;
 
 -- Policies for vatta_invoices
@@ -181,6 +224,14 @@ CREATE POLICY "Allow authenticated sawmill users full access on vatta_invoices"
 -- Policies for credit_notes
 CREATE POLICY "Allow authenticated sawmill users full access on credit_notes"
   ON public.credit_notes
+  FOR ALL
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);
+
+-- Policies for debit_notes
+CREATE POLICY "Allow authenticated sawmill users full access on debit_notes"
+  ON public.debit_notes
   FOR ALL
   TO authenticated
   USING (true)

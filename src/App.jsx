@@ -24,6 +24,7 @@ import VattaMeasurementCalculator from './components/VattaMeasurementCalculator'
 import KeralaVatBillGenerator from './components/KeralaVatBillGenerator'
 import VattaInvoiceGenerator from './components/VattaInvoiceGenerator'
 import CreditNoteGenerator from './components/CreditNoteGenerator'
+import DebitNoteGenerator from './components/DebitNoteGenerator'
 import AuthModal from './components/AuthModal'
 import { supabase, isSupabaseConfigured } from './lib/supabaseClient'
 
@@ -129,6 +130,23 @@ const MODULES = [
     icon: FileText,
     badgeColor: '#1e3a2b',
     isCreditNote: true
+  },
+  {
+    id: 'debit-note',
+    number: 'Module 07',
+    title: 'Debit Note Generator',
+    subtitle: 'Form GST Debit Note (Incentive & Annual Bonus Billing)',
+    description:
+      'Generate official Form GST Debit Notes for Vatta wood pencil slats annual bonus and special incentives on previously delivered loads. Supports multi-bill batching, custom rate-per-bag calculations, and print-ready A4 PDF generation.',
+    formula: 'Total Taxable = Bags × Rate/Bag (₹100)  •  Total DN = Taxable + IGST (5% / 12%)',
+    features: [
+      'Single & multi-bill row items with auto rate-per-bag calculations',
+      'Direct integration with saved Vatta GST invoices to autofill load details',
+      'Print-ready single page A4 PDF export matching official sawmill samples'
+    ],
+    icon: FileText,
+    badgeColor: '#1e3a2b',
+    isDebitNote: true
   }
 ]
 
@@ -153,7 +171,9 @@ function App() {
   }, [])
 
   const handleCardClick = (mod) => {
-    if (mod.id === 'credit-note') {
+    if (mod.id === 'debit-note') {
+      setCurrentView('debit-note')
+    } else if (mod.id === 'credit-note') {
       setCurrentView('credit-note')
     } else if (mod.id === 'vatta-invoice') {
       setCurrentView('vatta-invoice')
@@ -319,6 +339,27 @@ function App() {
                     <FileText size={14} />
                     Credit Note
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentView('debit-note')}
+                    style={{
+                      background: '#1e3a2b',
+                      border: '1px solid rgba(255, 255, 255, 0.35)',
+                      color: '#ffffff',
+                      padding: '0.42rem 0.9rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.18)'
+                    }}
+                  >
+                    <FileText size={14} />
+                    Debit Note
+                  </button>
                 </>
               ) : (
                 <>
@@ -383,6 +424,28 @@ function App() {
                     >
                       <FileText size={14} />
                       Credit Note
+                    </button>
+                  )}
+                  {currentView !== 'debit-note' && (
+                    <button
+                      type="button"
+                      onClick={() => setCurrentView('debit-note')}
+                      style={{
+                        background: '#ffffff',
+                        border: 'none',
+                        color: '#1e3a2b',
+                        padding: '0.42rem 0.9rem',
+                        borderRadius: '9999px',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem'
+                      }}
+                    >
+                      <FileText size={14} />
+                      Debit Note
                     </button>
                   )}
                   {currentView !== 'vatta-measurement' && (
@@ -514,7 +577,15 @@ function App() {
       </header>
 
       {/* Main Container */}
-      {currentView === 'credit-note' ? (
+      {currentView === 'debit-note' ? (
+        <main style={{ flex: 1 }}>
+          <DebitNoteGenerator
+            onBack={() => setCurrentView('home')}
+            onOpenVattaInvoice={() => setCurrentView('vatta-invoice')}
+            onOpenCreditNote={() => setCurrentView('credit-note')}
+          />
+        </main>
+      ) : currentView === 'credit-note' ? (
         <main style={{ flex: 1 }}>
           <CreditNoteGenerator
             onBack={() => setCurrentView('home')}
@@ -595,21 +666,22 @@ function App() {
               <Calculator size={22} color="var(--primary)" />
               Calculator Modules
             </h2>
-            <p>Six specialized calculation and documentation tools built for sawmill operations</p>
+            <p>Seven specialized calculation and documentation tools built for sawmill operations</p>
           </div>
 
           {/* Modules Grid */}
           <div className="modules-grid">
             {MODULES.map((module) => {
               const Icon = module.icon
+              const isDebitNote = module.id === 'debit-note'
               const isCreditNote = module.id === 'credit-note'
               const isVattaInvoice = module.id === 'vatta-invoice'
               const isVat = module.id === 'kerala-vat-bill'
               const isVatta = module.id === 'vatta-measurement'
               const isInvoice = module.id === 'mahogany-manjiyam-invoice'
               const isChart = module.id === 'mahogany-manjiyam-size-chart'
-              const isInteractive = isCreditNote || isVattaInvoice || isVat || isVatta || isInvoice || isChart
-              const themeColor = isCreditNote ? '#1e3a2b' : isVattaInvoice ? '#1e3a2b' : isVat ? '#1e3a2b' : isVatta ? '#2d6a4f' : isInvoice ? 'var(--primary)' : '#925c38'
+              const isInteractive = isDebitNote || isCreditNote || isVattaInvoice || isVat || isVatta || isInvoice || isChart
+              const themeColor = isDebitNote ? '#1e3a2b' : isCreditNote ? '#1e3a2b' : isVattaInvoice ? '#1e3a2b' : isVat ? '#1e3a2b' : isVatta ? '#2d6a4f' : isInvoice ? 'var(--primary)' : '#925c38'
 
               return (
                 <div
@@ -683,7 +755,9 @@ function App() {
                       }}
                     >
                       <span>
-                        {isCreditNote
+                        {isDebitNote
+                          ? 'Open Debit Note Generator'
+                          : isCreditNote
                           ? 'Open Credit Note Generator'
                           : isVattaInvoice
                           ? 'Open Invoice Generator'
@@ -701,7 +775,7 @@ function App() {
                         className="btn-tag"
                         style={isInteractive ? { background: 'rgba(255, 255, 255, 0.25)', color: '#ffffff' } : {}}
                       >
-                        {isCreditNote ? 'Section 34 ⚡' : isVattaInvoice ? 'Form GST-I ⚡' : isVat ? 'Form 8F ⚡' : isVatta ? 'A4 Sheet ⚡' : isInvoice ? 'A4 Invoice ⚡' : isChart ? 'Canva Ready ⚡' : 'Next Step →'}
+                        {isDebitNote ? 'Bonus / Incentive ⚡' : isCreditNote ? 'Section 34 ⚡' : isVattaInvoice ? 'Form GST-I ⚡' : isVat ? 'Form 8F ⚡' : isVatta ? 'A4 Sheet ⚡' : isInvoice ? 'A4 Invoice ⚡' : isChart ? 'Canva Ready ⚡' : 'Next Step →'}
                       </span>
                     </button>
                   </div>
@@ -716,7 +790,7 @@ function App() {
             <div className="info-content">
               <h3>Industrial Timber Suite Operations</h3>
               <p>
-                The sawmill workspace is equipped with specialized tools. Module 1 (Vatta GST Invoice Generator), Module 2 (Vatta Measurement Calculator), Module 3 (Mahogany & Manjiyam Invoice Generator), Module 4 (Mahogany & Manjiyam Size Chart Generator), Module 5 (Kerala VAT Bill Generator), and Module 6 (Credit Note Generator) are fully operational with automated piece totals, unrounded CBM volume calculations, customer & carrier directories, and authentic print-ready A4 PDF exports.
+                The sawmill workspace is equipped with specialized tools. Module 1 (Vatta GST Invoice Generator), Module 2 (Vatta Measurement Calculator), Module 3 (Mahogany & Manjiyam Invoice Generator), Module 4 (Mahogany & Manjiyam Size Chart Generator), Module 5 (Kerala VAT Bill Generator), Module 6 (Credit Note Generator), and Module 7 (Debit Note Generator) are fully operational with automated piece totals, unrounded CBM volume calculations, customer & carrier directories, and authentic print-ready A4 PDF exports.
               </p>
             </div>
           </div>

@@ -31,6 +31,7 @@ import {
 } from '../data/invoiceSettings.js'
 import { convertNumberToIndianWords } from '../utils/numberToWords.js'
 import { generateInvoicePdf } from '../utils/invoicePdfGenerator.js'
+import { getNextSuggestedInvoice } from '../utils/invoiceSequenceHelper.js'
 
 export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeChart }) {
   // Settings & Storage State
@@ -199,6 +200,20 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
     roundOff,
     settings.roundingMode,
   ])
+
+  // Cross-module Financial Year sequential invoice tracker
+  const suggestedSequence = useMemo(() => {
+    let target = new Date()
+    if (invoiceDate) {
+      if (/^\d{2}-\d{2}-\d{4}$/.test(invoiceDate)) {
+        const parts = invoiceDate.split('-')
+        target = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`)
+      } else {
+        target = new Date(invoiceDate)
+      }
+    }
+    return getNextSuggestedInvoice(target)
+  }, [invoiceDate, savedInvoices])
 
   // Select customer from saved list
   const handleSelectCustomer = (cust) => {
@@ -644,9 +659,26 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
-                  Invoice Number *
-                </label>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>
+                    Invoice Number *
+                  </label>
+                  {suggestedSequence && (
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 700,
+                        background: '#eaf3ed',
+                        color: '#166534',
+                        padding: '0.1rem 0.4rem',
+                        borderRadius: '4px'
+                      }}
+                      title="Indian Financial Year runs from April 1 to March 31. Series resets to A-1 on April 1st."
+                    >
+                      FY {suggestedSequence.currentFy}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   value={invoiceNo}
@@ -654,6 +686,48 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   placeholder="e.g. A-19"
                   style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 700, boxSizing: 'border-box' }}
                 />
+                {suggestedSequence && (
+                  <div
+                    style={{
+                      marginTop: '0.35rem',
+                      fontSize: '0.72rem',
+                      color: '#475569',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                      gap: '0.25rem'
+                    }}
+                  >
+                    <span>
+                      {suggestedSequence.lastInvoice ? (
+                        <>
+                          Last: <strong>{suggestedSequence.lastInvoice.invoiceNo}</strong> ({suggestedSequence.lastInvoice.typeLabel === 'Vatta Wood' ? 'Vatta' : 'Timber'})
+                        </>
+                      ) : (
+                        <span>Fresh FY start</span>
+                      )}
+                    </span>
+                    {invoiceNo !== suggestedSequence.suggestedInvoiceNo && (
+                      <button
+                        type="button"
+                        onClick={() => setInvoiceNo(suggestedSequence.suggestedInvoiceNo)}
+                        style={{
+                          background: '#eaf3ed',
+                          border: '1px solid #b7d6c2',
+                          color: '#1e3a2b',
+                          borderRadius: '4px',
+                          padding: '0.15rem 0.45rem',
+                          fontSize: '0.7rem',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Suggest: {suggestedSequence.suggestedInvoiceNo}
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div>
