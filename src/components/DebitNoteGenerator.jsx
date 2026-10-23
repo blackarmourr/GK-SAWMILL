@@ -1347,15 +1347,40 @@ export default function DebitNoteGenerator({
             <div
               style={{
                 border: '1.5px solid #000000',
-                padding: '1rem',
+                padding: '1.25rem',
                 background: '#ffffff',
-                fontSize: '0.72rem',
+                fontSize: '0.74rem',
                 color: '#000000',
-                lineHeight: 1.35
+                lineHeight: 1.4
               }}
             >
-              {/* Top Legal Citation */}
-              <div style={{ textAlign: 'center', fontSize: '0.65rem', fontWeight: 600, marginBottom: '0.25rem' }}>
+              {/* Seller Header */}
+              <div style={{ textAlign: 'center', marginBottom: '0.65rem' }}>
+                <div style={{ fontSize: '1.25rem', fontWeight: 900, letterSpacing: '0.5px' }}>
+                  {form.sellerName || DEFAULT_DEBIT_NOTE_SETTINGS.sellerName}
+                </div>
+                <div style={{ fontSize: '0.72rem', marginTop: '0.15rem' }}>
+                  {form.sellerAddressLine || DEFAULT_DEBIT_NOTE_SETTINGS.sellerAddressLine}
+                </div>
+                <div style={{ fontSize: '0.72rem', marginTop: '0.15rem' }}>
+                  GST NO: <strong>{form.sellerGstin || DEFAULT_DEBIT_NOTE_SETTINGS.sellerGstin}</strong>
+                  <span style={{ margin: '0 0.4rem' }}>•</span>
+                  Mob: {form.mobile || DEFAULT_DEBIT_NOTE_SETTINGS.mobile}
+                  <span style={{ margin: '0 0.4rem' }}>•</span>
+                  {form.email || DEFAULT_DEBIT_NOTE_SETTINGS.email}
+                </div>
+              </div>
+
+              {/* Double Horizontal Separator */}
+              <div style={{ borderTop: '2px solid #000000', borderBottom: '1px solid #000000', height: '3px', margin: '0.65rem 0' }} />
+
+              {/* Meta & Citation */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', marginBottom: '0.35rem' }}>
+                <span>Ref: <strong>{form.referenceNo || '—'}</strong></span>
+                <span>Date: .....................</span>
+              </div>
+
+              <div style={{ textAlign: 'center', fontSize: '0.68rem', fontStyle: 'italic', marginBottom: '0.35rem' }}>
                 {DEFAULT_DEBIT_NOTE_SETTINGS.legalCitation}
               </div>
 
@@ -1363,57 +1388,49 @@ export default function DebitNoteGenerator({
               <div
                 style={{
                   textAlign: 'center',
-                  fontSize: '1.25rem',
+                  fontSize: '1.3rem',
                   fontWeight: 900,
-                  letterSpacing: '1px',
-                  marginBottom: '0.4rem'
+                  letterSpacing: '1.5px',
+                  marginBottom: '0.75rem'
                 }}
               >
                 DEBIT NOTE
               </div>
 
-              {/* Seller Header */}
-              <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
-                <div style={{ fontSize: '1.15rem', fontWeight: 900, letterSpacing: '0.5px' }}>
-                  {form.sellerName || DEFAULT_DEBIT_NOTE_SETTINGS.sellerName}
+              {/* Upper Box: Debit Note No/Date (Left) & Consignee Details (Right) */}
+              <div style={{ border: '1px solid #000000', display: 'grid', gridTemplateColumns: '1fr 1.8fr', marginBottom: '0.75rem' }}>
+                {/* Left Column: DEBIT NOTE NO & DATE */}
+                <div style={{ borderRight: '1px solid #000000', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ borderBottom: '1px solid #000000', padding: '0.45rem 0.55rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ fontWeight: 700 }}>DEBIT NOTE NO</span>
+                    <strong>{form.debitNoteNo || 'AA-09'}</strong>
+                  </div>
+                  <div style={{ borderBottom: '1px solid #000000', padding: '0.45rem 0.55rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ fontWeight: 700 }}>DEBIT NOTE DATE</span>
+                    <strong>{formatDebitNoteDate(form.debitNoteDate)}</strong>
+                  </div>
+                  <div style={{ padding: '0.45rem 0.55rem', flex: 1, display: 'flex', justifyContent: 'space-between', color: '#64748b' }}>
+                    <span>Ref No:</span>
+                    <span>{form.referenceNo || '—'}</span>
+                  </div>
                 </div>
-                <div style={{ fontSize: '0.7rem' }}>
-                  {form.sellerAddressLine || DEFAULT_DEBIT_NOTE_SETTINGS.sellerAddressLine}
-                </div>
-                <div style={{ fontSize: '0.7rem' }}>
-                  GSTIN: <strong>{form.sellerGstin || DEFAULT_DEBIT_NOTE_SETTINGS.sellerGstin}</strong>
-                  <span style={{ margin: '0 0.4rem' }}>•</span>
-                  Mob: {form.mobile || DEFAULT_DEBIT_NOTE_SETTINGS.mobile}
-                </div>
-              </div>
 
-              {/* Double Horizontal Separator */}
-              <div style={{ borderTop: '2px solid #000000', borderBottom: '1px solid #000000', height: '3px', marginBottom: '0.65rem' }} />
-
-              {/* Document Meta Row */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <div>
-                  <div>Debit Note No : <strong>{form.debitNoteNo || 'AA-09'}</strong></div>
-                  <div>Reference No : <strong>{form.referenceNo || '—'}</strong></div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div>Debit Note Date : <strong>{formatDebitNoteDate(form.debitNoteDate)}</strong></div>
-                </div>
-              </div>
-
-              {/* Consignee Box */}
-              <div style={{ border: '1px solid #000000', padding: '0.5rem', marginBottom: '0.65rem' }}>
-                <div style={{ fontWeight: 800, textDecoration: 'underline', marginBottom: '0.2rem' }}>
-                  Details of Receiver (Consignee)
-                </div>
-                <div style={{ fontWeight: 800, fontSize: '0.78rem' }}>{form.receiverName || '—'}</div>
-                <div style={{ whiteSpace: 'pre-line', fontSize: '0.68rem', margin: '0.15rem 0', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
-                  {form.receiverAddress || '—'}
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', marginTop: '0.25rem' }}>
-                  <span>State: <strong>{form.receiverState || '—'}</strong></span>
-                  <span>State Code: <strong>{form.receiverStateCode || '—'}</strong></span>
-                  <span>GSTIN: <strong>{form.receiverGstin || '—'}</strong></span>
+                {/* Right Column: Details of Consignee / Receiver */}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ borderBottom: '1px solid #000000', padding: '0.35rem 0.5rem', textAlign: 'center', fontWeight: 800, background: '#f8fafc' }}>
+                    Details of Consignee / Receiver
+                  </div>
+                  <div style={{ padding: '0.55rem', flex: 1 }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.825rem' }}>{form.receiverName || '—'}</div>
+                    <div style={{ whiteSpace: 'pre-line', fontSize: '0.72rem', margin: '0.2rem 0', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                      {form.receiverAddress || '—'}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', padding: '0.35rem 0.55rem', borderTop: '1px solid #e2e8f0', background: '#f8fafc' }}>
+                    <span>State: <strong>{form.receiverState || '—'}</strong></span>
+                    <span>State Code: <strong>{form.receiverStateCode || '—'}</strong></span>
+                    <span>GSTIN: <strong>{form.receiverGstin || '—'}</strong></span>
+                  </div>
                 </div>
               </div>
 
@@ -1997,50 +2014,73 @@ export default function DebitNoteGenerator({
                 lineHeight: 1.4
               }}
             >
-              <div style={{ textAlign: 'center', fontSize: '0.75rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+              {/* Seller Header */}
+              <div style={{ textAlign: 'center', marginBottom: '0.85rem' }}>
+                <div style={{ fontSize: '1.4rem', fontWeight: 900 }}>
+                  {form.sellerName || DEFAULT_DEBIT_NOTE_SETTINGS.sellerName}
+                </div>
+                <div style={{ fontSize: '0.825rem', marginTop: '0.2rem' }}>
+                  {form.sellerAddressLine || DEFAULT_DEBIT_NOTE_SETTINGS.sellerAddressLine}
+                </div>
+                <div style={{ fontSize: '0.825rem', marginTop: '0.2rem' }}>
+                  GST NO: <strong>{form.sellerGstin || DEFAULT_DEBIT_NOTE_SETTINGS.sellerGstin}</strong>
+                  <span style={{ margin: '0 0.5rem' }}>•</span>
+                  Mob: {form.mobile || DEFAULT_DEBIT_NOTE_SETTINGS.mobile}
+                  <span style={{ margin: '0 0.5rem' }}>•</span>
+                  {form.email || DEFAULT_DEBIT_NOTE_SETTINGS.email}
+                </div>
+              </div>
+
+              <div style={{ borderTop: '2px solid #000000', borderBottom: '1px solid #000000', height: '3px', margin: '0.85rem 0' }} />
+
+              {/* Meta & Citation */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.825rem', marginBottom: '0.45rem' }}>
+                <span>Ref: <strong>{form.referenceNo || '—'}</strong></span>
+                <span>Date: .....................</span>
+              </div>
+
+              <div style={{ textAlign: 'center', fontSize: '0.78rem', fontStyle: 'italic', marginBottom: '0.45rem' }}>
                 {DEFAULT_DEBIT_NOTE_SETTINGS.legalCitation}
               </div>
 
-              <div style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 900, letterSpacing: '1.5px', marginBottom: '0.5rem' }}>
+              <div style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 900, letterSpacing: '1.5px', marginBottom: '0.85rem' }}>
                 DEBIT NOTE
               </div>
 
-              <div style={{ textAlign: 'center', marginBottom: '0.75rem' }}>
-                <div style={{ fontSize: '1.35rem', fontWeight: 900 }}>
-                  {form.sellerName || DEFAULT_DEBIT_NOTE_SETTINGS.sellerName}
+              {/* Upper Box: Debit Note No/Date (Left) & Consignee Details (Right) */}
+              <div style={{ border: '1px solid #000000', display: 'grid', gridTemplateColumns: '1fr 1.8fr', marginBottom: '0.85rem' }}>
+                {/* Left Column: DEBIT NOTE NO & DATE */}
+                <div style={{ borderRight: '1px solid #000000', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ borderBottom: '1px solid #000000', padding: '0.55rem 0.75rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ fontWeight: 700 }}>DEBIT NOTE NO</span>
+                    <strong>{form.debitNoteNo || 'AA-09'}</strong>
+                  </div>
+                  <div style={{ borderBottom: '1px solid #000000', padding: '0.55rem 0.75rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ fontWeight: 700 }}>DEBIT NOTE DATE</span>
+                    <strong>{formatDebitNoteDate(form.debitNoteDate)}</strong>
+                  </div>
+                  <div style={{ padding: '0.55rem 0.75rem', flex: 1, display: 'flex', justifyContent: 'space-between', color: '#64748b' }}>
+                    <span>Ref No:</span>
+                    <span>{form.referenceNo || '—'}</span>
+                  </div>
                 </div>
-                <div>{form.sellerAddressLine || DEFAULT_DEBIT_NOTE_SETTINGS.sellerAddressLine}</div>
-                <div>
-                  GSTIN: <strong>{form.sellerGstin || DEFAULT_DEBIT_NOTE_SETTINGS.sellerGstin}</strong>
-                  <span style={{ margin: '0 0.5rem' }}>•</span>
-                  Mob: {form.mobile || DEFAULT_DEBIT_NOTE_SETTINGS.mobile}
-                </div>
-              </div>
 
-              <div style={{ borderTop: '2px solid #000000', borderBottom: '1px solid #000000', height: '3px', marginBottom: '0.85rem' }} />
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                <div>
-                  <div>Debit Note No : <strong>{form.debitNoteNo || 'AA-09'}</strong></div>
-                  <div>Reference No : <strong>{form.referenceNo || '—'}</strong></div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div>Debit Note Date : <strong>{formatDebitNoteDate(form.debitNoteDate)}</strong></div>
-                </div>
-              </div>
-
-              <div style={{ border: '1px solid #000000', padding: '0.75rem', marginBottom: '0.85rem' }}>
-                <div style={{ fontWeight: 800, textDecoration: 'underline', marginBottom: '0.25rem' }}>
-                  Details of Receiver (Consignee)
-                </div>
-                <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>{form.receiverName || '—'}</div>
-                <div style={{ whiteSpace: 'pre-line', fontSize: '0.78rem', margin: '0.25rem 0', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
-                  {form.receiverAddress || '—'}
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginTop: '0.35rem' }}>
-                  <span>State: <strong>{form.receiverState || '—'}</strong></span>
-                  <span>State Code: <strong>{form.receiverStateCode || '—'}</strong></span>
-                  <span>GSTIN: <strong>{form.receiverGstin || '—'}</strong></span>
+                {/* Right Column: Details of Consignee / Receiver */}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ borderBottom: '1px solid #000000', padding: '0.4rem 0.75rem', textAlign: 'center', fontWeight: 800, background: '#f8fafc' }}>
+                    Details of Consignee / Receiver
+                  </div>
+                  <div style={{ padding: '0.75rem', flex: 1 }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>{form.receiverName || '—'}</div>
+                    <div style={{ whiteSpace: 'pre-line', fontSize: '0.78rem', margin: '0.25rem 0', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                      {form.receiverAddress || '—'}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', padding: '0.45rem 0.75rem', borderTop: '1px solid #e2e8f0', background: '#f8fafc' }}>
+                    <span>State: <strong>{form.receiverState || '—'}</strong></span>
+                    <span>State Code: <strong>{form.receiverStateCode || '—'}</strong></span>
+                    <span>GSTIN: <strong>{form.receiverGstin || '—'}</strong></span>
+                  </div>
                 </div>
               </div>
 

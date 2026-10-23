@@ -65,104 +65,104 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
   doc.setLineWidth(0.25)
 
   /* =========================================================================
-     1. DOCUMENT HEADER (Top of Page)
+     1. DOCUMENT HEADER (Top of Page - Generously Spaced to Fill A4 Page)
      ========================================================================= */
-  let y = 17
+  let y = 18.5
 
   // Company Name Centered
   doc.setFont('times', 'bold')
-  doc.setFontSize(22)
+  doc.setFontSize(23)
   doc.text(sellerName, pageWidth / 2, y, { align: 'center' })
 
   // Subtitle Address Centered
-  y += 6.5
+  y += 7.5
   doc.setFont('times', 'bold')
-  doc.setFontSize(10.5)
+  doc.setFontSize(11)
   doc.text(sellerAddressLine, pageWidth / 2, y, { align: 'center' })
 
   // Contact & GST Row
-  y += 7.0
+  y += 8.0
   doc.setFont('times', 'bold')
-  doc.setFontSize(9.5)
+  doc.setFontSize(10)
   doc.text(`GST NO:${sellerGstin}`, margin, y)
 
-  doc.text(`MOB: ${mobile}`, rightEdge, y - 2.5, { align: 'right' })
-  doc.text(email, rightEdge, y + 2.0, { align: 'right' })
+  doc.text(`MOB: ${mobile}`, rightEdge, y - 2.8, { align: 'right' })
+  doc.text(email, rightEdge, y + 2.2, { align: 'right' })
 
   // Double Horizontal Rule
-  y += 5.5
+  y += 7.0
   doc.setLineWidth(0.35)
   doc.line(margin, y, rightEdge, y)
-  doc.line(margin, y + 0.6, rightEdge, y + 0.6)
+  doc.line(margin, y + 0.7, rightEdge, y + 0.7)
 
   /* =========================================================================
      2. DOCUMENT TITLE & LEGAL CITATION
      ========================================================================= */
-  y += 6.0
+  y += 8.5
   doc.setFont('times', 'normal')
-  doc.setFontSize(9.5)
+  doc.setFontSize(10)
   doc.text(`Ref: ${referenceNo || ''}`, margin, y)
   doc.text('Date.....................', rightEdge, y, { align: 'right' })
 
-  y += 5.5
+  y += 7.5
   doc.setFont('times', 'italic')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.5)
   doc.text(legalCitation, pageWidth / 2, y, { align: 'center' })
 
-  y += 5.0
+  y += 7.5
   doc.setFont('times', 'bold')
-  doc.setFontSize(13.5)
+  doc.setFontSize(15.5)
   doc.text('DEBIT NOTE', pageWidth / 2, y, { align: 'center' })
 
   /* =========================================================================
      3. UPPER BOX: DEBIT NOTE NO/DATE & CONSIGNEE DETAILS
      ========================================================================= */
-  y += 4.0
+  y += 6.5
   const boxTop = y
   const leftColW = 58
   const rightColX = margin + leftColW
-  const boxHeight = 44.0
+  const boxHeight = 48.0
 
   doc.rect(margin, boxTop, contentWidth, boxHeight)
   doc.line(rightColX, boxTop, rightColX, boxTop + boxHeight)
 
-  // Left Column: DEBIT NOTE NO & DATE
-  const leftRowH = 7.0
+  // Left Column: DEBIT NOTE NO & DATE (Spaced generously across 48mm)
+  const leftRowH = 8.5
   doc.line(margin, boxTop + leftRowH, rightColX, boxTop + leftRowH)
   doc.line(margin, boxTop + leftRowH * 2, rightColX, boxTop + leftRowH * 2)
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.5)
-  doc.text('DEBIT NOTE NO', margin + 2.5, boxTop + 4.8)
-  doc.text(debitNoteNo || '', rightColX - 2.5, boxTop + 4.8, { align: 'right' })
+  doc.setFontSize(8.8)
+  doc.text('DEBIT NOTE NO', margin + 3.0, boxTop + 5.8)
+  doc.text(debitNoteNo || '', rightColX - 3.0, boxTop + 5.8, { align: 'right' })
 
-  doc.text('DEBIT NOTE DATE', margin + 2.5, boxTop + leftRowH + 4.8)
-  doc.text(formatDebitNoteDate(debitNoteDate, 'standard'), rightColX - 2.5, boxTop + leftRowH + 4.8, { align: 'right' })
+  doc.text('DEBIT NOTE DATE', margin + 3.0, boxTop + leftRowH + 5.8)
+  doc.text(formatDebitNoteDate(debitNoteDate, 'standard'), rightColX - 3.0, boxTop + leftRowH + 5.8, { align: 'right' })
 
   // Right Column: Details of Consignee / Receiver
-  const rHeaderH = 6.0
+  const rHeaderH = 7.0
   doc.line(rightColX, boxTop + rHeaderH, rightEdge, boxTop + rHeaderH)
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(9)
-  doc.text('Details of Consignee / Receiver', (rightColX + rightEdge) / 2, boxTop + 4.2, { align: 'center' })
+  doc.setFontSize(9.5)
+  doc.text('Details of Consignee / Receiver', (rightColX + rightEdge) / 2, boxTop + 4.8, { align: 'center' })
 
   // Consignee Content
   const rTextX = rightColX + 3.0
   const maxConsigneeW = (rightEdge - 3.5) - rTextX // 121.5 mm safely inside right border
-  let curR = boxTop + rHeaderH + 4.2
+  let curR = boxTop + rHeaderH + 5.0
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(9)
+  doc.setFontSize(9.5)
   const nameLines = doc.splitTextToSize((receiverName || '').trim(), maxConsigneeW)
   nameLines.forEach((line) => {
     doc.text(line, rTextX, curR)
-    curR += 4.0
+    curR += 4.2
   })
 
-  curR += 0.4
+  curR += 0.5
   doc.setFont('times', 'normal')
-  doc.setFontSize(8)
+  doc.setFontSize(8.8)
 
   // Split address into lines that strictly stay inside the consignee box
   const addrParagraphs = (receiverAddress || '').replace(/\r\n/g, '\n').split('\n').filter(Boolean)
@@ -173,20 +173,20 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
   })
 
   // Ensure address lines do not collide with State / GSTIN line at the bottom
-  const consigneeBottomY = boxTop + boxHeight - 2.5
-  const maxAllowedY = consigneeBottomY - 3.8
+  const consigneeBottomY = boxTop + boxHeight - 3.0
+  const maxAllowedY = consigneeBottomY - 4.2
   wrappedAddrLines.forEach((line) => {
     if (curR <= maxAllowedY) {
       doc.text(line, rTextX, curR)
-      curR += 3.6
+      curR += 3.8
     }
   })
 
   // Bottom Line of Consignee Box: State, State code, GSTIN
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.2)
+  doc.setFontSize(8.8)
   doc.text(`State : ${receiverState || ''}`, rTextX, consigneeBottomY)
-  doc.text(`State code : ${receiverStateCode || ''}`, rTextX + 44, consigneeBottomY)
+  doc.text(`State code : ${receiverStateCode || ''}`, rTextX + 46, consigneeBottomY)
   doc.text(`GSTIN : ${receiverGstin || ''}`, rightEdge - 2.5, consigneeBottomY, { align: 'right' })
 
   /* =========================================================================
@@ -220,13 +220,13 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
     totalDn: margin + colW.slNo + colW.desc + colW.hsn + colW.billNo + colW.billDate + colW.bags + colW.rate + colW.taxable + colW.igst
   }
 
-  const headerH = 10.0
+  const headerH = 10.5
   const activeItems = calculatedItems.length > 0 ? calculatedItems : items
 
   // Dynamically scale table body height based on number of items (ensuring single page A4)
   const isMultiRow = activeItems.length > 2
-  const minTableBodyH = isMultiRow ? 44.0 : 48.0
-  const rowHeight = isMultiRow ? 10.0 : 14.0
+  const minTableBodyH = isMultiRow ? 48.0 : 54.0
+  const rowHeight = isMultiRow ? 11.0 : 15.0
 
   doc.rect(margin, tableTop, contentWidth, headerH)
 
@@ -248,18 +248,18 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
 
   // Header Titles
   doc.setFont('times', 'bold')
-  doc.setFontSize(7.5)
+  doc.setFontSize(8)
 
-  doc.text('SL NO', colX.slNo + colW.slNo / 2, tableTop + 6.0, { align: 'center' })
-  doc.text('DESCRIPTION\nOF GOODS', colX.desc + colW.desc / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('HSN CODE', colX.hsn + colW.hsn / 2, tableTop + 6.0, { align: 'center' })
-  doc.text('BILL NO', colX.billNo + colW.billNo / 2, tableTop + 6.0, { align: 'center' })
-  doc.text('BILL\nDATE', colX.billDate + colW.billDate / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('BAGS\nQTY', colX.bags + colW.bags / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('RATE\nPER BAG', colX.rate + colW.rate / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('TOTAL\nTAXABLE\nAMT', colX.taxable + colW.taxable / 2, tableTop + 3.2, { align: 'center' })
-  doc.text(taxTreatment === 'CGST_SGST' ? 'GST\nAMT' : 'IGST\nAMT', colX.igst + colW.igst / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('TOTAL\nDN AMT', colX.totalDn + colW.totalDn / 2, tableTop + 4.2, { align: 'center' })
+  doc.text('SL NO', colX.slNo + colW.slNo / 2, tableTop + 6.2, { align: 'center' })
+  doc.text('DESCRIPTION\nOF GOODS', colX.desc + colW.desc / 2, tableTop + 4.4, { align: 'center' })
+  doc.text('HSN CODE', colX.hsn + colW.hsn / 2, tableTop + 6.2, { align: 'center' })
+  doc.text('BILL NO', colX.billNo + colW.billNo / 2, tableTop + 6.2, { align: 'center' })
+  doc.text('BILL\nDATE', colX.billDate + colW.billDate / 2, tableTop + 4.4, { align: 'center' })
+  doc.text('BAGS\nQTY', colX.bags + colW.bags / 2, tableTop + 4.4, { align: 'center' })
+  doc.text('RATE\nPER BAG', colX.rate + colW.rate / 2, tableTop + 4.4, { align: 'center' })
+  doc.text('TOTAL\nTAXABLE\nAMT', colX.taxable + colW.taxable / 2, tableTop + 3.4, { align: 'center' })
+  doc.text(taxTreatment === 'CGST_SGST' ? 'GST\nAMT' : 'IGST\nAMT', colX.igst + colW.igst / 2, tableTop + 4.4, { align: 'center' })
+  doc.text('TOTAL\nDN AMT', colX.totalDn + colW.totalDn / 2, tableTop + 4.4, { align: 'center' })
 
   // Render Rows
   let curRowTop = tableTop + headerH
@@ -278,7 +278,7 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
 
     const midY = itemY + (rowHeight / 2) + 1.2
     doc.setFont('times', 'normal')
-    doc.setFontSize(8)
+    doc.setFontSize(8.5)
 
     // SL No
     doc.text(String(idx + 1), colX.slNo + colW.slNo / 2, midY, { align: 'center' })
@@ -287,7 +287,7 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
     const desc = item.description || ''
     if (desc) {
       const splitDesc = doc.splitTextToSize(desc, colW.desc - 4)
-      const descStartY = itemY + 4.0
+      const descStartY = itemY + 4.5
       doc.setFont('times', 'bold')
       doc.text(splitDesc, colX.desc + 2, descStartY)
       doc.setFont('times', 'normal')
@@ -322,25 +322,25 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
 
   // Table Totals Subtotal Row
   const subtotalTop = curRowTop + totalItemRowsH
-  const subtotalH = 7.0
+  const subtotalH = 7.5
   doc.rect(margin, subtotalTop, contentWidth, subtotalH)
   divCols.forEach((x) => {
     doc.line(x, subtotalTop, x, subtotalTop + subtotalH)
   })
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.5)
-  doc.text('TOTAL', colX.hsn + colW.hsn / 2, subtotalTop + 4.8, { align: 'center' })
-  doc.text(totalBags ? String(totalBags) : '', colX.bags + colW.bags / 2, subtotalTop + 4.8, { align: 'center' })
-  doc.text(formatIndianCurrency(totalTaxable), colX.igst - 2.5, subtotalTop + 4.8, { align: 'right' })
-  doc.text(formatIndianCurrency(totalGst), colX.totalDn - 2.5, subtotalTop + 4.8, { align: 'right' })
-  doc.text(formatIndianCurrency(totalDnAmt), rightEdge - 2.5, subtotalTop + 4.8, { align: 'right' })
+  doc.setFontSize(9)
+  doc.text('TOTAL', colX.hsn + colW.hsn / 2, subtotalTop + 5.2, { align: 'center' })
+  doc.text(totalBags ? String(totalBags) : '', colX.bags + colW.bags / 2, subtotalTop + 5.2, { align: 'center' })
+  doc.text(formatIndianCurrency(totalTaxable), colX.igst - 2.5, subtotalTop + 5.2, { align: 'right' })
+  doc.text(formatIndianCurrency(totalGst), colX.totalDn - 2.5, subtotalTop + 5.2, { align: 'right' })
+  doc.text(formatIndianCurrency(totalDnAmt), rightEdge - 2.5, subtotalTop + 5.2, { align: 'right' })
 
   /* =========================================================================
      5. SUMMARY BOX: Taxable Amount, GST %, Total DN Amount (Right Aligned)
      ========================================================================= */
   const sumTop = subtotalTop + subtotalH
-  const sumRowH = 6.2
+  const sumRowH = 7.0
   const sumWidth = colW.taxable + colW.igst + colW.totalDn // 56 mm
   const sumLeftX = colX.taxable
 
@@ -352,42 +352,42 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
 
   // Row 1: Taxable Amount
   doc.setFont('times', 'normal')
-  doc.setFontSize(8.5)
-  doc.text('Taxable Amount', sumLeftX + 2.5, sumTop + 4.4)
-  doc.text(formatIndianCurrency(totalTaxable), rightEdge - 2.5, sumTop + 4.4, { align: 'right' })
+  doc.setFontSize(9)
+  doc.text('Taxable Amount', sumLeftX + 2.5, sumTop + 4.8)
+  doc.text(formatIndianCurrency(totalTaxable), rightEdge - 2.5, sumTop + 4.8, { align: 'right' })
 
   // Row 2: GST Rate & Amount
   const gstLabel = taxTreatment === 'CGST_SGST' ? `GST @ ${gstRate}%` : `IGST @ ${gstRate}%`
-  doc.text(gstLabel, sumLeftX + 2.5, sumTop + sumRowH + 4.4)
-  doc.text(formatIndianCurrency(totalGst), rightEdge - 2.5, sumTop + sumRowH + 4.4, { align: 'right' })
+  doc.text(gstLabel, sumLeftX + 2.5, sumTop + sumRowH + 4.8)
+  doc.text(formatIndianCurrency(totalGst), rightEdge - 2.5, sumTop + sumRowH + 4.8, { align: 'right' })
 
   // Row 3: Total DN Amount (Bold)
   doc.setFont('times', 'bold')
-  doc.text('Total DN Amount', sumLeftX + 2.5, sumTop + sumRowH * 2 + 4.4)
-  doc.text(formatIndianCurrency(totalDnAmt), rightEdge - 2.5, sumTop + sumRowH * 2 + 4.4, { align: 'right' })
+  doc.text('Total DN Amount', sumLeftX + 2.5, sumTop + sumRowH * 2 + 4.8)
+  doc.text(formatIndianCurrency(totalDnAmt), rightEdge - 2.5, sumTop + sumRowH * 2 + 4.8, { align: 'right' })
 
   /* =========================================================================
      6. TOTAL VALUE IN WORDS ROW
      ========================================================================= */
   const wordsTop = sumTop + sumRowH * 3
-  const wordsH = 7.5
+  const wordsH = 8.5
   doc.rect(margin, wordsTop, contentWidth, wordsH)
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.5)
-  doc.text(`Total Value in Words :- ${totalInWords}`, margin + 2.5, wordsTop + 5.0)
+  doc.setFontSize(9)
+  doc.text(`Total Value in Words :- ${totalInWords}`, margin + 2.5, wordsTop + 5.6)
 
   /* =========================================================================
      7. FOOTER & PROPRIETOR SIGNATURE
      ========================================================================= */
-  const signTop = wordsTop + wordsH + 12.0
+  const signTop = wordsTop + wordsH + 15.0
   doc.setFont('times', 'bolditalic')
-  doc.setFontSize(11)
+  doc.setFontSize(11.5)
   doc.text('For G.K. SAW MILL', rightEdge - 6, signTop, { align: 'right' })
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(10)
-  doc.text('Proprietor', rightEdge - 12, signTop + 16.0, { align: 'right' })
+  doc.setFontSize(10.5)
+  doc.text('Proprietor', rightEdge - 14, signTop + 18.0, { align: 'right' })
 
   if (save) {
     const filename = `DebitNote_${debitNoteNo || 'DN'}_${(receiverName || 'Consignee').replace(/[^a-zA-Z0-9]/g, '_')}.pdf`
