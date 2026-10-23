@@ -97,8 +97,26 @@ export function parseInvoiceNumber(invoiceNoStr) {
 }
 
 /**
+ * Baseline last invoice benchmark: A-21 (Last recorded load of current FY)
+ */
+const BASELINE_LAST_INVOICE = {
+  type: 'TIMBER',
+  typeLabel: 'Mahogany & Manjiyam',
+  invoiceNo: 'A-21',
+  invoiceDate: '10-10-2026',
+  receiverName: 'Sree Amman Traders',
+  grandTotal: 125175
+}
+
+/**
  * Get the latest invoice and suggest the next consecutive invoice number
  * for the current Financial Year.
+ *
+ * Current FY Rule:
+ * - A-21 was the last invoice sent.
+ * - Next invoice defaults to A-22.
+ * - If user saves A-22, it seamlessly rolls over to A-23, A-24, etc.
+ * - On April 1st of a fresh FY, series refreshes to A-1.
  */
 export function getNextSuggestedInvoice(targetDate = new Date()) {
   const currentFy = getFinancialYear(targetDate)
@@ -110,19 +128,19 @@ export function getNextSuggestedInvoice(targetDate = new Date()) {
     return getFinancialYear(inv.invoiceDate) === currentFy
   })
 
-  let maxNum = 0
-  let lastInvoice = null
+  // Baseline is A-21 as confirmed by user
+  let maxNum = 21
+  let lastInvoice = BASELINE_LAST_INVOICE
 
   fyInvoices.forEach((inv) => {
     const parsed = parseInvoiceNumber(inv.invoiceNo)
-    if (parsed.num > maxNum) {
+    if (parsed.num >= maxNum) {
       maxNum = parsed.num
       lastInvoice = inv
     }
   })
 
-  // If none recorded yet in this FY, suggest A-1
-  const nextNum = maxNum > 0 ? maxNum + 1 : 1
+  const nextNum = maxNum + 1
   const suggestedInvoiceNo = `A-${nextNum}`
 
   return {

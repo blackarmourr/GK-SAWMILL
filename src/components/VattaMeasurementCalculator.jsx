@@ -555,7 +555,7 @@ export default function VattaMeasurementCalculator({
                   type="text"
                   value={invoiceNo}
                   onChange={(e) => setInvoiceNo(e.target.value)}
-                  placeholder="e.g. A-20/2026-27"
+                  placeholder="e.g. A-22/2026-27"
                   style={{
                     width: '100%',
                     padding: '0.65rem 0.8rem',

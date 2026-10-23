@@ -75,10 +75,20 @@ export default function VattaInvoiceGenerator({
   const [selectedReceiverId, setSelectedReceiverId] = useState('receiver-hindustan')
   const [selectedDespatchedId, setSelectedDespatchedId] = useState('despatched-umesh')
 
-  // Form State initialized with A-20 benchmark sample values
+  // Form State initialized: A-21 was last invoice, next defaults to A-22
   const [invoiceForm, setInvoiceForm] = useState(() => {
+    let nextInv = 'A-22'
+    try {
+      const seq = getNextSuggestedInvoice()
+      if (seq && seq.suggestedInvoiceNo) {
+        nextInv = seq.suggestedInvoiceNo
+      }
+    } catch {
+      nextInv = 'A-22'
+    }
     return {
       ...SAMPLE_VATTA_INVOICE_A20,
+      invoiceNo: nextInv,
       bankDetails: businessSettings.bankDetails || '',
       accountNumber: businessSettings.accountNumber || '',
       branchIfsc: businessSettings.branchIfsc || '',
@@ -273,8 +283,13 @@ export default function VattaInvoiceGenerator({
   const handleResetForm = () => {
     if (window.confirm('Reset this invoice to a blank draft?')) {
       const today = new Date().toISOString().split('T')[0]
+      let nextInv = 'A-22'
+      try {
+        const seq = getNextSuggestedInvoice(new Date(today))
+        if (seq && seq.suggestedInvoiceNo) nextInv = seq.suggestedInvoiceNo
+      } catch {}
       setInvoiceForm({
-        invoiceNo: '',
+        invoiceNo: nextInv,
         purchaseOrderNo: '',
         invoiceDate: today,
         dateOfSupply: today,
@@ -757,7 +772,7 @@ export default function VattaInvoiceGenerator({
                   type="text"
                   value={invoiceForm.invoiceNo}
                   onChange={(e) => handleFieldChange('invoiceNo', e.target.value)}
-                  placeholder="e.g. A-20"
+                  placeholder="e.g. A-22"
                   style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
                 />
                 {suggestedSequence && (

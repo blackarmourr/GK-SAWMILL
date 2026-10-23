@@ -118,7 +118,7 @@ export default function KeralaVatBillGenerator({
       bagQuantity: 285,
 
       // Field 8
-      billNo: 'A-20',
+      billNo: 'A-22',
       billDate: today,
       billValue: '781292.93',
 
@@ -1265,7 +1265,7 @@ export default function KeralaVatBillGenerator({
                   type="text"
                   value={billData.billNo}
                   onChange={(e) => handleFieldChange('billNo', e.target.value)}
-                  placeholder="e.g. A-20"
+                  placeholder="e.g. A-22"
                   style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
                 />
               </div>

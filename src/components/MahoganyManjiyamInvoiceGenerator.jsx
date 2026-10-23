@@ -45,9 +45,16 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
   const [notification, setNotification] = useState(null)
   const [validationError, setValidationError] = useState('')
 
-  // Invoice Form State (Initialized with A-19 sample as sensible baseline)
+  // Invoice Form State (A-21 was last invoice, so next defaults to A-22)
   const [invoiceId, setInvoiceId] = useState(() => 'inv_' + Date.now())
-  const [invoiceNo, setInvoiceNo] = useState('A-19')
+  const [invoiceNo, setInvoiceNo] = useState(() => {
+    try {
+      const seq = getNextSuggestedInvoice()
+      return seq?.suggestedInvoiceNo || 'A-22'
+    } catch {
+      return 'A-22'
+    }
+  })
   const [invoiceDate, setInvoiceDate] = useState('01-10-2026')
   const [vehicleNo, setVehicleNo] = useState('KL-02-AN-7779')
   const [dateOfSupply, setDateOfSupply] = useState('01-10-2026')
@@ -311,7 +318,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
   // Reset to new clean invoice
   const handleNewInvoice = () => {
     setInvoiceId('inv_' + Date.now())
-    setInvoiceNo('')
+    const nextInv = suggestedSequence?.suggestedInvoiceNo || 'A-22'
+    setInvoiceNo(nextInv)
     setInvoiceDate(new Date().toLocaleDateString('en-GB').replace(/\//g, '-'))
     setMahoganyTaxableValue(0)
     setManjiyamTaxableValue(0)
@@ -683,7 +691,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   type="text"
                   value={invoiceNo}
                   onChange={(e) => setInvoiceNo(e.target.value)}
-                  placeholder="e.g. A-19"
+                  placeholder="e.g. A-22"
                   style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 700, boxSizing: 'border-box' }}
                 />
                 {suggestedSequence && (

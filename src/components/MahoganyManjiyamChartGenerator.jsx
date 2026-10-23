@@ -47,9 +47,9 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
 
   const [invoiceNo, setInvoiceNo] = useState(() => {
     try {
-      return localStorage.getItem('gk_invoice_no') || 'A-19'
+      return localStorage.getItem('gk_invoice_no') || 'A-22'
     } catch {
-      return 'A-19'
+      return 'A-22'
     }
   })
 
@@ -340,7 +340,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                     type="text"
                     value={invoiceNo}
                     onChange={(e) => handleInvoiceChange(e.target.value)}
-                    placeholder="e.g. A-19"
+                    placeholder="e.g. A-22"
                     style={{
                       width: '100%',
                       padding: '0.7rem 1rem 0.7rem 2.5rem',
