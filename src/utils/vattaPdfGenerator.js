@@ -252,7 +252,7 @@ export function generateVattaPdf(sheetData, save = true) {
 
   doc.setFont('times', 'bold')
   doc.setFontSize(11)
-  doc.text('G.K. SAW MILLS', sigX, sigY + 6.5, { align: 'center' })
+  doc.text('G.K. SAW MILL', sigX, sigY + 6.5, { align: 'center' })
 
   // Trigger download if requested
   if (save) {

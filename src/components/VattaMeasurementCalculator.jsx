@@ -1024,7 +1024,7 @@ export default function VattaMeasurementCalculator({
               {/* Signature block */}
               <div style={{ textAlign: 'right', paddingRight: '2rem' }}>
                 <div style={{ fontSize: '1.05rem', marginBottom: '0.4rem' }}>Proprietor</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 900 }}>G.K. SAW MILLS</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 900 }}>G.K. SAW MILL</div>
               </div>
             </div>
           </div>

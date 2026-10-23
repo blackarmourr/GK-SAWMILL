@@ -160,77 +160,77 @@ export function generateInvoicePdf(invoiceData, save = true) {
   
   // Left: Business info (Serif matching original invoice)
   doc.setFont('times', 'bold')
-  doc.setFontSize(15)
-  doc.text(businessName, margin, 18)
+  doc.setFontSize(16.5)
+  doc.text(businessName, margin, 16.5)
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.5)
-  doc.text(addressLine1, margin, 23)
-  doc.text(addressLine2, margin, 27)
+  doc.setFontSize(8.8)
+  doc.text(addressLine1, margin, 21.8)
+  doc.text(addressLine2, margin, 26.2)
 
   // Right: Contact info
   const rightX = margin + contentWidth
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8.5)
-  doc.text(`Tel :- ${telephone}`, rightX, 18, { align: 'right' })
-  doc.text(`E-mail :- ${email}`, rightX, 22.5, { align: 'right' })
-  doc.text(`GSTIN :- ${gstin}`, rightX, 27, { align: 'right' })
+  doc.setFontSize(8.8)
+  doc.text(`Tel :- ${telephone}`, rightX, 16.5, { align: 'right' })
+  doc.text(`E-mail :- ${email}`, rightX, 21.2, { align: 'right' })
+  doc.text(`GSTIN :- ${gstin}`, rightX, 26.2, { align: 'right' })
 
   // Center Title
-  doc.setFontSize(11)
+  doc.setFontSize(12)
   doc.setFont('helvetica', 'bold')
-  doc.text('FORM GST INVOICE - I', pageWidth / 2, 33, { align: 'center' })
+  doc.text('FORM GST INVOICE - I', pageWidth / 2, 33.5, { align: 'center' })
 
   // --- MAIN BOUNDED BOX ---
-  const boxTop = 36
+  const boxTop = 37.0
   doc.setDrawColor(0, 0, 0)
   doc.setLineWidth(0.3)
 
-  // Section 1: Top Metadata Grid (y = 36 to 56, height = 20)
-  const metaHeight = 20
+  // Section 1: Top Metadata Grid (y = 37.0 to 62.0, height = 25.0)
+  const metaHeight = 25.0
   doc.rect(margin, boxTop, contentWidth, metaHeight)
   doc.line(midX, boxTop, midX, boxTop + metaHeight)
 
-  doc.setFontSize(8)
-  const lX = margin + 2
-  const rX = midX + 2
+  doc.setFontSize(8.5)
+  const lX = margin + 2.5
+  const rX = midX + 2.5
 
-  // Left Column Metadata
+  // Left Column Metadata (Spaced generously across 25mm)
   doc.setFont('helvetica', 'normal')
-  doc.text(`Reverse Charge :- ${reverseCharge || ''}`, lX, boxTop + 4.2)
+  doc.text(`Reverse Charge :- ${reverseCharge || ''}`, lX, boxTop + 5.0)
   doc.setFont('helvetica', 'bold')
-  doc.text(`Invoice No :- ${invoiceNo || ''}`, lX, boxTop + 8.8)
-  doc.text(`Invoice Date : ${invoiceDate || ''}`, lX, boxTop + 13.4)
-  doc.text(`State :- ${state || ''}`, lX, boxTop + 18)
-  doc.text(`State code :- ${stateCode || ''}`, midX - 2, boxTop + 18, { align: 'right' })
+  doc.text(`Invoice No :- ${invoiceNo || ''}`, lX, boxTop + 10.5)
+  doc.text(`Invoice Date : ${invoiceDate || ''}`, lX, boxTop + 16.0)
+  doc.text(`State :- ${state || ''}`, lX, boxTop + 21.5)
+  doc.text(`State code :- ${stateCode || ''}`, midX - 2.5, boxTop + 21.5, { align: 'right' })
 
   // Right Column Metadata
   doc.setFont('helvetica', 'normal')
-  doc.text(`Transportation mode :- ${transportationMode || ''}`, rX, boxTop + 4.2)
+  doc.text(`Transportation mode :- ${transportationMode || ''}`, rX, boxTop + 5.0)
   doc.setFont('helvetica', 'bold')
-  doc.text(`Vehicle No :- ${vehicleNo || ''}`, rX, boxTop + 8.8)
-  doc.text(`Date of supply :- ${dateOfSupply || ''}`, rX, boxTop + 13.4)
-  doc.text(`Place of supply :- ${placeOfSupply || ''}`, rX, boxTop + 18)
+  doc.text(`Vehicle No :- ${vehicleNo || ''}`, rX, boxTop + 10.5)
+  doc.text(`Date of supply :- ${dateOfSupply || ''}`, rX, boxTop + 16.0)
+  doc.text(`Place of supply :- ${placeOfSupply || ''}`, rX, boxTop + 21.5)
 
-  // Section 2: Details of Receiver & Dispatched (y = 56 to 97, height = 41)
+  // Section 2: Details of Receiver & Dispatched (y = 62.0 to 109.0, height = 47.0)
   const recTop = boxTop + metaHeight
-  const recHeight = 41
+  const recHeight = 47.0
   doc.rect(margin, recTop, contentWidth, recHeight)
   doc.line(midX, recTop, midX, recTop + recHeight)
 
   // Sub headers
-  const subHeadH = 5
-  doc.line(margin, recTop + subHeadH, margin + contentWidth, recTop + subHeadH)
+  const subHeadH = 6.0
+  doc.line(margin, recTop + subHeadH, rightX, recTop + subHeadH)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8.5)
-  doc.text('Details of Receiver', (margin + midX) / 2, recTop + 3.8, { align: 'center' })
-  doc.text('Details of Dispatched', (midX + rightX) / 2, recTop + 3.8, { align: 'center' })
+  doc.setFontSize(9)
+  doc.text('Details of Receiver', (margin + midX) / 2, recTop + 4.2, { align: 'center' })
+  doc.text('Details of Dispatched', (midX + rightX) / 2, recTop + 4.2, { align: 'center' })
 
   // Receiver Data
-  doc.setFontSize(8)
-  let recY = recTop + 9
+  doc.setFontSize(8.2)
+  let recY = recTop + subHeadH + 4.5
   const maxRecW = (midX - 2.5) - (lX + 16) // ~72mm strictly within left box
-  const maxDispW = (rightMargin - 2.5) - rX // ~88mm strictly within right box
+  const maxDispW = (rightX - 2.5) - rX   // ~88mm strictly within right box
 
   doc.setFont('helvetica', 'bold')
   doc.text('Name :-', lX, recY)
@@ -248,8 +248,8 @@ export function generateInvoicePdf(invoiceData, save = true) {
     const lines = doc.splitTextToSize(p.trim(), maxRecW)
     lines.forEach(l => rWrapped.push(l))
   })
-  const recBottomY = recTop + recHeight - 2.5
-  const maxRecAllowedY = recBottomY - 8.0
+  const recBottomY = recTop + recHeight - 2.8
+  const maxRecAllowedY = recBottomY - 8.5
   rWrapped.forEach((line) => {
     if (recY <= maxRecAllowedY) {
       doc.text(line, lX + 16, recY)
@@ -258,9 +258,9 @@ export function generateInvoicePdf(invoiceData, save = true) {
   })
 
   doc.setFont('helvetica', 'bold')
-  doc.text(`GSTIN :-   ${receiverGstin || ''}`, lX, recBottomY - 4.2)
+  doc.text(`GSTIN :-   ${receiverGstin || ''}`, lX, recBottomY - 4.6)
   doc.text(`State :- ${receiverState || ''}`, lX, recBottomY)
-  doc.text(`State code :-  ${receiverStateCode || ''}`, midX - 2, recBottomY, { align: 'right' })
+  doc.text(`State code :-  ${receiverStateCode || ''}`, midX - 2.5, recBottomY, { align: 'right' })
 
   // Dispatched Data
   if (dispatchedDetails) {
@@ -271,7 +271,7 @@ export function generateInvoicePdf(invoiceData, save = true) {
       const lines = doc.splitTextToSize(p.trim(), maxDispW)
       lines.forEach(l => dWrapped.push(l))
     })
-    let dY = recTop + 9
+    let dY = recTop + subHeadH + 4.5
     const maxDispAllowedY = recTop + recHeight - 3.0
     dWrapped.forEach((line) => {
       if (dY <= maxDispAllowedY) {
@@ -281,7 +281,7 @@ export function generateInvoicePdf(invoiceData, save = true) {
     })
   }
 
-  // Section 3: Goods Table Header & Rows
+  // Section 3: Goods Table Header & Rows (y = 109.0 to 179.0, height = 70.0)
   // Columns aligned with original template proportions:
   // Sl No (14mm), Desc (70mm), HSN (24mm), Qty (24mm), Rate (24mm), Value (30mm)
   const c1 = margin + 14  // 26 mm
@@ -291,10 +291,10 @@ export function generateInvoicePdf(invoiceData, save = true) {
   const c5 = margin + 156 // 168 mm
 
   const tableTop = recTop + recHeight
-  const tblHeadH = 6
-  const goodsBodyH = 50
-  const sepRowH = 4.5
-  const tableHeight = tblHeadH + goodsBodyH + sepRowH // 60.5 mm
+  const tblHeadH = 7.0
+  const goodsBodyH = 58.0
+  const sepRowH = 5.0
+  const tableHeight = tblHeadH + goodsBodyH + sepRowH // 70.0 mm
 
   doc.rect(margin, tableTop, contentWidth, tableHeight)
   doc.line(margin, tableTop + tblHeadH, rightX, tableTop + tblHeadH)
@@ -309,27 +309,28 @@ export function generateInvoicePdf(invoiceData, save = true) {
 
   // Header Texts
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8)
-  doc.text('Sl. No.', (margin + c1) / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('Description of Goods', (c1 + c2) / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('HSN Code', (c2 + c3) / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('Qty (CFT)', (c3 + c4) / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('Rate', (c4 + c5) / 2, tableTop + 4.2, { align: 'center' })
-  doc.text('Value', (c5 + rightX) / 2, tableTop + 4.2, { align: 'center' })
+  doc.setFontSize(8.5)
+  doc.text('Sl. No.', (margin + c1) / 2, tableTop + 4.8, { align: 'center' })
+  doc.text('Description of Goods', (c1 + c2) / 2, tableTop + 4.8, { align: 'center' })
+  doc.text('HSN Code', (c2 + c3) / 2, tableTop + 4.8, { align: 'center' })
+  doc.text('Qty (CFT)', (c3 + c4) / 2, tableTop + 4.8, { align: 'center' })
+  doc.text('Rate', (c4 + c5) / 2, tableTop + 4.8, { align: 'center' })
+  doc.text('Value', (c5 + rightX) / 2, tableTop + 4.8, { align: 'center' })
 
   // Goods Rows
-  let curItemY = tableTop + tblHeadH + 6
+  let curItemY = tableTop + tblHeadH + 7.5
   let rowIdx = 1
 
   // Item 1: Mahogany
   if (mahoganyEnabled && mahogVal > 0) {
     doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
     doc.text(String(rowIdx), (margin + c1) / 2, curItemY, { align: 'center' })
     
     doc.setFont('helvetica', 'italic')
     const descL = mahoganyDesc.split('\n')
     doc.text(descL[0] || 'Mahogany Rejected size', c1 + 2, curItemY)
-    if (descL[1]) doc.text(descL[1], c1 + 2, curItemY + 4)
+    if (descL[1]) doc.text(descL[1], c1 + 2, curItemY + 4.5)
     
     doc.setFont('helvetica', 'normal')
     doc.text(String(mahoganyHsn), (c2 + c3) / 2, curItemY, { align: 'center' })
@@ -337,19 +338,20 @@ export function generateInvoicePdf(invoiceData, save = true) {
     doc.text(formatAmt(mahogR), c5 - 2, curItemY, { align: 'right' })
     doc.text(formatAmt(mahogVal), rightX - 2, curItemY, { align: 'right' })
     
-    curItemY += 13
+    curItemY += 15.0
     rowIdx++
   }
 
   // Item 2: Manjiyam
   if (manjiyamEnabled && manjVal > 0) {
     doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
     doc.text(String(rowIdx), (margin + c1) / 2, curItemY, { align: 'center' })
     
     doc.setFont('helvetica', 'italic')
     const descL = manjiyamDesc.split('\n')
     doc.text(descL[0] || 'Manjiyam Rejected Size', c1 + 2, curItemY)
-    if (descL[1]) doc.text(descL[1], c1 + 2, curItemY + 4)
+    if (descL[1]) doc.text(descL[1], c1 + 2, curItemY + 4.5)
     
     doc.setFont('helvetica', 'normal')
     doc.text(String(manjiyamHsn), (c2 + c3) / 2, curItemY, { align: 'center' })
@@ -357,21 +359,22 @@ export function generateInvoicePdf(invoiceData, save = true) {
     doc.text(formatAmt(manjR), c5 - 2, curItemY, { align: 'right' })
     doc.text(formatAmt(manjVal), rightX - 2, curItemY, { align: 'right' })
     
-    curItemY += 13
+    curItemY += 15.0
     rowIdx++
   }
 
   // Volume & E-Way Bill in description area (matching sample invoice)
   doc.setFont('helvetica', 'bold')
-  doc.text(`(Qty in CBM :-${totalCbm.toFixed(2)})`, c1 + 2, curItemY + 2)
+  doc.setFontSize(8.5)
+  doc.text(`(Qty in CBM :- ${totalCbm.toFixed(2)})`, c1 + 2, curItemY + 2.5)
   if (ewayBillNo && ewayBillNo.trim()) {
-    doc.text(`EWAY BILL :- ${ewayBillNo.trim()}`, c1 + 2, curItemY + 7)
+    doc.text(`EWAY BILL :- ${ewayBillNo.trim()}`, c1 + 2, curItemY + 8.5)
   }
 
   // --- SECTION 4: EXACT ORIGINAL INVOICE CHARGES, BANK & TOTALS ---
-  // Reconstructs the exact multi-cell grid from original G.K. Saw Mill Invoice
+  // Expanded to 65.0mm total height to comfortably fill the lower page
   const botTop = tableTop + tableHeight
-  const rowH = 5.2
+  const rowH = 6.4
 
   const y0 = botTop
   const y1 = y0 + rowH // Row 1 bottom: Freight / Sub Total
@@ -381,9 +384,9 @@ export function generateInvoicePdf(invoiceData, save = true) {
   const y5 = y4 + rowH // Row 5 bottom: Account Number / SGST Rate
   const y6 = y5 + rowH // Row 6 bottom: Branch IFSC / IGST Rate
   const y7 = y6 + rowH // Row 7 bottom: Terms / Round off
-  const y8 = y7 + rowH // Row 8 bottom: Signatory / GRAND TOTAL
-  const y9 = y8 + 6.2  // Row 9 bottom: Words
-  const y10 = y9 + 5.8 // Row 10 bottom: Copies / Reverse Charge (Bottom of Box)
+  const y8 = y7 + 6.6  // Row 8 bottom: Signatory / GRAND TOTAL
+  const y9 = y8 + 7.2  // Row 9 bottom: Words
+  const y10 = y9 + 6.4 // Row 10 bottom: Copies / Reverse Charge (Bottom of Box = 244.0mm)
 
   // Horizontal dividing lines matching original invoice
   doc.line(margin, y1, rightX, y1)
@@ -408,86 +411,87 @@ export function generateInvoicePdf(invoiceData, save = true) {
 
   // Cell Content Rendering
   doc.setFont('helvetica', 'normal')
-  doc.setFontSize(8)
+  doc.setFontSize(8.5)
 
   // Row 1: Freight / Sub Total
-  doc.text('Freight', margin + 2, y0 + 3.8)
-  if (freightVal > 0) doc.text(formatAmt(freightVal), c2 - 2, y0 + 3.8, { align: 'right' })
-  doc.text('Sub Total', c3 + 2, y0 + 3.8)
-  doc.text(formatAmt(subTotal), rightX - 2, y0 + 3.8, { align: 'right' })
+  doc.text('Freight', margin + 2.5, y0 + 4.5)
+  if (freightVal > 0) doc.text(formatAmt(freightVal), c2 - 2.5, y0 + 4.5, { align: 'right' })
+  doc.text('Sub Total', c3 + 2.5, y0 + 4.5)
+  doc.text(formatAmt(subTotal), rightX - 2.5, y0 + 4.5, { align: 'right' })
 
   // Row 2: Insurance / Discount
-  doc.text('Insurance', margin + 2, y1 + 3.8)
-  if (insVal > 0) doc.text(formatAmt(insVal), c2 - 2, y1 + 3.8, { align: 'right' })
-  doc.text('Discount', c3 + 2, y1 + 3.8)
-  if (discountVal > 0) doc.text(formatAmt(discountVal), rightX - 2, y1 + 3.8, { align: 'right' })
+  doc.text('Insurance', margin + 2.5, y1 + 4.5)
+  if (insVal > 0) doc.text(formatAmt(insVal), c2 - 2.5, y1 + 4.5, { align: 'right' })
+  doc.text('Discount', c3 + 2.5, y1 + 4.5)
+  if (discountVal > 0) doc.text(formatAmt(discountVal), rightX - 2.5, y1 + 4.5, { align: 'right' })
 
   // Row 3: Packing & Forwading Charge / TaxableValue
-  doc.text('Packing & Forwading Charge', margin + 2, y2 + 3.8)
-  if (packVal > 0) doc.text(formatAmt(packVal), c2 - 2, y2 + 3.8, { align: 'right' })
-  doc.text('TaxableValue', c3 + 2, y2 + 3.8)
-  doc.text(formatAmt(taxableValue), rightX - 2, y2 + 3.8, { align: 'right' })
+  doc.text('Packing & Forwading Charge', margin + 2.5, y2 + 4.5)
+  if (packVal > 0) doc.text(formatAmt(packVal), c2 - 2.5, y2 + 4.5, { align: 'right' })
+  doc.text('TaxableValue', c3 + 2.5, y2 + 4.5)
+  doc.text(formatAmt(taxableValue), rightX - 2.5, y2 + 4.5, { align: 'right' })
 
   // Rows 4, 5, 6: Bank details on left, Taxes on right
   const bankLabel = bankDetails ? `Bank Details : ${bankDetails}` : 'Bank Details'
   const acctLabel = accountNumber ? `Account Number : ${accountNumber}` : 'Account Number'
   const ifscLabel = branchIfsc ? `Branch IFSC : ${branchIfsc}` : 'Branch IFSC'
-  doc.text(bankLabel, margin + 2, y3 + 3.8)
-  doc.text(acctLabel, margin + 2, y4 + 3.8)
-  doc.text(ifscLabel, margin + 2, y5 + 3.8)
+  doc.text(bankLabel, margin + 2.5, y3 + 4.5)
+  doc.text(acctLabel, margin + 2.5, y4 + 4.5)
+  doc.text(ifscLabel, margin + 2.5, y5 + 4.5)
 
   // Row 4 (CGST):
-  doc.text('CGST Rate', c3 + 2, y3 + 3.8)
-  doc.text('Amount', c4 + 2, y3 + 3.8)
+  doc.text('CGST Rate', c3 + 2.5, y3 + 4.5)
+  doc.text('Amount', c4 + 2.5, y3 + 4.5)
   if (taxTreatment === 'CGST_SGST' && cgstAmount > 0) {
-    doc.text(formatAmt(cgstAmount), rightX - 2, y3 + 3.8, { align: 'right' })
+    doc.text(formatAmt(cgstAmount), rightX - 2.5, y3 + 4.5, { align: 'right' })
   }
 
   // Row 5 (SGST):
-  doc.text('SGST Rate', c3 + 2, y4 + 3.8)
-  doc.text('Amount', c4 + 2, y4 + 3.8)
+  doc.text('SGST Rate', c3 + 2.5, y4 + 4.5)
+  doc.text('Amount', c4 + 2.5, y4 + 4.5)
   if (taxTreatment === 'CGST_SGST' && sgstAmount > 0) {
-    doc.text(formatAmt(sgstAmount), rightX - 2, y4 + 3.8, { align: 'right' })
+    doc.text(formatAmt(sgstAmount), rightX - 2.5, y4 + 4.5, { align: 'right' })
   }
 
   // Row 6 (IGST):
-  doc.text('IGST Rate', c3 + 2, y5 + 3.8)
-  doc.text('Amount', c4 + 2, y5 + 3.8)
+  doc.text('IGST Rate', c3 + 2.5, y5 + 4.5)
+  doc.text('Amount', c4 + 2.5, y5 + 4.5)
   if (taxTreatment === 'IGST' && igstAmount > 0) {
-    doc.text(formatAmt(igstAmount), rightX - 2, y5 + 3.8, { align: 'right' })
+    doc.text(formatAmt(igstAmount), rightX - 2.5, y5 + 4.5, { align: 'right' })
   }
 
   // Row 7: Terms and Conditions / Round off
   const termsLabel = termsAndConditions ? `Terms and Conditions : ${termsAndConditions}` : 'Terms and Conditions'
-  doc.text(termsLabel, margin + 2, y6 + 3.8)
-  doc.text('Round off', c3 + 2, y6 + 3.8)
+  doc.text(termsLabel, margin + 2.5, y6 + 4.5)
+  doc.text('Round off', c3 + 2.5, y6 + 4.5)
   if (finalRoundOff !== 0) {
-    doc.text(formatAmt(finalRoundOff), rightX - 2, y6 + 3.8, { align: 'right' })
+    doc.text(formatAmt(finalRoundOff), rightX - 2.5, y6 + 4.5, { align: 'right' })
   }
 
   // Row 8: Authorised Signatory / GRAND TOTAL
-  doc.text('Authorised Signatory (with status & seal)', (margin + c3) / 2, y7 + 3.8, { align: 'center' })
+  doc.text('Authorised Signatory (with status & seal)', (margin + c3) / 2, y7 + 4.5, { align: 'center' })
   doc.setFont('helvetica', 'bold')
-  doc.text('GRAND TOTAL', c3 + 2, y7 + 3.8)
-  doc.text(formatAmt(calculatedGrandTotal), rightX - 2, y7 + 3.8, { align: 'right' })
+  doc.text('GRAND TOTAL', c3 + 2.5, y7 + 4.5)
+  doc.text(formatAmt(calculatedGrandTotal), rightX - 2.5, y7 + 4.5, { align: 'right' })
 
   // Row 9: Grand Total in Words (Full width)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8)
-  doc.text(`Grand Total in words :- ( ${grandTotalWords} )`, margin + 2, y8 + 4.2)
+  doc.setFontSize(8.5)
+  doc.text(`Grand Total in words :- ( ${grandTotalWords} )`, margin + 2.5, y8 + 5.0)
 
   // Row 10: Copies / Reverse Charge
   doc.setFont('helvetica', 'normal')
-  doc.setFontSize(7.5)
-  doc.text('Orginal for Recipient, Duplicate for Transporter, Triplicate for Supplier', margin + 2, y9 + 3.8)
+  doc.setFontSize(8)
+  doc.text('Orginal for Recipient, Duplicate for Transporter, Triplicate for Supplier', margin + 2.5, y9 + 4.5)
   const revChargeLabel = reverseCharge ? `GST Payable on Reverse Charge : ${reverseCharge}` : 'GST Payable on Reverse Charge'
-  doc.text(revChargeLabel, c4 + 2, y9 + 3.8)
+  doc.text(revChargeLabel, c4 + 2.5, y9 + 4.5)
 
   // Section 5: Signature Block (Below outer box)
   doc.setFont('times', 'bold')
-  doc.setFontSize(9)
-  doc.text(`For ${businessName}`, (c4 + rightX) / 2, y10 + 6.5, { align: 'center' })
-  doc.text('Proprietor', (c4 + rightX) / 2, y10 + 17.5, { align: 'center' })
+  doc.setFontSize(10.5)
+  doc.text(`For ${businessName}`, (c4 + rightX) / 2, y10 + 7.5, { align: 'center' })
+  doc.setFontSize(10)
+  doc.text('Proprietor', (c4 + rightX) / 2, y10 + 20.0, { align: 'center' })
 
   // Trigger Download if requested
   if (save) {
