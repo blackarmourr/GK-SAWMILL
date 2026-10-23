@@ -1,3 +1,6 @@
+/* ==========================================================================
+   G.K. SAWMILL - THEME VARIABLES (LIGHT & DARK MODE)
+   ========================================================================== */
 :root {
   --primary: #1e3a2b;
   --primary-hover: #14281e;
@@ -6,23 +9,63 @@
   --wood-accent: #925c38;
   --wood-light: #f7ede2;
   --wood-badge: #d4a373;
-  --bg-page: #f4f6f8;
+  --bg-page: #f6f2ea;
   --card-bg: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
-  --border-color: #e5e7eb;
-  --border-subtle: #f0f2f5;
-  --tag-bg: #f3f4f6;
+  --card-border: #e6dfd5;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: #e2dcd2;
+  --border-subtle: #f0ebe1;
+  --tag-bg: #f5efe6;
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --input-text: #1e293b;
+  --table-head-bg: #f8fafc;
+  --header-bg-start: #162c20;
+  --header-bg-mid: #1e3a2b;
+  --header-bg-end: #254a35;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
   --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
-  --shadow-hover: 0 16px 30px -4px rgba(30, 58, 43, 0.12), 0 6px 12px -3px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 4px 14px rgba(146, 92, 56, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 16px 30px -4px rgba(30, 58, 43, 0.16), 0 6px 12px -3px rgba(0, 0, 0, 0.06);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
   --radius-xl: 24px;
   --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+[data-theme='dark'] {
+  --primary: #2d6a4f;
+  --primary-hover: #388a66;
+  --primary-light: #40916c;
+  --primary-soft: rgba(45, 106, 79, 0.28);
+  --wood-accent: #d4a373;
+  --wood-light: #241c15;
+  --wood-badge: #e0a96d;
+  --bg-page: #0b130e;
+  --card-bg: #14231a;
+  --card-border: #233b2d;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #1e3628;
+  --border-subtle: #172b20;
+  --tag-bg: #1c3124;
+  --input-bg: #101d16;
+  --input-border: #233b2d;
+  --input-text: #f8fafc;
+  --table-head-bg: #0f1c14;
+  --header-bg-start: #080f0a;
+  --header-bg-mid: #0e1b12;
+  --header-bg-end: #14281b;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 28px -3px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 16px 32px -4px rgba(0, 0, 0, 0.7), 0 0 18px rgba(52, 211, 153, 0.15);
 }
 
 * {
@@ -34,10 +77,26 @@
 body {
   font-family: var(--font-family);
   background-color: var(--bg-page);
+  /* Organic wood grain texture with warm sawmill timber ambient gradient */
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(212, 163, 115, 0.14) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(246, 242, 234, 0.88) 0%, rgba(241, 235, 224, 0.96) 100%),
+    url("data:image/svg+xml,%3Csvg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='woodGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018 0.003' numOctaves='3' result='noise'/%3E%3CfeColorMatrix type='matrix' values='0.7 0.3 0 0 0  0.5 0.3 0 0 0  0.3 0.2 0 0 0  0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23woodGrain)'/%3E%3C/svg%3E");
+  background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+[data-theme='dark'] body {
+  background-color: #0b130e;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(45, 106, 79, 0.2) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(11, 19, 14, 0.92) 0%, rgba(14, 24, 18, 0.97) 100%),
+    url("data:image/svg+xml,%3Csvg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='woodGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018 0.003' numOctaves='3' result='noise'/%3E%3CfeColorMatrix type='matrix' values='0.4 0.6 0.3 0 0  0.3 0.5 0.3 0 0  0.2 0.4 0.2 0 0  0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23woodGrain)'/%3E%3C/svg%3E");
+  background-attachment: fixed;
 }
 
 #root {
@@ -46,20 +105,22 @@ body {
   flex-direction: column;
 }
 
-/* App Container */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Header */
+/* ==========================================================================
+   Header Component
+   ========================================================================== */
 .app-header {
-  background: linear-gradient(135deg, #162c20 0%, #1e3a2b 60%, #254a35 100%);
+  background: linear-gradient(135deg, var(--header-bg-start) 0%, var(--header-bg-mid) 60%, var(--header-bg-end) 100%);
   color: #ffffff;
   padding: 0.85rem 1.25rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   border-bottom: 3px solid var(--wood-badge);
+  transition: background 0.25s ease;
 }
 
 .header-content {
@@ -134,11 +195,11 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -150,10 +211,10 @@ body {
 
 @keyframes livePulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.75);
   }
   70% {
-    box-shadow: 0 0 0 7px rgba(34, 197, 94, 0);
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
   }
   100% {
     box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
@@ -170,195 +231,243 @@ body {
   display: inline-block;
 }
 
-/* Main Content Area */
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fef3c7;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.24);
+  transform: scale(1.1);
+  color: #ffffff;
+}
+
+[data-theme='dark'] .theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fcd34d;
+}
+
+/* ==========================================================================
+   Main Content Area
+   ========================================================================== */
 .main-content {
   flex: 1;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 1.25rem 1.25rem 2rem;
-}
-
-/* Compact Premium Modules Grid */
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 0.85rem;
-}
-
-.compact-module-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 0.85rem 1.15rem;
+  padding: 1.5rem 1.25rem 2.5rem;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Square-Type Module Cards Grid
+   ========================================================================== */
+.modules-grid.square-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 225px));
+  justify-content: center;
+  gap: 1.25rem;
+  margin: 1.5rem auto;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.square-module-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: 18px;
+  padding: 1.35rem 1.1rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: space-between;
-  gap: 0.85rem;
+  gap: 0.75rem;
+  min-height: 210px;
   cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-card);
   position: relative;
   overflow: hidden;
+  user-select: none;
 }
 
-.compact-module-card::before {
+.square-module-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  bottom: 0;
-  width: 4px;
+  right: 0;
+  height: 4px;
   background: var(--card-accent, #1e3a2b);
-  opacity: 0.9;
-  transition: width 0.2s ease;
+  opacity: 0.95;
+  transition: height 0.2s ease;
 }
 
-.compact-module-card:hover {
-  transform: translateY(-2px);
-  border-color: #cbd5e1;
-  box-shadow: 0 8px 20px -4px rgba(30, 58, 43, 0.12), 0 3px 6px -2px rgba(0, 0, 0, 0.04);
+.square-module-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--card-accent, #2d6a4f);
+  box-shadow: var(--shadow-hover);
 }
 
-.compact-module-card:hover::before {
-  width: 6px;
+.square-module-card:hover::before {
+  height: 6px;
 }
 
-.compact-card-left {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  min-width: 0;
-  flex: 1;
-}
-
-.compact-card-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+.square-card-top {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  width: 100%;
 }
 
-.compact-module-card:hover .compact-card-icon {
-  transform: scale(1.05);
-}
-
-.compact-card-details {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  gap: 0.15rem;
-}
-
-.compact-card-badge {
+.square-card-badge {
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #64748b;
-}
-
-.compact-card-title {
-  font-size: 0.93rem;
-  font-weight: 700;
-  color: #1e293b;
-  line-height: 1.25;
-  margin: 0;
-}
-
-.compact-card-action {
-  flex-shrink: 0;
-}
-
-.compact-open-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.35rem 0.65rem;
-  border-radius: 6px;
-  background: #f1f5f9;
-  color: #334155;
-  border: 1px solid #e2e8f0;
+  letter-spacing: 0.06em;
+  color: var(--wood-accent);
+  background: var(--wood-light);
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
   transition: all 0.2s ease;
 }
 
-.compact-module-card:hover .compact-open-btn {
-  background: #1e3a2b;
-  color: #ffffff;
-  border-color: #1e3a2b;
-  box-shadow: 0 2px 6px rgba(30, 58, 43, 0.2);
+[data-theme='dark'] .square-card-badge {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.15);
 }
 
-/* Informational Callout */
-.info-callout {
-  margin-top: 1.75rem;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-left: 4px solid var(--wood-badge);
-  border-radius: var(--radius-md);
-  padding: 0.9rem 1.15rem;
+.square-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.info-icon {
-  color: var(--wood-accent);
-  margin-top: 0.1rem;
-  flex-shrink: 0;
-}
-
-.info-content h3 {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.2rem;
-}
-
-.info-content p {
-  font-size: 0.825rem;
-  color: var(--text-secondary);
-  line-height: 1.45;
-}
-
-/* Footer */
-.app-footer {
-  background: #ffffff;
-  border-top: 1px solid var(--border-color);
-  padding: 1rem 1.25rem;
-  margin-top: auto;
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
+  transition: transform 0.25s ease;
+  margin: 0.2rem 0;
 }
 
-.footer-brand {
-  font-size: 0.875rem;
+.square-module-card:hover .square-card-icon {
+  transform: scale(1.1) rotate(2deg);
+}
+
+.square-card-title {
+  font-size: 0.92rem;
   font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.square-card-action {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+.square-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: var(--tag-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.square-module-card:hover .square-open-btn {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(30, 58, 43, 0.25);
+}
+
+[data-theme='dark'] .square-module-card:hover .square-open-btn {
+  background: #2d6a4f;
+  border-color: #2d6a4f;
+}
+
+/* ==========================================================================
+   Global Dark Mode Overrides for Modules, Forms & Containers
+   ========================================================================== */
+[data-theme='dark'] input:not([type='checkbox']):not([type='radio']),
+[data-theme='dark'] select,
+[data-theme='dark'] textarea {
+  background-color: var(--input-bg) !important;
+  color: var(--input-text) !important;
+  border-color: var(--input-border) !important;
+}
+
+[data-theme='dark'] input::placeholder,
+[data-theme='dark'] textarea::placeholder {
+  color: #64748b !important;
+}
+
+[data-theme='dark'] .card,
+[data-theme='dark'] .calculator-container,
+[data-theme='dark'] .panel-box,
+[data-theme='dark'] .bg-white {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary);
+  border-color: var(--card-border) !important;
+}
+
+[data-theme='dark'] table {
   color: var(--text-primary);
 }
 
-.footer-sub {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+[data-theme='dark'] th {
+  background-color: var(--table-head-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
 }
 
-/* Responsive Tweaks */
+[data-theme='dark'] td {
+  border-color: var(--border-color) !important;
+}
+
+/* Protect physical A4 printable paper preview from being inverted */
+.a4-sheet-preview,
+div[id*="pdf-preview"],
+div[id*="print-preview"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+.a4-sheet-preview *,
+div[id*="pdf-preview"] *,
+div[id*="print-preview"] * {
+  color: inherit;
+}
+
+/* ==========================================================================
+   Responsive Tweaks
+   ========================================================================== */
 @media (max-width: 640px) {
   .app-header {
     padding: 0.75rem 1rem;
@@ -372,14 +481,22 @@ body {
     padding: 1rem 0.75rem 1.75rem;
   }
 
-  .modules-grid {
-    grid-template-columns: 1fr;
+  .modules-grid.square-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
 
-  .footer-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 0.35rem;
+  .square-module-card {
+    min-height: 185px;
+    padding: 1rem 0.75rem;
+  }
+
+  .square-card-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .square-card-title {
+    font-size: 0.82rem;
   }
 }
-

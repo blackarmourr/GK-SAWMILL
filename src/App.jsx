@@ -5,9 +5,10 @@ import {
   Layers,
   Ruler,
   ArrowRight,
-  Info,
   TreePine,
-  FileText
+  FileText,
+  Sun,
+  Moon
 } from 'lucide-react'
 import MahoganyManjiyamChartGenerator from './components/MahoganyManjiyamChartGenerator'
 import MahoganyManjiyamInvoiceGenerator from './components/MahoganyManjiyamInvoiceGenerator'
@@ -75,6 +76,24 @@ function App() {
   const [currentView, setCurrentView] = useState('home')
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [cloudSession, setCloudSession] = useState(null)
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('gk_sawmill_theme') || 'light'
+    } catch {
+      return 'light'
+    }
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    try {
+      localStorage.setItem('gk_sawmill_theme', theme)
+    } catch {}
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+  }
 
   useEffect(() => {
     if (isSupabaseConfigured && supabase) {
@@ -150,6 +169,15 @@ function App() {
               >
                 <span className="live-green-dot" />
               </div>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="theme-toggle-btn"
+                title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                aria-label="Toggle Dark and Light Mode"
+              >
+                {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+              </button>
             </div>
           </div>
         </div>
@@ -215,14 +243,14 @@ function App() {
         </main>
       ) : (
         <main className="main-content">
-          {/* Modules Grid */}
-          <div className="modules-grid">
+          {/* Square Modules Grid */}
+          <div className="modules-grid square-grid">
             {MODULES.map((module) => {
               const Icon = module.icon
               return (
                 <div
                   key={module.id}
-                  className="compact-module-card"
+                  className="square-module-card"
                   style={{ '--card-accent': module.themeColor }}
                   onClick={() => handleCardClick(module)}
                   role="button"
@@ -233,20 +261,21 @@ function App() {
                     }
                   }}
                 >
-                  <div className="compact-card-left">
-                    <div
-                      className="compact-card-icon"
-                      style={{ background: module.themeColor }}
-                    >
-                      <Icon size={20} strokeWidth={2.2} />
-                    </div>
-                    <div className="compact-card-details">
-                      <span className="compact-card-badge">{module.number}</span>
-                      <h3 className="compact-card-title">{module.title}</h3>
-                    </div>
+                  <div className="square-card-top">
+                    <span className="square-card-badge">{module.number}</span>
                   </div>
-                  <div className="compact-card-action">
-                    <span className="compact-open-btn">
+
+                  <div
+                    className="square-card-icon"
+                    style={{ background: module.themeColor }}
+                  >
+                    <Icon size={24} strokeWidth={2.2} />
+                  </div>
+
+                  <h3 className="square-card-title">{module.title}</h3>
+
+                  <div className="square-card-action">
+                    <span className="square-open-btn">
                       Open <ArrowRight size={13} />
                     </span>
                   </div>
@@ -254,27 +283,8 @@ function App() {
               )
             })}
           </div>
-
-          {/* Informational Callout */}
-          <div className="info-callout">
-            <Info size={20} className="info-icon" />
-            <div className="info-content">
-              <h3>Industrial Timber Suite Operations</h3>
-              <p>
-                The sawmill workspace is equipped with specialized tools: Module 1 (Vatta GST Invoice Generator), Module 2 (Vatta Measurement Calculator), Module 3 (Mahogany & Manjiyam Invoice Generator), Module 4 (Mahogany & Manjiyam Size Chart), Module 5 (Kerala VAT Bill Generator), Module 6 (Credit Note Generator), and Module 7 (Debit Note Generator) with automated piece totals, volume calculations, customer directories, and authentic print-ready A4 PDF exports.
-              </p>
-            </div>
-          </div>
         </main>
       )}
-
-      {/* Footer */}
-      <footer className="app-footer">
-        <div className="footer-content">
-          <div className="footer-brand">G.K. SAWMILL</div>
-          <div className="footer-sub">Industrial Timber & Invoicing Suite</div>
-        </div>
-      </footer>
 
       {/* Supabase Authentication & Cloud Access Modal */}
       <AuthModal

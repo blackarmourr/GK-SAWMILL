@@ -1583,7 +1583,7 @@ export default function VattaInvoiceGenerator({
               {/* Upper Section */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderBottom: '1px solid #000000' }}>
                 <div style={{ padding: '0.4rem 0.5rem', borderRight: '1px solid #000000', fontSize: '0.75rem' }}>
-                  <div>Reverse Charge: {invoiceForm.reverseCharge || 'No'}</div>
+                  <div>Reverse Charge: {invoiceForm.reverseCharge ? invoiceForm.reverseCharge : ''}</div>
                   <div style={{ fontWeight: 'bold' }}>Invoice No : {invoiceForm.invoiceNo || '—'}</div>
                   {invoiceForm.purchaseOrderNo && (
                     <div>Purchase Order No : {invoiceForm.purchaseOrderNo}</div>

@@ -152,7 +152,8 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
     let curR = boxTop + 4.5
 
     // Row 1
-    doc.text(`Reverse Charge: ${reverseCharge || 'No'}`, leftTextX, curL)
+    const rcVal = (reverseCharge !== undefined && reverseCharge !== null) ? reverseCharge : 'No'
+    doc.text(`Reverse Charge: ${rcVal ? rcVal : ''}`, leftTextX, curL)
     doc.text(`Transportation mode: ${transportationMode || ''}`, rightTextX, curR)
 
     // Row 2
@@ -182,7 +183,8 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
     let curR = boxTop + 4.6
 
     // Row 1
-    doc.text(`Reverse Charge: ${reverseCharge || 'No'}`, leftTextX, curL)
+    const rcVal = (reverseCharge !== undefined && reverseCharge !== null) ? reverseCharge : 'No'
+    doc.text(`Reverse Charge: ${rcVal ? rcVal : ''}`, leftTextX, curL)
     doc.text(`Transportation mode: ${transportationMode || ''}`, rightTextX, curR)
 
     // Row 2
