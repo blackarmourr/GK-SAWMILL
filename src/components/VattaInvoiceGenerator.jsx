@@ -1628,7 +1628,9 @@ export default function VattaInvoiceGenerator({
                     <div>Freight {invoiceForm.freight ? `: ₹${formatIndianCurrency(invoiceForm.freight)}` : ''}</div>
                     <div>Insurance {invoiceForm.insurance ? `: ₹${formatIndianCurrency(invoiceForm.insurance)}` : ''}</div>
                     <div>Packing & Forwading Charge {invoiceForm.packingCharge ? `: ₹${formatIndianCurrency(invoiceForm.packingCharge)}` : ''}</div>
-                    <div style={{ fontWeight: 'bold', marginTop: '0.2rem' }}>Bank Details {invoiceForm.bankDetails ? `: ${invoiceForm.bankDetails}` : ''}</div>
+                  </div>
+                  <div style={{ borderTop: '1px solid #000000', paddingTop: '0.3rem', fontSize: '0.7rem' }}>
+                    <div style={{ fontWeight: 'bold' }}>Bank Details {invoiceForm.bankDetails ? `: ${invoiceForm.bankDetails}` : ''}</div>
                     <div>Account Number {invoiceForm.accountNumber ? `: ${invoiceForm.accountNumber}` : ''}</div>
                     <div>Branch IFSC {invoiceForm.branchIfsc ? `: ${invoiceForm.branchIfsc}` : ''}</div>
                   </div>
