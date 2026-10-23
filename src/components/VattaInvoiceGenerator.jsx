@@ -1874,9 +1874,12 @@ export default function VattaInvoiceGenerator({
                       <button
                         type="button"
                         onClick={() => {
-                          if (window.confirm(`Delete saved invoice "${inv.title}"?`)) {
-                            const updated = deleteVatInvoiceRecord(inv.id)
-                            if (updated) setSavedInvoices(updated)
+                          if (window.confirm(`Delete saved invoice "${inv.title || inv.invoiceData?.invoiceNo || 'Draft'}"?`)) {
+                            const updated = deleteVattaInvoiceRecord(inv.id)
+                            if (updated) {
+                              setSavedInvoices(updated)
+                              showNotification(`Deleted invoice "${inv.title || inv.invoiceData?.invoiceNo}"`)
+                            }
                           }
                         }}
                         style={{

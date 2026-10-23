@@ -4,6 +4,8 @@
  * G.K. Saw Mill industrial timber suite
  */
 
+import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+
 export const STORAGE_KEYS = {
   BUSINESS: 'gk_sawmill_vatta_inv_business',
   PRODUCTS: 'gk_sawmill_vatta_inv_products',
@@ -490,6 +492,14 @@ export function saveVattaInvoiceRecord(record) {
       updated = [recordToSave, ...current]
     }
     localStorage.setItem(STORAGE_KEYS.INVOICES, JSON.stringify(updated))
+
+    // Asynchronously sync to Supabase in background
+    if (isSupabaseConfigured && supabase) {
+      syncVattaInvoiceToSupabase(recordToSave).catch(err => {
+        console.warn('Background Supabase vatta invoice sync notice:', err.message)
+      })
+    }
+
     return updated
   } catch (err) {
     console.error('Error saving Vatta invoice record:', err)
@@ -501,9 +511,92 @@ export function deleteVattaInvoiceRecord(id) {
   try {
     const updated = getSavedVattaInvoices().filter(inv => inv.id !== id)
     localStorage.setItem(STORAGE_KEYS.INVOICES, JSON.stringify(updated))
+
+    // Asynchronously delete from Supabase if connected
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('vatta_invoices').delete().eq('id', id).then(({ error }) => {
+        if (error) console.warn('Supabase vatta invoice delete warning:', error.message)
+      })
+    }
+
     return updated
   } catch (err) {
     console.error('Error deleting Vatta invoice record:', err)
     return null
   }
+}
+
+/**
+ * Sync a single Vatta GST invoice record to Supabase table `vatta_invoices`
+ */
+export async function syncVattaInvoiceToSupabase(record) {
+  if (!isSupabaseConfigured || !supabase) return null
+
+  const data = record.invoiceData || {}
+  const totals = record.totals || {}
+
+  const row = {
+    id: record.id,
+    invoice_no: data.invoiceNo || 'Draft',
+    purchase_order_no: data.purchaseOrderNo || null,
+    invoice_date: data.invoiceDate || new Date().toISOString().split('T')[0],
+    date_of_supply: data.dateOfSupply || null,
+    state: data.state || 'KERALA',
+    state_code: data.stateCode || '32',
+    place_of_supply: data.placeOfSupply || null,
+    transportation_mode: data.transportationMode || null,
+    vehicle_no: data.vehicleNo || null,
+    forest_pass_no: data.forestPassNo || null,
+    total_measurement: Number(data.totalMeasurement) || null,
+    eway_bill_no: data.ewayBillNo || null,
+    reverse_charge: data.reverseCharge || 'No',
+
+    receiver_name: data.receiverName || 'Unnamed Purchaser',
+    receiver_address: data.receiverAddress || null,
+    receiver_pin_no: data.receiverPinNo || null,
+    receiver_mobile_no: data.receiverMobileNo || null,
+    receiver_gstin: data.receiverGstin || null,
+    receiver_state: data.receiverState || null,
+    receiver_state_code: data.receiverStateCode || null,
+
+    despatched_name: data.despatchedName || null,
+    despatched_address: data.despatchedAddress || null,
+    despatched_pin_no: data.despatchedPinNo || null,
+    despatched_mobile_no: data.despatchedMobileNo || null,
+    despatched_gstin: data.despatchedGstin || null,
+    despatched_state: data.despatchedState || null,
+    despatched_state_code: data.despatchedStateCode || null,
+
+    bag_quantities: data.bagQuantities || {},
+    products_snapshot: record.productsSnapshot || [],
+    total_bags: Number(totals.totalBags) || 0,
+    total_pieces: Number(totals.totalPieces) || 0,
+    sub_total: Number(totals.subTotal) || 0,
+    discount_val: Number(totals.discountVal) || 0,
+    freight: Number(totals.freightVal) || 0,
+    insurance: Number(totals.insuranceVal) || 0,
+    packing_charge: Number(totals.packingChargeVal) || 0,
+    taxable_value: Number(totals.taxableValue) || 0,
+    tax_treatment: data.taxTreatment || 'IGST',
+    gst_rate: Number(data.gstRate) || 5,
+    cgst_amount: Number(totals.cgstAmount) || 0,
+    sgst_amount: Number(totals.sgstAmount) || 0,
+    igst_amount: Number(totals.igstAmount) || 0,
+    round_off: Number(totals.roundOff) || 0,
+    grand_total: Number(record.grandTotal || totals.grandTotal) || 0,
+
+    full_payload: record,
+    updated_at: new Date().toISOString()
+  }
+
+  const { data: resData, error } = await supabase
+    .from('vatta_invoices')
+    .upsert(row, { onConflict: 'id' })
+    .select()
+
+  if (error) {
+    console.warn('Supabase upsert vatta_invoice warning:', error.message)
+    throw error
+  }
+  return resData
 }

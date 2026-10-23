@@ -19,7 +19,8 @@ import {
   Hash,
   Building2,
   Percent,
-  X
+  X,
+  Trash2
 } from 'lucide-react'
 import {
   getStoredSettings,
@@ -28,6 +29,7 @@ import {
   saveCustomer,
   getSavedInvoices,
   saveInvoiceRecord,
+  deleteInvoiceRecord,
 } from '../data/invoiceSettings.js'
 import { convertNumberToIndianWords } from '../utils/numberToWords.js'
 import { generateInvoicePdf } from '../utils/invoicePdfGenerator.js'
@@ -1677,22 +1679,48 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                         Customer: {inv.receiverName || 'N/A'} | Vehicle: {inv.vehicleNo || 'N/A'}
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => handleLoadInvoice(inv)}
-                      style={{
-                        padding: '0.45rem 0.85rem',
-                        borderRadius: '6px',
-                        border: 'none',
-                        background: 'var(--primary)',
-                        color: '#ffffff',
-                        fontWeight: 700,
-                        fontSize: '0.8rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Load Invoice
-                    </button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <button
+                        type="button"
+                        onClick={() => handleLoadInvoice(inv)}
+                        style={{
+                          padding: '0.45rem 0.85rem',
+                          borderRadius: '6px',
+                          border: 'none',
+                          background: 'var(--primary)',
+                          color: '#ffffff',
+                          fontWeight: 700,
+                          fontSize: '0.8rem',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Load Invoice
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (window.confirm(`Delete saved timber invoice #${inv.invoiceNo}?`)) {
+                            const updated = deleteInvoiceRecord(inv.id)
+                            if (updated) {
+                              setSavedInvoices(updated)
+                              notify(`Deleted invoice #${inv.invoiceNo}`)
+                            }
+                          }
+                        }}
+                        style={{
+                          background: '#fee2e2',
+                          color: '#b91c1c',
+                          border: 'none',
+                          padding: '0.45rem 0.65rem',
+                          borderRadius: '6px',
+                          cursor: 'pointer'
+                        }}
+                        title="Delete Invoice"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

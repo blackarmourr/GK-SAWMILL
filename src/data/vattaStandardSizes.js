@@ -3,6 +3,8 @@
  * G.K. Saw Mill Standard Measurements
  */
 
+import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+
 export const VATTA_STANDARD_ROWS = [
   {
     slNo: 1,
@@ -135,11 +137,73 @@ export function saveVattaSheetRecord(sheet) {
       newList = [updatedRecord, ...existing]
     }
     localStorage.setItem(STORAGE_KEY_VATTA_SAVED, JSON.stringify(newList))
+
+    // Asynchronously sync to Supabase in background
+    if (isSupabaseConfigured && supabase) {
+      syncVattaSheetToSupabase(updatedRecord).catch(err => {
+        console.warn('Background Supabase vatta sheet sync notice:', err.message)
+      })
+    }
+
     return updatedRecord
   } catch (err) {
     console.error('Error saving Vatta sheet record:', err)
     return sheet
   }
+}
+
+export function deleteVattaSheetRecord(id) {
+  try {
+    const existing = getSavedVattaSheets().filter((item) => item.id !== id)
+    localStorage.setItem(STORAGE_KEY_VATTA_SAVED, JSON.stringify(existing))
+
+    // Asynchronously delete from Supabase if connected
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('vatta_measurement_sheets').delete().eq('id', id).then(({ error }) => {
+        if (error) console.warn('Supabase vatta sheet delete warning:', error.message)
+      })
+    }
+
+    return existing
+  } catch (err) {
+    console.error('Error deleting Vatta sheet record:', err)
+    return null
+  }
+}
+
+/**
+ * Sync Vatta measurement sheet to Supabase table `vatta_measurement_sheets`
+ */
+export async function syncVattaSheetToSupabase(record) {
+  if (!isSupabaseConfigured || !supabase) return null
+
+  const calcs = record.calculations || {}
+
+  const row = {
+    id: record.id,
+    sheet_date: record.date || new Date().toISOString().split('T')[0],
+    invoice_no: record.invoiceNo || null,
+    pass_no: record.passNo || null,
+    lorry_reg_no: record.lorryRegNo || null,
+    place: record.place || null,
+    total_bags: Number(calcs.grandTotalBags) || 0,
+    total_pieces: Number(calcs.grandTotalPieces) || 0,
+    grand_total_cbm: Number(calcs.unroundedTotalCbm) || 0,
+    bag_quantities: record.bagQuantities || {},
+    full_payload: record,
+    updated_at: new Date().toISOString()
+  }
+
+  const { data, error } = await supabase
+    .from('vatta_measurement_sheets')
+    .upsert(row, { onConflict: 'id' })
+    .select()
+
+  if (error) {
+    console.warn('Supabase upsert vatta sheet warning:', error.message)
+    throw error
+  }
+  return data
 }
 
 /**

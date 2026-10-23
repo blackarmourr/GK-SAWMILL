@@ -2,6 +2,8 @@
  * Centralized Settings and Default Configuration for G.K. Saw Mill Invoice Generator
  */
 
+import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+
 export const DEFAULT_BUSINESS_SETTINGS = {
   businessName: 'G.K. SAW MILL',
   addressLine1: 'KATOOR, NEDUMPANA - P.O.,',
@@ -151,9 +153,88 @@ export function saveInvoiceRecord(invoiceData) {
     }
     
     localStorage.setItem(SAVED_INVOICES_KEY, JSON.stringify(updated))
+
+    // Asynchronously sync to Supabase in background
+    if (isSupabaseConfigured && supabase) {
+      syncTimberInvoiceToSupabase(recordToSave).catch(err => {
+        console.warn('Background Supabase timber invoice sync notice:', err.message)
+      })
+    }
+
     return recordToSave
   } catch (err) {
     console.error('Error saving invoice record', err)
     return invoiceData
   }
+}
+
+export function deleteInvoiceRecord(id) {
+  try {
+    const updated = getSavedInvoices().filter(inv => inv.id !== id)
+    localStorage.setItem(SAVED_INVOICES_KEY, JSON.stringify(updated))
+
+    // Asynchronously delete from Supabase if connected
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('timber_invoices').delete().eq('id', id).then(({ error }) => {
+        if (error) console.warn('Supabase timber invoice delete warning:', error.message)
+      })
+    }
+
+    return updated
+  } catch (err) {
+    console.error('Error deleting invoice record', err)
+    return null
+  }
+}
+
+/**
+ * Sync Mahogany & Manjiyam Timber invoice to Supabase table `timber_invoices`
+ */
+export async function syncTimberInvoiceToSupabase(record) {
+  if (!isSupabaseConfigured || !supabase) return null
+
+  const row = {
+    id: record.id,
+    invoice_no: record.invoiceNo || 'Draft',
+    invoice_date: record.invoiceDate || new Date().toISOString().split('T')[0],
+    vehicle_no: record.vehicleNo || null,
+    date_of_supply: record.dateOfSupply || null,
+    place_of_supply: record.placeOfSupply || null,
+    state: record.state || 'Kerala',
+    state_code: record.stateCode || '32',
+    eway_bill_no: record.ewayBillNo || null,
+    reverse_charge: record.reverseCharge || '',
+
+    receiver_name: record.receiverName || 'Timber Customer',
+    receiver_address: record.receiverAddress || null,
+    receiver_gstin: record.receiverGstin || null,
+    receiver_state: record.receiverState || null,
+
+    mahogany_enabled: Boolean(record.mahoganyEnabled),
+    mahogany_cft: Number(record.mahoganyCft) || 0,
+    mahogany_rate: Number(record.mahoganyRate) || 0,
+    mahogany_taxable: Number(record.mahoganyTaxableValue) || 0,
+
+    manjiyam_enabled: Boolean(record.manjiyamEnabled),
+    manjiyam_cft: Number(record.manjiyamCft) || 0,
+    manjiyam_rate: Number(record.manjiyamRate) || 0,
+    manjiyam_taxable: Number(record.manjiyamTaxableValue) || 0,
+
+    total_cft: Number(record.totalCft) || 0,
+    grand_total: Number(record.grandTotal) || 0,
+
+    full_payload: record,
+    updated_at: new Date().toISOString()
+  }
+
+  const { data, error } = await supabase
+    .from('timber_invoices')
+    .upsert(row, { onConflict: 'id' })
+    .select()
+
+  if (error) {
+    console.warn('Supabase upsert timber_invoice warning:', error.message)
+    throw error
+  }
+  return data
 }

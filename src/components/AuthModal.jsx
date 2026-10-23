@@ -29,14 +29,42 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
     setPinging(true)
     setPingResult(null)
     try {
-      const { error } = await supabase.from('vatta_invoices').select('*', { count: 'exact', head: true })
-      if (error) throw error
-      const cnRes = await supabase.from('credit_notes').select('*', { count: 'exact', head: true })
-      if (cnRes.error) throw cnRes.error
-      setPingResult({
-        success: true,
-        message: '✓ Live Connection Confirmed: Database tables "vatta_invoices" & "credit_notes" are online!'
+      const tables = [
+        { name: 'vatta_invoices', label: 'Vatta Invoices' },
+        { name: 'credit_notes', label: 'Credit Notes' },
+        { name: 'debit_notes', label: 'Debit Notes' },
+        { name: 'timber_invoices', label: 'Timber Invoices' },
+        { name: 'kerala_vat_bills', label: 'Kerala VAT Bills' },
+        { name: 'vatta_measurement_sheets', label: 'Measurement Sheets' },
+        { name: 'business_parties', label: 'Parties Directory' }
+      ]
+
+      const checks = await Promise.all(
+        tables.map(t => supabase.from(t.name).select('*', { count: 'exact', head: true }))
+      )
+
+      const missing = []
+      const active = []
+
+      checks.forEach((res, i) => {
+        if (res.error) {
+          missing.push(tables[i].label)
+        } else {
+          active.push(tables[i].label)
+        }
       })
+
+      if (missing.length === 0) {
+        setPingResult({
+          success: true,
+          message: '✓ All 7 Sawmill Database Tables are Live, Connected & Verified!'
+        })
+      } else {
+        setPingResult({
+          success: false,
+          message: `Active (${active.length}/7): ${active.join(', ')}. Need SQL setup in Supabase (${missing.length}): ${missing.join(', ')}. Run the updated schema.sql in Supabase SQL editor.`
+        })
+      }
     } catch (err) {
       setPingResult({
         success: false,

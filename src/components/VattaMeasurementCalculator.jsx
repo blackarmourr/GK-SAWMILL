@@ -27,6 +27,7 @@ import {
   saveStoredVattaSettings,
   getSavedVattaSheets,
   saveVattaSheetRecord,
+  deleteVattaSheetRecord,
   calculateVattaCalculations,
 } from '../data/vattaStandardSizes.js'
 import { getSavedVattaInvoices } from '../data/vattaInvoiceSettings.js'
@@ -259,8 +260,7 @@ export default function VattaMeasurementCalculator({
   const handleDeleteSavedRecord = (id, e) => {
     e.stopPropagation()
     try {
-      const existing = getSavedVattaSheets().filter((item) => item.id !== id)
-      localStorage.setItem('gk_sawmill_vatta_sheets', JSON.stringify(existing))
+      const existing = deleteVattaSheetRecord(id)
       setSavedSheets(existing)
       notify('Sheet record removed.')
     } catch (err) {

@@ -3,6 +3,8 @@
  * Data definitions, storage helpers, and sample specifications
  */
 
+import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+
 export const STORAGE_KEYS = {
   CONSIGNER: 'gk_vat_consigner_profile',
   CONSIGNEES: 'gk_vat_saved_consignees',
@@ -456,6 +458,14 @@ export function saveVatBillRecord(billData, title) {
       list.unshift(record)
     }
     localStorage.setItem(STORAGE_KEYS.SAVED_BILLS, JSON.stringify(list))
+
+    // Asynchronously sync to Supabase in background
+    if (isSupabaseConfigured && supabase) {
+      syncVatBillToSupabase(record).catch(err => {
+        console.warn('Background Supabase vat bill sync notice:', err.message)
+      })
+    }
+
     return { list, record }
   } catch (err) {
     console.error('Failed to save VAT bill record:', err)
@@ -467,9 +477,63 @@ export function deleteVatBillRecord(id) {
   try {
     const list = getSavedVatBills().filter(b => b.id !== id)
     localStorage.setItem(STORAGE_KEYS.SAVED_BILLS, JSON.stringify(list))
+
+    // Asynchronously delete from Supabase if connected
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('kerala_vat_bills').delete().eq('id', id).then(({ error }) => {
+        if (error) console.warn('Supabase vat bill delete warning:', error.message)
+      })
+    }
+
     return list
   } catch (err) {
     console.error('Failed to delete VAT bill record:', err)
     return null
   }
+}
+
+/**
+ * Sync Kerala VAT bill to Supabase table `kerala_vat_bills`
+ */
+export async function syncVatBillToSupabase(record) {
+  if (!isSupabaseConfigured || !supabase) return null
+
+  const bill = record.billData || {}
+
+  const row = {
+    id: record.id,
+    bill_no: bill.billNo || 'Draft',
+    bill_date: bill.billDate || new Date().toISOString().split('T')[0],
+    bill_value: Number(bill.billValue) || 0,
+    eway_bill_no: bill.ewayBillNo || null,
+    vehicle_no: bill.vehicleNo || null,
+
+    consigner_name: bill.consignerName || null,
+    consigner_business_name: bill.consignerBusinessName || null,
+
+    consignee_name: bill.consigneeName || 'Consignee',
+    consignee_address: bill.consigneeAddress || null,
+    consignee_gstin: bill.consigneeGstin || null,
+    consignee_state: bill.consigneeState || null,
+
+    goods_description: bill.goodsDescription || null,
+    bag_quantity: Number(bill.bagQuantity) || 0,
+
+    transporter_name: bill.transporterName || null,
+    transport_doc_no: bill.transportDocNo || null,
+
+    full_payload: record,
+    updated_at: new Date().toISOString()
+  }
+
+  const { data, error } = await supabase
+    .from('kerala_vat_bills')
+    .upsert(row, { onConflict: 'id' })
+    .select()
+
+  if (error) {
+    console.warn('Supabase upsert vat bill warning:', error.message)
+    throw error
+  }
+  return data
 }
