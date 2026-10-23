@@ -224,25 +224,38 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
 
   // Receiver (Left Column)
   let rY = partyTop + partyHeadH + 4.5
+  const maxRecW = (midX - 2.5) - (leftTextX + 18) // 70 mm strictly within left column
   doc.setFont('times', 'bold')
   doc.setFontSize(9)
   doc.text('Name', leftTextX, rY)
-  doc.text(receiverName || '', leftTextX + 18, rY)
+  const rNameLines = doc.splitTextToSize((receiverName || '').trim(), maxRecW)
+  rNameLines.forEach((line, i) => {
+    doc.text(line, leftTextX + 18, rY + (i * 4.0))
+  })
+  rY += Math.max(4.5, rNameLines.length * 4.0)
 
-  rY += 4.5
   doc.text('Address', leftTextX, rY)
   doc.setFont('times', 'normal')
-  const rAddrLines = (receiverAddress || '').split('\n').filter(Boolean)
-  rAddrLines.forEach((line, i) => {
-    doc.text(line.trim(), leftTextX + 18, rY + (i * 4.2))
+  const rAddrParagraphs = (receiverAddress || '').replace(/\r\n/g, '\n').split('\n').filter(Boolean)
+  const rWrappedLines = []
+  rAddrParagraphs.forEach((para) => {
+    const lines = doc.splitTextToSize(para.trim(), maxRecW)
+    lines.forEach((l) => rWrappedLines.push(l))
   })
   if (receiverPinNo && !receiverAddress.includes(receiverPinNo)) {
-    const pinOffset = rAddrLines.length * 4.2
-    doc.text(`Pin No:- ${receiverPinNo}`, leftTextX + 18, rY + pinOffset)
+    rWrappedLines.push(`Pin No:- ${receiverPinNo}`)
   }
 
   // Receiver bottom meta (Mobile No, GSTI, State)
   const recBottomY = partyTop + partyHeight - 2.5
+  const maxRecAllowedY = recBottomY - 12.0
+  rWrappedLines.forEach((line) => {
+    if (rY <= maxRecAllowedY) {
+      doc.text(line, leftTextX + 18, rY)
+      rY += 3.8
+    }
+  })
+
   doc.setFont('times', 'bold')
   if (receiverMobileNo) {
     doc.text(`Mobile No: ${receiverMobileNo}`, leftTextX, recBottomY - 9.0)
@@ -257,18 +270,35 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
 
   // Despatched (Right Column)
   let dY = partyTop + partyHeadH + 4.5
+  const maxDispW = (rightEdge - 2.5) - rightTextX // 88 mm strictly within right column
   doc.setFont('times', 'bold')
-  doc.text(despatchedName || '', rightTextX, dY)
+  const dNameLines = doc.splitTextToSize((despatchedName || '').trim(), maxDispW)
+  dNameLines.forEach((line, i) => {
+    doc.text(line, rightTextX, dY + (i * 4.0))
+  })
+  dY += Math.max(4.5, dNameLines.length * 4.0)
 
-  dY += 4.5
   doc.setFont('times', 'normal')
-  const dAddrLines = (despatchedAddress || '').split('\n').filter(Boolean)
-  dAddrLines.forEach((line, i) => {
-    doc.text(line.trim(), rightTextX, dY + (i * 4.2))
+  const dAddrParagraphs = (despatchedAddress || '').replace(/\r\n/g, '\n').split('\n').filter(Boolean)
+  const dWrappedLines = []
+  dAddrParagraphs.forEach((para) => {
+    const lines = doc.splitTextToSize(para.trim(), maxDispW)
+    lines.forEach((l) => dWrappedLines.push(l))
+  })
+  if (despatchedPinNo && !despatchedAddress.includes(despatchedPinNo)) {
+    dWrappedLines.push(`Pin No:- ${despatchedPinNo}`)
+  }
+
+  const dispBottomY = partyTop + partyHeight - 2.5
+  const maxDispAllowedY = dispBottomY - 8.0
+  dWrappedLines.forEach((line) => {
+    if (dY <= maxDispAllowedY) {
+      doc.text(line, rightTextX, dY)
+      dY += 3.8
+    }
   })
 
   // Despatched bottom meta (GSTN, STATE, State Code)
-  const dispBottomY = partyTop + partyHeight - 2.5
   doc.setFont('times', 'bold')
   doc.text(`GSTN:-  ${despatchedGstin || ''}`, rightTextX, dispBottomY - 4.6)
   doc.text(`STATE :- ${despatchedState || ''}`, rightTextX, dispBottomY)

@@ -1407,7 +1407,7 @@ export default function DebitNoteGenerator({
                   Details of Receiver (Consignee)
                 </div>
                 <div style={{ fontWeight: 800, fontSize: '0.78rem' }}>{form.receiverName || '—'}</div>
-                <div style={{ whiteSpace: 'pre-line', fontSize: '0.68rem', margin: '0.15rem 0' }}>
+                <div style={{ whiteSpace: 'pre-line', fontSize: '0.68rem', margin: '0.15rem 0', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
                   {form.receiverAddress || '—'}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', marginTop: '0.25rem' }}>
@@ -2034,7 +2034,7 @@ export default function DebitNoteGenerator({
                   Details of Receiver (Consignee)
                 </div>
                 <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>{form.receiverName || '—'}</div>
-                <div style={{ whiteSpace: 'pre-line', fontSize: '0.78rem', margin: '0.25rem 0' }}>
+                <div style={{ whiteSpace: 'pre-line', fontSize: '0.78rem', margin: '0.25rem 0', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
                   {form.receiverAddress || '—'}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginTop: '0.35rem' }}>

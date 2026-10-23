@@ -148,24 +148,41 @@ export function generateDebitNotePdf(debitNoteData, save = true) {
   doc.text('Details of Consignee / Receiver', (rightColX + rightEdge) / 2, boxTop + 4.2, { align: 'center' })
 
   // Consignee Content
-  let curR = boxTop + rHeaderH + 4.2
   const rTextX = rightColX + 3.0
+  const maxConsigneeW = (rightEdge - 3.5) - rTextX // 121.5 mm safely inside right border
+  let curR = boxTop + rHeaderH + 4.2
 
   doc.setFont('times', 'bold')
   doc.setFontSize(9)
-  doc.text(receiverName || '', rTextX, curR)
+  const nameLines = doc.splitTextToSize((receiverName || '').trim(), maxConsigneeW)
+  nameLines.forEach((line) => {
+    doc.text(line, rTextX, curR)
+    curR += 4.0
+  })
 
-  curR += 4.2
+  curR += 0.4
   doc.setFont('times', 'normal')
   doc.setFontSize(8)
-  const addrLines = (receiverAddress || '').split('\n').filter(Boolean)
-  addrLines.forEach((line) => {
-    doc.text(line.trim(), rTextX, curR)
-    curR += 3.8
+
+  // Split address into lines that strictly stay inside the consignee box
+  const addrParagraphs = (receiverAddress || '').replace(/\r\n/g, '\n').split('\n').filter(Boolean)
+  const wrappedAddrLines = []
+  addrParagraphs.forEach((para) => {
+    const lines = doc.splitTextToSize(para.trim(), maxConsigneeW)
+    lines.forEach((l) => wrappedAddrLines.push(l))
+  })
+
+  // Ensure address lines do not collide with State / GSTIN line at the bottom
+  const consigneeBottomY = boxTop + boxHeight - 2.5
+  const maxAllowedY = consigneeBottomY - 3.8
+  wrappedAddrLines.forEach((line) => {
+    if (curR <= maxAllowedY) {
+      doc.text(line, rTextX, curR)
+      curR += 3.6
+    }
   })
 
   // Bottom Line of Consignee Box: State, State code, GSTIN
-  const consigneeBottomY = boxTop + boxHeight - 2.5
   doc.setFont('times', 'bold')
   doc.setFontSize(8.2)
   doc.text(`State : ${receiverState || ''}`, rTextX, consigneeBottomY)

@@ -181,6 +181,8 @@ export function generateCreditNotePdf(creditNoteData, save = true) {
   let curL = partyTop + partyHeadH + 4.0
   const leftX = margin + 2.5
   const rightX = midX + 2.5
+  const maxRecW = (midX - 2.5) - (leftX + 16) // ~72mm strictly within left box
+  const maxDespW = (rightEdge - 2.5) - rightX // ~88mm strictly within right box
 
   doc.setFont('times', 'normal')
   doc.setFontSize(8.2)
@@ -188,16 +190,24 @@ export function generateCreditNotePdf(creditNoteData, save = true) {
   // Receiver Name
   doc.text('Name', leftX, curL)
   doc.setFont('times', 'bold')
-  doc.text(receiverName || '', leftX + 16, curL)
+  const rNameLines = doc.splitTextToSize((receiverName || '').trim(), maxRecW)
+  rNameLines.forEach((line, i) => {
+    doc.text(line, leftX + 16, curL + (i * 3.8))
+  })
+  curL += Math.max(3.8, rNameLines.length * 3.8)
   doc.setFont('times', 'normal')
 
   // Receiver Address
-  curL += 3.8
   doc.text('Address', leftX, curL)
-  const addrLines = (receiverAddress || '').split('\n').filter(Boolean)
-  if (addrLines.length > 0) {
-    addrLines.forEach((line) => {
-      doc.text(line.trim(), leftX + 16, curL)
+  const addrParas = (receiverAddress || '').replace(/\r\n/g, '\n').split('\n').filter(Boolean)
+  const rWrapped = []
+  addrParas.forEach(p => {
+    const lines = doc.splitTextToSize(p.trim(), maxRecW)
+    lines.forEach(l => rWrapped.push(l))
+  })
+  if (rWrapped.length > 0) {
+    rWrapped.forEach((line) => {
+      doc.text(line, leftX + 16, curL)
       curL += 3.6
     })
   } else {
@@ -225,13 +235,21 @@ export function generateCreditNotePdf(creditNoteData, save = true) {
   // Body: Despatched (Right)
   let curR = partyTop + partyHeadH + 4.0
   doc.setFont('times', 'bold')
-  doc.text(despatchedName || '', rightX, curR)
+  const dNameLines = doc.splitTextToSize((despatchedName || '').trim(), maxDespW)
+  dNameLines.forEach((line, i) => {
+    doc.text(line, rightX, curR + (i * 3.8))
+  })
+  curR += Math.max(3.8, dNameLines.length * 3.8)
   doc.setFont('times', 'normal')
 
-  curR += 3.8
-  const despLines = (despatchedAddress || '').split('\n').filter(Boolean)
-  despLines.forEach((line) => {
-    doc.text(line.trim(), rightX, curR)
+  const despParas = (despatchedAddress || '').replace(/\r\n/g, '\n').split('\n').filter(Boolean)
+  const dWrapped = []
+  despParas.forEach(p => {
+    const lines = doc.splitTextToSize(p.trim(), maxDespW)
+    lines.forEach(l => dWrapped.push(l))
+  })
+  dWrapped.forEach((line) => {
+    doc.text(line, rightX, curR)
     curR += 3.6
   })
 

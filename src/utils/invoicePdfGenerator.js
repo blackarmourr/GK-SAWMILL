@@ -229,19 +229,34 @@ export function generateInvoicePdf(invoiceData, save = true) {
   // Receiver Data
   doc.setFontSize(8)
   let recY = recTop + 9
+  const maxRecW = (midX - 2.5) - (lX + 16) // ~72mm strictly within left box
+  const maxDispW = (rightMargin - 2.5) - rX // ~88mm strictly within right box
+
   doc.setFont('helvetica', 'bold')
   doc.text('Name :-', lX, recY)
-  doc.text(receiverName || '', lX + 13, recY)
+  const rNameLines = doc.splitTextToSize((receiverName || '').trim(), maxRecW)
+  rNameLines.forEach((line, idx) => {
+    doc.text(line, lX + 13, recY + idx * 3.8)
+  })
+  recY += Math.max(4.2, rNameLines.length * 3.8)
 
-  recY += 4.2
   doc.text('Address :-', lX, recY)
   doc.setFont('helvetica', 'normal')
-  const addrLines = (receiverAddress || '').split('\n')
-  addrLines.forEach((line, idx) => {
-    doc.text(line.trim(), lX + 16, recY + idx * 3.8)
+  const addrParas = (receiverAddress || '').replace(/\r\n/g, '\n').split('\n').filter(Boolean)
+  const rWrapped = []
+  addrParas.forEach(p => {
+    const lines = doc.splitTextToSize(p.trim(), maxRecW)
+    lines.forEach(l => rWrapped.push(l))
+  })
+  const recBottomY = recTop + recHeight - 2.5
+  const maxRecAllowedY = recBottomY - 8.0
+  rWrapped.forEach((line) => {
+    if (recY <= maxRecAllowedY) {
+      doc.text(line, lX + 16, recY)
+      recY += 3.6
+    }
   })
 
-  const recBottomY = recTop + recHeight - 2.5
   doc.setFont('helvetica', 'bold')
   doc.text(`GSTIN :-   ${receiverGstin || ''}`, lX, recBottomY - 4.2)
   doc.text(`State :- ${receiverState || ''}`, lX, recBottomY)
@@ -250,9 +265,19 @@ export function generateInvoicePdf(invoiceData, save = true) {
   // Dispatched Data
   if (dispatchedDetails) {
     doc.setFont('helvetica', 'normal')
-    const dispLines = dispatchedDetails.split('\n')
-    dispLines.forEach((line, idx) => {
-      doc.text(line.trim(), rX, recTop + 9 + idx * 3.8)
+    const dispParas = dispatchedDetails.replace(/\r\n/g, '\n').split('\n').filter(Boolean)
+    const dWrapped = []
+    dispParas.forEach(p => {
+      const lines = doc.splitTextToSize(p.trim(), maxDispW)
+      lines.forEach(l => dWrapped.push(l))
+    })
+    let dY = recTop + 9
+    const maxDispAllowedY = recTop + recHeight - 3.0
+    dWrapped.forEach((line) => {
+      if (dY <= maxDispAllowedY) {
+        doc.text(line, rX, dY)
+        dY += 3.6
+      }
     })
   }
 
