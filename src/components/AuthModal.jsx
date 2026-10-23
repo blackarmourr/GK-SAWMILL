@@ -21,6 +21,31 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
   const [errorMsg, setErrorMsg] = useState('')
   const [successMsg, setSuccessMsg] = useState('')
   const [authMode, setAuthMode] = useState('signin') // 'signin' | 'signup'
+  const [pinging, setPinging] = useState(false)
+  const [pingResult, setPingResult] = useState(null)
+
+  const handleTestPing = async () => {
+    if (!isSupabaseConfigured || !supabase) return
+    setPinging(true)
+    setPingResult(null)
+    try {
+      const { error } = await supabase.from('vatta_invoices').select('*', { count: 'exact', head: true })
+      if (error) throw error
+      const cnRes = await supabase.from('credit_notes').select('*', { count: 'exact', head: true })
+      if (cnRes.error) throw cnRes.error
+      setPingResult({
+        success: true,
+        message: '✓ Live Connection Confirmed: Database tables "vatta_invoices" & "credit_notes" are online!'
+      })
+    } catch (err) {
+      setPingResult({
+        success: false,
+        message: `Connection error: ${err.message || 'Failed to ping Supabase'}`
+      })
+    } finally {
+      setPinging(false)
+    }
+  }
 
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase) return
@@ -324,7 +349,67 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSignIn}>
+            <div>
+              <div
+                style={{
+                  background: '#f0fdf4',
+                  border: '1px solid #bbf7d0',
+                  borderRadius: '10px',
+                  padding: '0.85rem 1rem',
+                  marginBottom: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '0.75rem'
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 800, fontSize: '0.85rem', color: '#166534' }}>
+                    <CheckCircle2 size={16} color="#16a34a" />
+                    Supabase Project Connected
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: '#15803d', marginTop: '0.15rem' }}>
+                    njeohgetjjyvblwnttqv.supabase.co
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleTestPing}
+                  disabled={pinging}
+                  style={{
+                    background: '#ffffff',
+                    border: '1px solid #86efac',
+                    borderRadius: '6px',
+                    padding: '0.35rem 0.65rem',
+                    fontSize: '0.72rem',
+                    fontWeight: 800,
+                    color: '#15803d',
+                    cursor: 'pointer',
+                    flexShrink: 0
+                  }}
+                >
+                  {pinging ? 'Testing...' : 'Test Connection'}
+                </button>
+              </div>
+
+              {pingResult && (
+                <div
+                  style={{
+                    background: pingResult.success ? '#f0fdf4' : '#fef2f2',
+                    border: pingResult.success ? '1px solid #86efac' : '1px solid #fca5a5',
+                    borderRadius: '8px',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    fontWeight: 600,
+                    color: pingResult.success ? '#166534' : '#991b1b',
+                    marginBottom: '1rem'
+                  }}
+                >
+                  {pingResult.message}
+                </div>
+              )}
+
+              <form onSubmit={handleSignIn}>
               <div style={{ marginBottom: '1rem' }}>
                 <label
                   style={{
@@ -524,6 +609,7 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
                 )}
               </div>
             </form>
+          </div>
           )}
         </div>
       </div>

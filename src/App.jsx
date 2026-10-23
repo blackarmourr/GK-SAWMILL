@@ -480,18 +480,25 @@ function App() {
                 onClick={() => setAuthModalOpen(true)}
                 className="badge-pill"
                 style={{
-                  background: cloudSession ? '#dcfce7' : '#f1f5f9',
-                  color: cloudSession ? '#15803d' : '#334155',
-                  border: cloudSession ? '1px solid #86efac' : '1px solid #cbd5e1',
+                  background: cloudSession ? '#dcfce7' : isSupabaseConfigured ? '#eafbf0' : '#f1f5f9',
+                  color: cloudSession ? '#15803d' : isSupabaseConfigured ? '#166534' : '#334155',
+                  border: cloudSession ? '1px solid #86efac' : isSupabaseConfigured ? '1.5px solid #22c55e' : '1px solid #cbd5e1',
                   cursor: 'pointer',
                   fontWeight: 700,
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.35rem'
+                  gap: '0.4rem',
+                  padding: '0.35rem 0.75rem',
+                  borderRadius: '9999px',
+                  boxShadow: isSupabaseConfigured ? '0 1px 4px rgba(34, 197, 94, 0.2)' : 'none'
                 }}
               >
-                <Cloud size={14} color={cloudSession ? '#16a34a' : '#64748b'} />
-                {cloudSession ? 'Cloud Active' : isSupabaseConfigured ? 'Sign In / Sync' : 'Local Storage Mode'}
+                <Cloud size={14} color={isSupabaseConfigured ? '#16a34a' : '#64748b'} />
+                {cloudSession
+                  ? 'Cloud Active'
+                  : isSupabaseConfigured
+                  ? 'Supabase Live ⚡'
+                  : 'Local Storage Mode'}
               </button>
               <span className="badge-pill status-online">
                 <span className="status-dot"></span>
