@@ -15,8 +15,10 @@ import {
   FileDown,
   Truck,
   Hash,
-  FileText
+  FileText,
+  Receipt
 } from 'lucide-react'
+import { getSavedInvoices } from '../data/invoiceSettings.js'
 import {
   MAHOGANY_STANDARD_ROWS,
   MANJIYAM_STANDARD_ROWS_7,
@@ -84,6 +86,58 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
   const [pdfStatus, setPdfStatus] = useState(null)
   const [validationError, setValidationError] = useState('')
   const [showPrintSlip, setShowPrintSlip] = useState(false)
+
+  // Linked Mahogany & Manjiyam Invoice state
+  const [selectedTimberInvoiceId, setSelectedTimberInvoiceId] = useState('')
+  const [savedTimberInvoices, setSavedTimberInvoices] = useState(() => {
+    try {
+      const list = getSavedInvoices()
+      if (Array.isArray(list) && list.length > 0) return list
+      return [{
+        id: 'sample-a21',
+        invoiceNo: 'A-21',
+        receiverName: 'SREE AMMAN TRADERS',
+        vehicleNo: 'KL-02-AN-7779',
+        mahoganyCft: 419,
+        manjiyamCft: 238
+      }]
+    } catch {
+      return []
+    }
+  })
+
+  const handleLoadFromTimberInvoice = (invId) => {
+    setSelectedTimberInvoiceId(invId)
+    if (!invId) return
+    const found = savedTimberInvoices.find(i => i.id === invId)
+    if (found) {
+      if (found.invoiceNo) {
+        handleInvoiceChange(found.invoiceNo)
+      }
+      if (found.vehicleNo) {
+        handleVehicleChange(found.vehicleNo)
+      }
+      const mahog = found.mahoganyCft || (found.mahoganyTaxableValue && found.mahoganyRate ? (found.mahoganyTaxableValue / found.mahoganyRate).toFixed(2) : 0)
+      const manj = found.manjiyamCft || (found.manjiyamTaxableValue && found.manjiyamRate ? (found.manjiyamTaxableValue / found.manjiyamRate).toFixed(2) : 0)
+
+      if (Number(mahog) > 0) {
+        setMahoganyTargetCft(String(Math.round(Number(mahog))))
+      }
+      if (Number(manj) > 0) {
+        setManjiyamTargetCft(String(Math.round(Number(manj))))
+      }
+
+      if (Number(mahog) > 0 && Number(manj) <= 0) {
+        setWoodType('mahogany')
+      } else if (Number(manj) > 0 && Number(mahog) <= 0) {
+        setWoodType('manjiyam')
+      }
+
+      setValidationError('')
+      setCopyStatus(`Loaded Invoice ${found.invoiceNo}: Target CFT (${Number(mahog) > 0 ? mahog + ' Mahogany' : ''}${Number(manj) > 0 ? ' / ' + manj + ' Manjiyam' : ''}) & Vehicle populated!`)
+      setTimeout(() => setCopyStatus(null), 3500)
+    }
+  }
 
   // Determine active template rows based on user wood selection & row count
   const activeTemplateRows = useMemo(() => {
@@ -289,6 +343,78 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
         {/* Controls Section */}
         <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color)', background: '#fafbfc' }}>
           
+          {/* Link & Load from Mahogany & Manjiyam Invoice Bar */}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, rgba(30, 58, 43, 0.06) 0%, rgba(212, 163, 115, 0.12) 100%)',
+              border: '1.5px dashed #2d6a4f',
+              borderRadius: '12px',
+              padding: '0.9rem 1.25rem',
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '1rem'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+              <div
+                style={{
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '8px',
+                  background: '#1e3a2b',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}
+              >
+                <Receipt size={17} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  Link & Load from Mahogany & Manjiyam Invoice
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                  Select a saved timber invoice to auto-load invoice number, vehicle, and target CFT
+                </div>
+              </div>
+            </div>
+
+            <select
+              value={selectedTimberInvoiceId}
+              onChange={(e) => handleLoadFromTimberInvoice(e.target.value)}
+              style={{
+                padding: '0.55rem 0.85rem',
+                borderRadius: '8px',
+                border: '1.5px solid #2d6a4f',
+                background: 'var(--card-bg)',
+                color: 'var(--text-primary)',
+                fontWeight: 700,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                minWidth: '240px'
+              }}
+            >
+              <option value="">-- Select Saved Timber Invoice --</option>
+              {savedTimberInvoices.map((inv) => {
+                const mahog = inv.mahoganyCft || (inv.mahoganyTaxableValue && inv.mahoganyRate ? (inv.mahoganyTaxableValue / inv.mahoganyRate).toFixed(2) : 0)
+                const manj = inv.manjiyamCft || (inv.manjiyamTaxableValue && inv.manjiyamRate ? (inv.manjiyamTaxableValue / inv.manjiyamRate).toFixed(2) : 0)
+                const cftLabel = []
+                if (Number(mahog) > 0) cftLabel.push(`Mahogany: ${mahog} CFT`)
+                if (Number(manj) > 0) cftLabel.push(`Manjiyam: ${manj} CFT`)
+                return (
+                  <option key={inv.id} value={inv.id}>
+                    Invoice {inv.invoiceNo} • {inv.receiverName || 'Timber Sale'} • {cftLabel.join(' / ') || 'Timber CFT'}
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+
           {/* 1. Vehicle Number & Invoice Number Inputs */}
           <div
             style={{

@@ -365,12 +365,16 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
     mahoganyHsn,
     mahoganyRate,
     mahoganyTaxableValue,
+    mahoganyCft: calculations.mahoganyCft,
 
     manjiyamEnabled,
     manjiyamDesc,
     manjiyamHsn,
     manjiyamRate,
     manjiyamTaxableValue,
+    manjiyamCft: calculations.manjiyamCft,
+    totalCft: calculations.totalCft,
+    grandTotal: calculations.grandTotal,
 
     cbmOverride,
 

@@ -25,8 +25,10 @@ import {
   X,
   CreditCard,
   ShieldCheck,
-  Check
+  Check,
+  Receipt
 } from 'lucide-react'
+import { getSavedVattaInvoices } from '../data/vattaInvoiceSettings.js'
 import {
   DEFAULT_VAT_CONSIGNER,
   DEFAULT_VAT_CONSIGNEES,
@@ -78,6 +80,72 @@ export default function KeralaVatBillGenerator({
   const [savedDrivers, setSavedDrivers] = useState(() => getSavedVatDrivers())
   const [vatSettings, setVatSettings] = useState(() => getVatSettings())
   const [savedBills, setSavedBills] = useState(() => getSavedVatBills())
+
+  // Linked Vatta GST Invoice state
+  const [selectedVattaInvoiceId, setSelectedVattaInvoiceId] = useState('')
+  const [savedVattaInvoicesList, setSavedVattaInvoicesList] = useState(() => {
+    try {
+      const list = getSavedVattaInvoices()
+      if (Array.isArray(list) && list.length > 0) return list
+      return [{
+        id: 'sample-a20',
+        title: 'Invoice A-20 - M/S. HINDUSTAN PENCILS PVT. LTD',
+        invoiceData: {
+          invoiceNo: 'A-20',
+          invoiceDate: '2026-10-10',
+          receiverName: 'M/S. HINDUSTAN PENCILS PVT. LTD',
+          receiverAddress: 'Plot No:-1 TO 15, ACHHAD INDUSTRIAL ESTATE, ACHHAD, TALUKA, TALASARI, PALGHAR, MAHARASHTRA-401606',
+          receiverGstin: '27AAACH0401R1ZQ',
+          receiverState: 'MAHARASHTRA',
+          ewayBillNo: '5420 8705 0063',
+          vehicleNo: 'KL-58-D-1555'
+        },
+        totals: { totalBags: 285, grandTotal: 781292.93 }
+      }]
+    } catch {
+      return []
+    }
+  })
+
+  useEffect(() => {
+    try {
+      const list = getSavedVattaInvoices()
+      if (Array.isArray(list) && list.length > 0) {
+        setSavedVattaInvoicesList(list)
+      }
+    } catch {}
+  }, [])
+
+  const handleLoadFromVattaInvoice = (invId) => {
+    setSelectedVattaInvoiceId(invId)
+    if (!invId) return
+    const found = savedVattaInvoicesList.find(i => i.id === invId)
+    if (found && found.invoiceData) {
+      const data = found.invoiceData
+      const totalAmount = found.grandTotal || found.totals?.grandTotal || found.totals?.totalTaxable || ''
+      const totalBags = found.totals?.totalBags || 0
+      setBillData(prev => ({
+        ...prev,
+        // Field 8: Bill No, Date, Value
+        billNo: data.invoiceNo || prev.billNo,
+        billDate: data.invoiceDate || prev.billDate,
+        billValue: totalAmount ? String(totalAmount) : prev.billValue,
+        // Field 2: E-Way Bill No
+        ewayBillNo: data.ewayBillNo || prev.ewayBillNo,
+        // Field 4: Consignee Details
+        consigneeName: data.receiverName || prev.consigneeName,
+        consigneeAddress: data.receiverAddress || prev.consigneeAddress,
+        consigneeGstin: data.receiverGstin || prev.consigneeGstin,
+        consigneeState: data.receiverState || prev.consigneeState,
+        // Field 7: Goods Description & Bag Quantity
+        goodsDescription: 'Vatta wood & Pencil Slats',
+        bagQuantity: totalBags > 0 ? totalBags : prev.bagQuantity,
+        // Field 9: Vehicle No
+        vehicleNo: data.vehicleNo || prev.vehicleNo
+      }))
+      notify(`Loaded Invoice ${data.invoiceNo} into Kerala VAT Form 8F! (${data.receiverName || 'Consignee'})`)
+    }
+  }
 
   // Active Bill Form State
   const [billData, setBillData] = useState(() => {
@@ -916,6 +984,70 @@ export default function KeralaVatBillGenerator({
       >
         {/* Left Form: Field Groups */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {/* Link & Load from Vatta GST Invoice Bar */}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, rgba(30, 58, 43, 0.06) 0%, rgba(212, 163, 115, 0.12) 100%)',
+              border: '1.5px dashed #2d6a4f',
+              borderRadius: '12px',
+              padding: '0.9rem 1.15rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '0.85rem'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+              <div
+                style={{
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '8px',
+                  background: '#1e3a2b',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}
+              >
+                <Receipt size={17} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  Link & Load from Vatta GST Invoice
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                  Auto-fills consignee, Bill No, date, total amount, e-way bill, vehicle & bag quantity
+                </div>
+              </div>
+            </div>
+
+            <select
+              value={selectedVattaInvoiceId}
+              onChange={(e) => handleLoadFromVattaInvoice(e.target.value)}
+              style={{
+                padding: '0.55rem 0.85rem',
+                borderRadius: '8px',
+                border: '1.5px solid #2d6a4f',
+                background: 'var(--card-bg)',
+                color: 'var(--text-primary)',
+                fontWeight: 700,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                minWidth: '230px'
+              }}
+            >
+              <option value="">-- Select Vatta Invoice to Load --</option>
+              {savedVattaInvoicesList.map((inv) => (
+                <option key={inv.id} value={inv.id}>
+                  Invoice {inv.invoiceData?.invoiceNo || 'Draft'} • {inv.invoiceData?.receiverName || 'Vatta'} • ₹{Number(inv.grandTotal || inv.totals?.grandTotal || 0).toLocaleString('en-IN')}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Card 1: Field 1 - Consigner Profile & Field 5 */}
           <div
             style={{

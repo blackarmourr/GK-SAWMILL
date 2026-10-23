@@ -17,7 +17,8 @@ import {
   MapPin,
   Layers,
   Hash,
-  X
+  X,
+  Receipt
 } from 'lucide-react'
 import {
   VATTA_STANDARD_ROWS,
@@ -28,6 +29,7 @@ import {
   saveVattaSheetRecord,
   calculateVattaCalculations,
 } from '../data/vattaStandardSizes.js'
+import { getSavedVattaInvoices } from '../data/vattaInvoiceSettings.js'
 import { generateVattaPdf } from '../utils/vattaPdfGenerator.js'
 
 export default function VattaMeasurementCalculator({
@@ -74,6 +76,77 @@ export default function VattaMeasurementCalculator({
   const notify = (msg) => {
     setNotification(msg)
     setTimeout(() => setNotification(null), 3200)
+  }
+
+  // Linked Vatta GST Invoice state
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState('')
+  const [savedVattaInvoicesList, setSavedVattaInvoicesList] = useState(() => {
+    try {
+      const list = getSavedVattaInvoices()
+      if (Array.isArray(list) && list.length > 0) return list
+      return [{
+        id: 'sample-a20',
+        title: 'Invoice A-20 - M/S. HINDUSTAN PENCILS PVT. LTD',
+        invoiceData: {
+          invoiceNo: 'A-20',
+          invoiceDate: '2026-10-10',
+          receiverName: 'M/S. HINDUSTAN PENCILS PVT. LTD',
+          vehicleNo: 'KL-58-D-1555',
+          placeOfSupply: 'Nedumpana',
+          bagQuantities: { 1: 50, 2: 60, 3: 40, 4: 70, 5: 35, 6: 30 }
+        },
+        totals: { totalBags: 285 }
+      }]
+    } catch {
+      return []
+    }
+  })
+
+  // Refresh saved invoices list on mount / focus
+  useEffect(() => {
+    try {
+      const list = getSavedVattaInvoices()
+      if (Array.isArray(list) && list.length > 0) {
+        setSavedVattaInvoicesList(list)
+      }
+    } catch {}
+  }, [])
+
+  const handleLoadFromVattaInvoice = (invId) => {
+    setSelectedInvoiceId(invId)
+    if (!invId) return
+    const found = savedVattaInvoicesList.find(i => i.id === invId)
+    if (found && found.invoiceData) {
+      const data = found.invoiceData
+      // 1. Bag counts
+      if (data.bagQuantities) {
+        setBagQuantities({
+          1: data.bagQuantities[1] !== undefined && data.bagQuantities[1] !== '' ? Number(data.bagQuantities[1]) : '',
+          2: data.bagQuantities[2] !== undefined && data.bagQuantities[2] !== '' ? Number(data.bagQuantities[2]) : '',
+          3: data.bagQuantities[3] !== undefined && data.bagQuantities[3] !== '' ? Number(data.bagQuantities[3]) : '',
+          4: data.bagQuantities[4] !== undefined && data.bagQuantities[4] !== '' ? Number(data.bagQuantities[4]) : '',
+          5: data.bagQuantities[5] !== undefined && data.bagQuantities[5] !== '' ? Number(data.bagQuantities[5]) : '',
+          6: data.bagQuantities[6] !== undefined && data.bagQuantities[6] !== '' ? Number(data.bagQuantities[6]) : ''
+        })
+      }
+      // 2. Invoice number
+      if (data.invoiceNo) {
+        setInvoiceNo(`${data.invoiceNo}/2026-27`)
+      }
+      // 3. Vehicle / Lorry Reg No
+      if (data.vehicleNo) {
+        setLorryRegNo(data.vehicleNo)
+      }
+      // 4. Date
+      if (data.invoiceDate) {
+        setDate(data.invoiceDate)
+      }
+      // 5. Place
+      if (data.placeOfSupply) {
+        setPlace(data.placeOfSupply)
+      }
+      notify(`Loaded Invoice ${data.invoiceNo}: ${found.totals?.totalBags || 0} Bags & ${data.vehicleNo || 'Vehicle'}!`)
+    }
   }
 
   // Update persistent defaults whenever Lorry Reg No or Place change
@@ -504,6 +577,73 @@ export default function VattaMeasurementCalculator({
         {/* Form Body */}
         <div style={{ padding: '1.5rem', background: '#fafbfc' }}>
           
+          {/* Link & Load from Vatta GST Invoice Bar */}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, rgba(30, 58, 43, 0.06) 0%, rgba(212, 163, 115, 0.12) 100%)',
+              border: '1.5px dashed #2d6a4f',
+              borderRadius: '12px',
+              padding: '0.9rem 1.25rem',
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '1rem'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+              <div
+                style={{
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '8px',
+                  background: '#1e3a2b',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}
+              >
+                <Receipt size={17} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  Link & Load from Vatta GST Invoice
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                  Select a saved Vatta GST invoice to auto-load bag counts, invoice number, vehicle & place
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <select
+                value={selectedInvoiceId}
+                onChange={(e) => handleLoadFromVattaInvoice(e.target.value)}
+                style={{
+                  padding: '0.55rem 0.85rem',
+                  borderRadius: '8px',
+                  border: '1.5px solid #2d6a4f',
+                  background: 'var(--card-bg)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 700,
+                  fontSize: '0.82rem',
+                  cursor: 'pointer',
+                  minWidth: '240px'
+                }}
+              >
+                <option value="">-- Select Saved Vatta Invoice --</option>
+                {savedVattaInvoicesList.map((inv) => (
+                  <option key={inv.id} value={inv.id}>
+                    Invoice {inv.invoiceData?.invoiceNo || 'Draft'} • {inv.invoiceData?.receiverName || 'Vatta'} • {inv.totals?.totalBags || 0} Bags ({inv.invoiceData?.invoiceDate || ''})
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
           {/* Section 1: Document Details */}
           <div
             style={{
