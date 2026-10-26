@@ -62,7 +62,8 @@ export default function VattaInvoiceGenerator({
   onOpenMeasurement,
   onOpenMahoganyInvoice,
   onOpenSizeChart,
-  onOpenKeralaVat
+  onOpenKeralaVat,
+  initialRecord
 }) {
   // Stored Configurations & Directory Profiles
   const [businessSettings, setBusinessSettings] = useState(() => getStoredVattaBusinessSettings())
@@ -95,6 +96,18 @@ export default function VattaInvoiceGenerator({
       termsAndConditions: businessSettings.termsAndConditions || ''
     }
   })
+
+  // Load initial record if opened from GST Monthly Register
+  useEffect(() => {
+    if (initialRecord) {
+      if (initialRecord.invoiceData) {
+        setInvoiceForm({ ...initialRecord.invoiceData })
+      } else {
+        setInvoiceForm(prev => ({ ...prev, ...initialRecord }))
+      }
+      showNotification(`Loaded Invoice ${initialRecord.invoice_no || initialRecord.docNo || initialRecord.invoiceData?.invoiceNo || ''}`)
+    }
+  }, [initialRecord])
 
   // Modals & UI States
   const [showSavedModal, setShowSavedModal] = useState(false)
@@ -378,7 +391,22 @@ export default function VattaInvoiceGenerator({
         ...invoiceForm,
         ...calculated
       }, true)
-      showNotification(`Downloaded PDF for Invoice ${invoiceForm.invoiceNo}`)
+
+      // Auto-save so this invoice is permanently available in the Monthly Register
+      const record = {
+        id: invoiceForm.id || `vatta_inv_${Date.now()}`,
+        title: `Invoice ${invoiceForm.invoiceNo} - ${invoiceForm.receiverName || 'Vatta Sale'}`,
+        invoiceData: { ...invoiceForm },
+        totals: { ...calculated },
+        productsSnapshot: [...products],
+        grandTotal: calculated.grandTotal
+      }
+      const updated = saveVattaInvoiceRecord(record)
+      if (updated) {
+        setSavedInvoices(updated)
+      }
+
+      showNotification(`Downloaded PDF for Invoice ${invoiceForm.invoiceNo} & saved to register!`)
     } catch (err) {
       console.error('Error generating PDF:', err)
       setValidationError(`Failed to generate PDF: ${err.message}`)

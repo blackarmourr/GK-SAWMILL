@@ -44,7 +44,8 @@ import { isSupabaseConfigured, supabase } from '../lib/supabaseClient.js'
 export default function DebitNoteGenerator({
   onBack,
   onOpenVattaInvoice,
-  onOpenCreditNote
+  onOpenCreditNote,
+  initialRecord
 }) {
   // Saved Vatta Invoices list (for picking bills)
   const [savedVattaInvoices, setSavedVattaInvoices] = useState([])
@@ -321,12 +322,22 @@ export default function DebitNoteGenerator({
     if (!validateForm()) return
     try {
       generateDebitNotePdf(fullDebitNoteData, true)
-      notify(`Downloaded PDF for Debit Note ${form.debitNoteNo}`)
+      // Auto-save so this debit note is included in the Monthly GST Register
+      saveDebitNoteRecord(fullDebitNoteData)
+      setSavedDebitNotesList(getSavedDebitNotes())
+      notify(`Downloaded PDF for Debit Note ${form.debitNoteNo} & saved to register!`)
     } catch (err) {
       console.error('PDF error:', err)
       notify('Error generating PDF document.')
     }
   }
+
+  // Preload initial record if opened from GST Monthly Register
+  useEffect(() => {
+    if (initialRecord) {
+      handleLoadFromHistory(initialRecord)
+    }
+  }, [initialRecord])
 
   // Load Record from History
   const handleLoadFromHistory = (rec) => {

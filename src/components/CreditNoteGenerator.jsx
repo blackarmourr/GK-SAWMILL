@@ -47,7 +47,8 @@ import { uploadPdfToStorage, isSupabaseConfigured, supabase } from '../lib/supab
 export default function CreditNoteGenerator({
   onBack,
   onOpenVattaInvoice,
-  onOpenVattaMeasurement
+  onOpenVattaMeasurement,
+  initialRecord
 }) {
   // Saved Vatta Invoices list
   const [savedVattaInvoices, setSavedVattaInvoices] = useState([])
@@ -371,8 +372,18 @@ export default function CreditNoteGenerator({
       ...calculated
     }
     generateCreditNotePdf(fullPayload, true)
-    showToast(`Downloading Credit Note ${creditNoteForm.creditNoteNo}.pdf...`)
+    // Auto-save so it's guaranteed in the Monthly Register
+    const updated = saveCreditNoteRecord(fullPayload)
+    if (updated) setSavedCreditNotesList(updated)
+    showToast(`Downloading Credit Note ${creditNoteForm.creditNoteNo}.pdf & saved to register!`)
   }
+
+  // Preload initial record if opened from GST Monthly Register
+  useEffect(() => {
+    if (initialRecord) {
+      handleOpenFromHistory(initialRecord)
+    }
+  }, [initialRecord])
 
   // Open existing credit note from history
   const handleOpenFromHistory = (cn) => {

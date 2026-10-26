@@ -35,7 +35,7 @@ import { convertNumberToIndianWords } from '../utils/numberToWords.js'
 import { generateInvoicePdf } from '../utils/invoicePdfGenerator.js'
 import { getNextSuggestedInvoice } from '../utils/invoiceSequenceHelper.js'
 
-export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeChart }) {
+export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeChart, initialRecord }) {
   // Settings & Storage State
   const [settings, setSettings] = useState(() => getStoredSettings())
   const [savedCustomers, setSavedCustomers] = useState(() => getSavedCustomers())
@@ -317,6 +317,13 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
     notify(`Loaded Invoice ${inv.invoiceNo}`)
   }
 
+  // Preload initial record if opened from GST Monthly Register
+  useEffect(() => {
+    if (initialRecord) {
+      handleLoadInvoice(initialRecord)
+    }
+  }, [initialRecord])
+
   // Reset to new clean invoice
   const handleNewInvoice = () => {
     setInvoiceId('inv_' + Date.now())
@@ -420,7 +427,10 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
     try {
       const invoiceData = getCurrentInvoiceDataObject()
       generateInvoicePdf(invoiceData, true)
-      notify('Invoice PDF generated and downloaded!')
+      // Auto-save so it's guaranteed in the Monthly GST Register
+      saveInvoiceRecord(invoiceData)
+      setSavedInvoices(getSavedInvoices())
+      notify('Invoice PDF generated, downloaded & saved to register!')
     } catch (err) {
       console.error('Invoice PDF error:', err)
       setValidationError('Error generating Invoice PDF. Please check your inputs.')

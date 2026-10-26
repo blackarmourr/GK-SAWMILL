@@ -7,6 +7,7 @@ import {
   ArrowRight,
   TreePine,
   FileText,
+  FolderArchive,
   Sun,
   Moon
 } from 'lucide-react'
@@ -17,6 +18,7 @@ import KeralaVatBillGenerator from './components/KeralaVatBillGenerator'
 import VattaInvoiceGenerator from './components/VattaInvoiceGenerator'
 import CreditNoteGenerator from './components/CreditNoteGenerator'
 import DebitNoteGenerator from './components/DebitNoteGenerator'
+import GstMonthlyFilingRegister from './components/GstMonthlyFilingRegister'
 import AuthModal from './components/AuthModal'
 import { supabase, isSupabaseConfigured } from './lib/supabaseClient'
 
@@ -69,11 +71,19 @@ const MODULES = [
     title: 'Debit Note Generator',
     icon: FileText,
     themeColor: '#1e3a2b'
+  },
+  {
+    id: 'gst-monthly-filing',
+    number: 'Module 08',
+    title: 'GST Monthly Invoices & Filing (GSTR-1)',
+    icon: FolderArchive,
+    themeColor: '#1b4332'
   }
 ]
 
 function App() {
   const [currentView, setCurrentView] = useState('home')
+  const [docToLoad, setDocToLoad] = useState(null)
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [cloudSession, setCloudSession] = useState(null)
   const [theme, setTheme] = useState(() => {
@@ -110,7 +120,10 @@ function App() {
   }, [])
 
   const handleCardClick = (mod) => {
-    if (mod.id === 'debit-note') {
+    setDocToLoad(null)
+    if (mod.id === 'gst-monthly-filing') {
+      setCurrentView('gst-monthly-filing')
+    } else if (mod.id === 'debit-note') {
       setCurrentView('debit-note')
     } else if (mod.id === 'credit-note') {
       setCurrentView('credit-note')
@@ -147,6 +160,21 @@ function App() {
             </div>
 
             <div className="header-right-actions">
+              {currentView !== 'gst-monthly-filing' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDocToLoad(null)
+                    setCurrentView('gst-monthly-filing')
+                  }}
+                  className="back-nav-btn"
+                  title="Open Monthly Invoices & GSTR-1 Filing Register"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <FolderArchive size={14} />
+                  <span>GST Filing Folder</span>
+                </button>
+              )}
               {currentView !== 'home' && (
                 <button
                   type="button"
@@ -184,9 +212,36 @@ function App() {
       </header>
 
       {/* Main Container */}
-      {currentView === 'debit-note' ? (
+      {currentView === 'gst-monthly-filing' ? (
+        <main style={{ flex: 1 }}>
+          <GstMonthlyFilingRegister
+            onBack={() => setCurrentView('home')}
+            onOpenVattaInvoice={(rec) => {
+              setDocToLoad(rec)
+              setCurrentView('vatta-invoice')
+            }}
+            onOpenTimberInvoice={(rec) => {
+              setDocToLoad(rec)
+              setCurrentView('invoice-generator')
+            }}
+            onOpenCreditNote={(rec) => {
+              setDocToLoad(rec)
+              setCurrentView('credit-note')
+            }}
+            onOpenDebitNote={(rec) => {
+              setDocToLoad(rec)
+              setCurrentView('debit-note')
+            }}
+            onOpenKeralaVat={(rec) => {
+              setDocToLoad(rec)
+              setCurrentView('kerala-vat')
+            }}
+          />
+        </main>
+      ) : currentView === 'debit-note' ? (
         <main style={{ flex: 1 }}>
           <DebitNoteGenerator
+            initialRecord={docToLoad}
             onBack={() => setCurrentView('home')}
             onOpenVattaInvoice={() => setCurrentView('vatta-invoice')}
             onOpenCreditNote={() => setCurrentView('credit-note')}
@@ -195,6 +250,7 @@ function App() {
       ) : currentView === 'credit-note' ? (
         <main style={{ flex: 1 }}>
           <CreditNoteGenerator
+            initialRecord={docToLoad}
             onBack={() => setCurrentView('home')}
             onOpenVattaInvoice={() => setCurrentView('vatta-invoice')}
             onOpenVattaMeasurement={() => setCurrentView('vatta-measurement')}
@@ -203,6 +259,7 @@ function App() {
       ) : currentView === 'vatta-invoice' ? (
         <main style={{ flex: 1 }}>
           <VattaInvoiceGenerator
+            initialRecord={docToLoad}
             onBack={() => setCurrentView('home')}
             onOpenMeasurement={() => setCurrentView('vatta-measurement')}
             onOpenMahoganyInvoice={() => setCurrentView('invoice-generator')}
@@ -213,6 +270,7 @@ function App() {
       ) : currentView === 'kerala-vat' ? (
         <main style={{ flex: 1 }}>
           <KeralaVatBillGenerator
+            initialRecord={docToLoad}
             onBack={() => setCurrentView('home')}
             onOpenVatta={() => setCurrentView('vatta-measurement')}
             onOpenInvoice={() => setCurrentView('invoice-generator')}
@@ -230,6 +288,7 @@ function App() {
       ) : currentView === 'invoice-generator' ? (
         <main style={{ flex: 1 }}>
           <MahoganyManjiyamInvoiceGenerator
+            initialRecord={docToLoad}
             onBack={() => setCurrentView('home')}
             onOpenSizeChart={() => setCurrentView('size-chart')}
           />

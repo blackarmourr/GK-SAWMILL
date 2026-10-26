@@ -69,7 +69,8 @@ export default function KeralaVatBillGenerator({
   onBack,
   onOpenVatta,
   onOpenInvoice,
-  onOpenSizeChart
+  onOpenSizeChart,
+  initialRecord
 }) {
   // Stored Profiles & Defaults
   const [consignerProfile, setConsignerProfile] = useState(() => getVatConsignerProfile())
@@ -80,6 +81,17 @@ export default function KeralaVatBillGenerator({
   const [savedDrivers, setSavedDrivers] = useState(() => getSavedVatDrivers())
   const [vatSettings, setVatSettings] = useState(() => getVatSettings())
   const [savedBills, setSavedBills] = useState(() => getSavedVatBills())
+
+  // Preload initial record if opened from GST Monthly Register
+  useEffect(() => {
+    if (initialRecord) {
+      if (initialRecord.billData) {
+        setBillData({ ...initialRecord.billData })
+      } else {
+        setBillData(prev => ({ ...prev, ...initialRecord }))
+      }
+    }
+  }, [initialRecord])
 
   // Linked Vatta GST Invoice state
   const [selectedVattaInvoiceId, setSelectedVattaInvoiceId] = useState('')
