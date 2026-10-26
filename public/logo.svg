@@ -1,123 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Background Gradient -->
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#14281e"/>
-      <stop offset="50%" stop-color="#1e3a2b"/>
-      <stop offset="100%" stop-color="#0b130e"/>
+    <linearGradient id="gkLogoBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14281e" />
+      <stop offset="60%" stop-color="#1e3a2b" />
+      <stop offset="100%" stop-color="#0b130e" />
     </linearGradient>
-
-    <!-- Timber Wood Ring Gradient -->
-    <radialGradient id="timberGrad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#e0a96d"/>
-      <stop offset="40%" stop-color="#d4a373"/>
-      <stop offset="70%" stop-color="#925c38"/>
-      <stop offset="100%" stop-color="#58311a"/>
+    <radialGradient id="gkTimberDisc" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e0a96d" />
+      <stop offset="45%" stop-color="#d4a373" />
+      <stop offset="75%" stop-color="#925c38" />
+      <stop offset="100%" stop-color="#4a2411" />
     </radialGradient>
-
-    <!-- Gold Metallic Gradient -->
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fdfbf7"/>
-      <stop offset="35%" stop-color="#e0a96d"/>
-      <stop offset="70%" stop-color="#d4a373"/>
-      <stop offset="100%" stop-color="#b07d4b"/>
+    <linearGradient id="gkGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff8ee" />
+      <stop offset="40%" stop-color="#e0a96d" />
+      <stop offset="100%" stop-color="#b07d4b" />
     </linearGradient>
-
-    <!-- Emerald Leaf Gradient -->
-    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#52b788"/>
-      <stop offset="50%" stop-color="#2d6a4f"/>
-      <stop offset="100%" stop-color="#1b4332"/>
+    <linearGradient id="gkTree" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#52b788" />
+      <stop offset="60%" stop-color="#2d6a4f" />
+      <stop offset="100%" stop-color="#143625" />
     </linearGradient>
-
-    <!-- Drop Shadow Filter -->
-    <filter id="shadow" x="-10%" y="-10%" width="125%" height="125%">
-      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45"/>
-    </filter>
   </defs>
 
-  <!-- Outer Rounded Square App Icon Container -->
-  <rect width="512" height="512" rx="108" fill="url(#bgGrad)"/>
-  
-  <!-- Subtle Outer Border -->
-  <rect width="510" height="510" x="1" y="1" rx="107" fill="none" stroke="url(#goldGrad)" stroke-width="3" opacity="0.4"/>
+  <rect width="100" height="100" rx="22" fill="url(#gkLogoBg)" />
+  <rect x="1.5" y="1.5" width="97" height="97" rx="20.5" stroke="url(#gkGold)" stroke-width="1.5" stroke-opacity="0.45" />
 
-  <!-- Sawmill Blade Outer Teeth Ring (16 sharp circular teeth) -->
-  <g transform="translate(256, 230)" filter="url(#shadow)">
-    <!-- Rotating Saw Teeth Background Ring -->
-    <circle r="162" fill="none" stroke="#254a35" stroke-width="14" opacity="0.5"/>
-    
-    <!-- 16 Circular Saw Teeth -->
-    <g fill="url(#goldGrad)" opacity="0.95">
-      <!-- 0 deg -->
-      <polygon points="0,-174 14,-156 -14,-156"/>
-      <!-- 22.5 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(22.5)"/>
-      <!-- 45 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(45)"/>
-      <!-- 67.5 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(67.5)"/>
-      <!-- 90 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(90)"/>
-      <!-- 112.5 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(112.5)"/>
-      <!-- 135 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(135)"/>
-      <!-- 157.5 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(157.5)"/>
-      <!-- 180 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(180)"/>
-      <!-- 202.5 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(202.5)"/>
-      <!-- 225 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(225)"/>
-      <!-- 247.5 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(247.5)"/>
-      <!-- 270 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(270)"/>
-      <!-- 292.5 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(292.5)"/>
-      <!-- 315 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(315)"/>
-      <!-- 337.5 deg -->
-      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(337.5)"/>
+  <g transform="translate(50, 50)">
+    <g fill="url(#gkGold)">
+      <polygon points="0,-43 4,-37 -4,-37" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(22.5)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(45)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(67.5)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(90)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(112.5)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(135)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(157.5)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(180)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(202.5)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(225)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(247.5)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(270)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(292.5)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(315)" />
+      <polygon points="0,-43 4,-37 -4,-37" transform="rotate(337.5)" />
     </g>
 
-    <!-- Main Timber Wood Cross Section Core -->
-    <circle r="150" fill="url(#timberGrad)" stroke="#3a1e0f" stroke-width="4"/>
+    <circle r="36" fill="url(#gkTimberDisc)" stroke="#3a1e0f" stroke-width="1.5" />
+    <circle r="30" fill="none" stroke="#6f3d1e" stroke-width="1" stroke-opacity="0.65" />
+    <circle r="24" fill="none" stroke="#e0a96d" stroke-width="0.8" stroke-opacity="0.55" />
+    <circle r="17" fill="none" stroke="#58311a" stroke-width="0.8" stroke-opacity="0.6" />
 
-    <!-- Concentric Timber Tree Growth Rings -->
-    <circle r="128" fill="none" stroke="#6f3d1e" stroke-width="2.5" opacity="0.65"/>
-    <circle r="106" fill="none" stroke="#e0a96d" stroke-width="2" opacity="0.55"/>
-    <circle r="84" fill="none" stroke="#58311a" stroke-width="2.5" opacity="0.7"/>
-    <circle r="60" fill="none" stroke="#e0a96d" stroke-width="1.8" opacity="0.5"/>
-    
-    <!-- Central Saw Arbor Hole Plate -->
-    <circle r="36" fill="#14281e" stroke="url(#goldGrad)" stroke-width="3"/>
-    <circle r="14" fill="url(#goldGrad)"/>
+    <circle r="10" fill="#14281e" stroke="url(#gkGold)" stroke-width="1.2" />
+    <circle r="4" fill="url(#gkGold)" />
 
-    <!-- Majestic Timber Tree & Pine Crest Emblem -->
-    <!-- Tree Trunk -->
-    <rect x="-8" y="24" width="16" height="42" rx="3" fill="#3a1e0f"/>
-    <!-- Tree Layer 3 (Bottom) -->
-    <polygon points="0,-12 56,38 -56,38" fill="url(#emeraldGrad)" filter="url(#shadow)"/>
-    <!-- Tree Layer 2 (Middle) -->
-    <polygon points="0,-48 44,-2 -44,-2" fill="url(#emeraldGrad)"/>
-    <!-- Tree Layer 1 (Top) -->
-    <polygon points="0,-78 32,-36 -32,-36" fill="url(#emeraldGrad)"/>
-    <!-- Star / Timber Peak Crest -->
-    <polygon points="0,-92 5,-82 16,-82 8,-74 11,-63 0,-70 -11,-63 -8,-74 -16,-82 -5,-82" fill="url(#goldGrad)"/>
-  </g>
-
-  <!-- Brand Typography: G.K. SAWMILL -->
-  <g transform="translate(256, 442)" text-anchor="middle">
-    <!-- "G.K. SAWMILL" Header -->
-    <text y="0" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="900" font-size="34" fill="url(#goldGrad)" letter-spacing="3.5">
-      G.K. SAWMILL
-    </text>
-    <!-- Subtitle: TIMBER & SUITE -->
-    <text y="24" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="700" font-size="12" fill="#a3b899" letter-spacing="4">
-      TIMBER &amp; INVOICING SUITE
-    </text>
+    <rect x="-2" y="8" width="4" height="11" rx="1" fill="#2d1406" />
+    <polygon points="0,-2 14,12 -14,12" fill="url(#gkTree)" />
+    <polygon points="0,-12 11,1 -11,1" fill="url(#gkTree)" />
+    <polygon points="0,-20 8,-8 -8,-8" fill="url(#gkTree)" />
+    <polygon points="0,-25 1.5,-21.5 5,-21.5 2.2,-19.5 3.2,-16 0,-18.2 -3.2,-16 -2.2,-19.5 -5,-21.5 -1.5,-21.5" fill="url(#gkGold)" />
   </g>
 </svg>

@@ -5,13 +5,8 @@ import {
   Layers,
   Ruler,
   ArrowRight,
-  TreePine,
   FileText,
   FolderArchive,
-  Laptop,
-  Download,
-  X,
-  CheckCircle2,
   Sun,
   Moon
 } from 'lucide-react'
@@ -23,6 +18,7 @@ import VattaInvoiceGenerator from './components/VattaInvoiceGenerator'
 import CreditNoteGenerator from './components/CreditNoteGenerator'
 import DebitNoteGenerator from './components/DebitNoteGenerator'
 import GstMonthlyFilingRegister from './components/GstMonthlyFilingRegister'
+import SawmillLogo from './components/SawmillLogo'
 import AuthModal from './components/AuthModal'
 import { supabase, isSupabaseConfigured } from './lib/supabaseClient'
 
@@ -90,9 +86,6 @@ function App() {
   const [docToLoad, setDocToLoad] = useState(null)
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [cloudSession, setCloudSession] = useState(null)
-  const [deferredPrompt, setDeferredPrompt] = useState(null)
-  const [isAppInstalled, setIsAppInstalled] = useState(false)
-  const [showInstallModal, setShowInstallModal] = useState(false)
   const [theme, setTheme] = useState(() => {
     try {
       return localStorage.getItem('gk_sawmill_theme') || 'light'
@@ -100,44 +93,6 @@ function App() {
       return 'light'
     }
   })
-
-  // Listen for PWA beforeinstallprompt event for laptop / desktop installation
-  useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-      setIsAppInstalled(true)
-    }
-
-    const handlePrompt = (e) => {
-      e.preventDefault()
-      setDeferredPrompt(e)
-    }
-
-    const handleInstalled = () => {
-      setIsAppInstalled(true)
-      setDeferredPrompt(null)
-    }
-
-    window.addEventListener('beforeinstallprompt', handlePrompt)
-    window.addEventListener('appinstalled', handleInstalled)
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handlePrompt)
-      window.removeEventListener('appinstalled', handleInstalled)
-    }
-  }, [])
-
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt()
-      const choice = await deferredPrompt.userChoice
-      if (choice.outcome === 'accepted') {
-        setIsAppInstalled(true)
-      }
-      setDeferredPrompt(null)
-    } else {
-      setShowInstallModal(true)
-    }
-  }
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -196,12 +151,8 @@ function App() {
               onClick={() => setCurrentView('home')}
               style={{ cursor: 'pointer' }}
             >
-              <div className="logo-icon-wrapper" style={{ padding: 0, overflow: 'hidden', background: 'transparent' }}>
-                <img
-                  src="/logo.svg"
-                  alt="G.K. Sawmill Logo"
-                  style={{ width: '32px', height: '32px', display: 'block', borderRadius: '7px' }}
-                />
+              <div className="logo-icon-wrapper" style={{ padding: 0, overflow: 'hidden', background: 'transparent', border: 'none' }}>
+                <SawmillLogo size={34} />
               </div>
               <div className="brand-titles">
                 <h1>G.K. SAWMILL</h1>
@@ -209,41 +160,6 @@ function App() {
             </div>
 
             <div className="header-right-actions">
-              {!isAppInstalled && (
-                <button
-                  type="button"
-                  onClick={handleInstallClick}
-                  className="back-nav-btn install-app-btn"
-                  title="Install G.K. Sawmill as a native desktop app on your laptop"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.4rem',
-                    background: 'rgba(212, 163, 115, 0.18)',
-                    color: '#f6f2ea',
-                    border: '1px solid rgba(212, 163, 115, 0.45)',
-                    fontWeight: 700
-                  }}
-                >
-                  <Laptop size={14} color="#d4a373" />
-                  <span>Install on Laptop</span>
-                </button>
-              )}
-              {currentView !== 'gst-monthly-filing' && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDocToLoad(null)
-                    setCurrentView('gst-monthly-filing')
-                  }}
-                  className="back-nav-btn"
-                  title="Open Monthly Invoices & GSTR-1 Filing Register"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
-                >
-                  <FolderArchive size={14} />
-                  <span>GST Filing Folder</span>
-                </button>
-              )}
               {currentView !== 'home' && (
                 <button
                   type="button"
@@ -412,115 +328,6 @@ function App() {
             })}
           </div>
         </main>
-      )}
-
-      {/* PWA Laptop Installation Guide Modal */}
-      {showInstallModal && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 10000,
-            background: 'rgba(0, 0, 0, 0.72)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1rem',
-            backdropFilter: 'blur(4px)'
-          }}
-          onClick={() => setShowInstallModal(false)}
-        >
-          <div
-            style={{
-              background: 'var(--card-bg, #ffffff)',
-              color: 'var(--text-primary, #0f172a)',
-              borderRadius: '16px',
-              maxWidth: '520px',
-              width: '100%',
-              padding: '1.75rem',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-              border: '1px solid var(--card-border, #e6dfd5)'
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <img
-                  src="/logo.svg"
-                  alt="G.K. Sawmill"
-                  style={{ width: '42px', height: '42px', borderRadius: '10px' }}
-                />
-                <div>
-                  <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800 }}>
-                    Install G.K. Sawmill on Laptop
-                  </h3>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                    Native desktop experience with desktop shortcut &amp; taskbar icon
-                  </div>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowInstallModal(false)}
-                style={{
-                  border: 'none',
-                  background: 'transparent',
-                  cursor: 'pointer',
-                  color: 'var(--text-muted)',
-                  padding: '0.2rem'
-                }}
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', fontSize: '0.86rem', lineHeight: 1.5 }}>
-              <div style={{ padding: '0.85rem 1rem', borderRadius: '10px', background: 'var(--tag-bg)', border: '1px solid var(--border-color)' }}>
-                <div style={{ fontWeight: 800, color: 'var(--primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Laptop size={16} /> Method 1: Browser Address Bar (Instant)
-                </div>
-                <div>
-                  Look at the <strong>right side of your browser URL bar</strong> in Chrome or Edge. Click the <strong>Install G.K. Sawmill (icon with down arrow or computer)</strong> to install immediately.
-                </div>
-              </div>
-
-              <div style={{ padding: '0.85rem 1rem', borderRadius: '10px', background: 'var(--tag-bg)', border: '1px solid var(--border-color)' }}>
-                <div style={{ fontWeight: 800, color: 'var(--wood-accent)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Download size={16} /> Method 2: Browser Menu
-                </div>
-                <div>
-                  1. Click the <strong>three dots (&vellip;)</strong> in top-right of Chrome or Edge.<br />
-                  2. Select <strong>"Save and share"</strong> or <strong>"Apps"</strong>.<br />
-                  3. Click <strong>"Install G.K. Sawmill"</strong>.
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#10b981', fontSize: '0.8rem', fontWeight: 700 }}>
-                <CheckCircle2 size={16} />
-                <span>Runs standalone like an installed Windows software without browser tabs!</span>
-              </div>
-            </div>
-
-            <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'flex-end' }}>
-              <button
-                type="button"
-                onClick={() => setShowInstallModal(false)}
-                style={{
-                  padding: '0.6rem 1.4rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  background: 'var(--primary)',
-                  color: '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
-                  cursor: 'pointer'
-                }}
-              >
-                Got It
-              </button>
-            </div>
-          </div>
-        </div>
       )}
 
       {/* Supabase Authentication & Cloud Access Modal */}
