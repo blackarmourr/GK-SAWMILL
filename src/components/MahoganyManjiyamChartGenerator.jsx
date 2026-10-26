@@ -255,7 +255,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
             padding: '0.6rem 1rem',
             borderRadius: '8px',
             border: '1px solid var(--border-color)',
-            background: '#ffffff',
+            background: 'var(--card-bg, #ffffff)',
             color: 'var(--text-primary)',
             fontWeight: 600,
             fontSize: '0.875rem',
@@ -315,7 +315,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
       {/* Main Card */}
       <div
         style={{
-          background: '#ffffff',
+          background: 'var(--card-bg, #ffffff)',
           borderRadius: '16px',
           border: '1px solid var(--border-color)',
           boxShadow: 'var(--shadow-md)',
@@ -418,8 +418,8 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
           {/* 1. Vehicle Number & Invoice Number Inputs */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1rem 1.25rem',
               marginBottom: '1.5rem',
@@ -445,11 +445,11 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                       width: '100%',
                       padding: '0.7rem 1rem 0.7rem 2.5rem',
                       borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '0.95rem',
                       fontWeight: 600,
-                      color: '#0f172a',
-                      background: '#ffffff',
+                      color: 'var(--text-primary, #0f172a)',
+                      background: 'var(--card-bg, #ffffff)',
                       boxSizing: 'border-box'
                     }}
                   />
@@ -471,11 +471,11 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                       width: '100%',
                       padding: '0.7rem 1rem 0.7rem 2.5rem',
                       borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '0.95rem',
                       fontWeight: 600,
-                      color: '#0f172a',
-                      background: '#ffffff',
+                      color: 'var(--text-primary, #0f172a)',
+                      background: 'var(--card-bg, #ffffff)',
                       boxSizing: 'border-box'
                     }}
                   />
@@ -580,11 +580,11 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                     width: '100%',
                     padding: '0.75rem 3.5rem 0.75rem 1rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '1.05rem',
                     fontWeight: 700,
-                    color: '#0f172a',
-                    background: '#ffffff',
+                    color: 'var(--text-primary, #0f172a)',
+                    background: 'var(--card-bg, #ffffff)',
                     outline: 'none',
                     boxSizing: 'border-box'
                   }}
@@ -617,7 +617,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         fontSize: '0.75rem',
                         fontWeight: 600,
                         borderRadius: '4px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: currentTargetCft === '419' ? 'var(--primary)' : '#ffffff',
                         color: currentTargetCft === '419' ? '#ffffff' : '#334155',
                         cursor: 'pointer'
@@ -633,7 +633,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         fontSize: '0.75rem',
                         fontWeight: 600,
                         borderRadius: '4px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: currentTargetCft === '465' ? 'var(--primary)' : '#ffffff',
                         color: currentTargetCft === '465' ? '#ffffff' : '#334155',
                         cursor: 'pointer'
@@ -649,8 +649,8 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         fontSize: '0.75rem',
                         fontWeight: 600,
                         borderRadius: '4px',
-                        border: '1px solid #cbd5e1',
-                        background: '#ffffff',
+                        border: '1px solid var(--border-color, #cbd5e1)',
+                        background: 'var(--card-bg, #ffffff)',
                         color: '#334155',
                         cursor: 'pointer'
                       }}
@@ -672,7 +672,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         fontSize: '0.75rem',
                         fontWeight: 600,
                         borderRadius: '4px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: currentTargetCft === '120' && manjiyamRowCount === 7 ? 'var(--wood-accent)' : '#ffffff',
                         color: currentTargetCft === '120' && manjiyamRowCount === 7 ? '#ffffff' : '#334155',
                         cursor: 'pointer'
@@ -692,7 +692,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         fontSize: '0.75rem',
                         fontWeight: 600,
                         borderRadius: '4px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: currentTargetCft === '238' && manjiyamRowCount === 10 ? 'var(--wood-accent)' : '#ffffff',
                         color: currentTargetCft === '238' && manjiyamRowCount === 10 ? '#ffffff' : '#334155',
                         cursor: 'pointer'
@@ -708,8 +708,8 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         fontSize: '0.75rem',
                         fontWeight: 600,
                         borderRadius: '4px',
-                        border: '1px solid #cbd5e1',
-                        background: '#ffffff',
+                        border: '1px solid var(--border-color, #cbd5e1)',
+                        background: 'var(--card-bg, #ffffff)',
                         color: '#334155',
                         cursor: 'pointer'
                       }}
@@ -739,7 +739,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                       style={{
                         padding: '0.7rem 0.65rem',
                         borderRadius: '8px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: mahoganyRowCount === 15 ? 'var(--primary)' : '#ffffff',
                         color: mahoganyRowCount === 15 ? '#ffffff' : '#334155',
                         fontWeight: 700,
@@ -758,7 +758,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                       style={{
                         padding: '0.7rem 0.65rem',
                         borderRadius: '8px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: mahoganyRowCount === 12 ? 'var(--primary)' : '#ffffff',
                         color: mahoganyRowCount === 12 ? '#ffffff' : '#334155',
                         fontWeight: 700,
@@ -777,7 +777,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                       style={{
                         padding: '0.7rem 0.65rem',
                         borderRadius: '8px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: mahoganyRowCount === 10 ? 'var(--primary)' : '#ffffff',
                         color: mahoganyRowCount === 10 ? '#ffffff' : '#334155',
                         fontWeight: 700,
@@ -796,7 +796,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                       style={{
                         padding: '0.7rem 0.65rem',
                         borderRadius: '8px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: mahoganyRowCount === 7 ? 'var(--primary)' : '#ffffff',
                         color: mahoganyRowCount === 7 ? '#ffffff' : '#334155',
                         fontWeight: 700,
@@ -826,7 +826,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         padding: '0.7rem 0.4rem',
                         borderRadius: '8px',
                         border: isExceedingMahoganyRows ? '2px solid #ef4444' : '1px solid #cbd5e1',
-                        background: '#ffffff',
+                        background: 'var(--card-bg, #ffffff)',
                         textAlign: 'center',
                         fontWeight: 700,
                         fontSize: '0.9rem'
@@ -850,7 +850,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         flex: 1,
                         padding: '0.7rem 0.5rem',
                         borderRadius: '8px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: manjiyamRowCount === 7 ? 'var(--wood-accent)' : '#ffffff',
                         color: manjiyamRowCount === 7 ? '#ffffff' : '#334155',
                         fontWeight: 700,
@@ -870,7 +870,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         flex: 1,
                         padding: '0.7rem 0.5rem',
                         borderRadius: '8px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         background: manjiyamRowCount === 10 ? 'var(--wood-accent)' : '#ffffff',
                         color: manjiyamRowCount === 10 ? '#ffffff' : '#334155',
                         fontWeight: 700,
@@ -900,7 +900,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         padding: '0.7rem 0.5rem',
                         borderRadius: '8px',
                         border: isExceedingManjiyamRows ? '2px solid #ef4444' : '1px solid #cbd5e1',
-                        background: '#ffffff',
+                        background: 'var(--card-bg, #ffffff)',
                         textAlign: 'center',
                         fontWeight: 700,
                         fontSize: '0.9rem'
@@ -983,24 +983,24 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
 
         {/* Results & KPI Summary Banner */}
         {chartResult && (
-          <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--border-color)', background: '#ffffff' }}>
+          <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--border-color)', background: 'var(--card-bg, #ffffff)' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
-              <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+              <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                 <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Target CFT</div>
-                <div style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a' }}>{chartResult.targetCft.toFixed(2)}</div>
+                <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>{chartResult.targetCft.toFixed(2)}</div>
               </div>
 
-              <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+              <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                 <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Actual Total CFT</div>
                 <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary)' }}>{chartResult.actualTotalCft.toFixed(2)}</div>
               </div>
 
-              <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+              <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                 <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Total Pieces (Nos)</div>
-                <div style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a' }}>{chartResult.totalNos.toLocaleString()}</div>
+                <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>{chartResult.totalNos.toLocaleString()}</div>
               </div>
 
-              <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+              <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                 <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Total Volume (CBM)</div>
                 <div style={{ fontSize: '1.35rem', fontWeight: 800, color: '#925c38' }}>{chartResult.cbm.toFixed(2)}</div>
               </div>
@@ -1109,8 +1109,8 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                 gap: '0.45rem',
                 padding: '0.65rem 1rem',
                 borderRadius: '8px',
-                border: '1px solid #cbd5e1',
-                background: '#ffffff',
+                border: '1px solid var(--border-color, #cbd5e1)',
+                background: 'var(--card-bg, #ffffff)',
                 color: '#334155',
                 fontWeight: 600,
                 fontSize: '0.85rem',
@@ -1131,8 +1131,8 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                 gap: '0.45rem',
                 padding: '0.65rem 1rem',
                 borderRadius: '8px',
-                border: '1px solid #cbd5e1',
-                background: '#ffffff',
+                border: '1px solid var(--border-color, #cbd5e1)',
+                background: 'var(--card-bg, #ffffff)',
                 color: '#334155',
                 fontWeight: 600,
                 fontSize: '0.85rem',
@@ -1155,7 +1155,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                 gap: '0.4rem',
                 padding: '0.6rem 0.9rem',
                 borderRadius: '8px',
-                border: '1px solid #cbd5e1',
+                border: '1px solid var(--border-color, #cbd5e1)',
                 background: showPrintSlip ? '#e2e8f0' : '#ffffff',
                 color: '#1e293b',
                 fontWeight: 600,
@@ -1171,12 +1171,12 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
 
         {/* Printable G.K. Saw Mill Slip Preview (if toggled) */}
         {showPrintSlip && chartResult && (
-          <div style={{ padding: '2rem 1rem', background: '#f8fafc', borderBottom: '1px solid #cbd5e1' }}>
+          <div style={{ padding: '2rem 1rem', background: 'var(--tag-bg, #f8fafc)', borderBottom: '1px solid #cbd5e1' }}>
             <div
               style={{
                 maxWidth: '720px',
                 margin: '0 auto',
-                background: '#ffffff',
+                background: 'var(--card-bg, #ffffff)',
                 borderRadius: '12px',
                 padding: '2.5rem 2rem',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
@@ -1184,13 +1184,13 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
             >
               {/* Header: Company Name & Spacing */}
               <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-                <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: '0 0 0.5rem', textTransform: 'uppercase', color: '#0f172a', letterSpacing: '0.02em' }}>
+                <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: '0 0 0.5rem', textTransform: 'uppercase', color: 'var(--text-primary, #0f172a)', letterSpacing: '0.02em' }}>
                   G.K. SAW MILL
                 </h3>
-                <p style={{ fontSize: '0.85rem', color: '#475569', margin: '0.15rem 0' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #475569)', margin: '0.15rem 0' }}>
                   KATOOR, NEDUMPANA - P.O.,
                 </p>
-                <p style={{ fontSize: '0.85rem', color: '#475569', margin: '0.15rem 0' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #475569)', margin: '0.15rem 0' }}>
                   KOLLAM, KERALA - 691576
                 </p>
               </div>
@@ -1202,7 +1202,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
               <div style={{ marginBottom: '1.25rem', fontSize: '0.825rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontWeight: 700 }}>
                   <span>GSTIN :- 32AHOPG1823G1ZP</span>
-                  <span style={{ fontWeight: 500, color: '#475569' }}>Tel :- 9446786175</span>
+                  <span style={{ fontWeight: 500, color: 'var(--text-secondary, #475569)' }}>Tel :- 9446786175</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
                   <span>Vehicle No: {vehicleNo || 'N/A'}</span>
@@ -1211,7 +1211,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
               </div>
 
               {/* Title with generous spacing */}
-              <div style={{ textAlign: 'center', fontWeight: 800, fontSize: '1.1rem', textTransform: 'uppercase', margin: '1.25rem 0 0.85rem', color: '#0f172a', letterSpacing: '0.04em' }}>
+              <div style={{ textAlign: 'center', fontWeight: 800, fontSize: '1.1rem', textTransform: 'uppercase', margin: '1.25rem 0 0.85rem', color: 'var(--text-primary, #0f172a)', letterSpacing: '0.04em' }}>
                 {woodType === 'mahogany' ? 'MAHAGANI SIZES' : 'MANJIYAM SIZES'}
               </div>
 
@@ -1263,18 +1263,18 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
         )}
 
         {/* Output Table */}
-        <div style={{ overflowX: 'auto', background: '#ffffff' }}>
+        <div style={{ overflowX: 'auto', background: 'var(--card-bg, #ffffff)' }}>
           {chartResult ? (
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '700px' }}>
               <thead>
-                <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
-                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: '#475569', textAlign: 'center', width: '60px' }}>Sl No</th>
-                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>Item Description</th>
-                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: '#475569', textAlign: 'center' }}>Width (in)</th>
-                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: '#475569', textAlign: 'center' }}>Thick (in)</th>
-                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: '#475569', textAlign: 'center' }}>Length (ft)</th>
-                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', textAlign: 'center', background: '#f1f5f9' }}>Nos (pcs)</th>
-                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', textAlign: 'right', background: '#f1f5f9' }}>CFT</th>
+                <tr style={{ background: 'var(--tag-bg, #f8fafc)', borderBottom: '2px solid #e2e8f0' }}>
+                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', textAlign: 'center', width: '60px' }}>Sl No</th>
+                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)' }}>Item Description</th>
+                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', textAlign: 'center' }}>Width (in)</th>
+                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', textAlign: 'center' }}>Thick (in)</th>
+                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', textAlign: 'center' }}>Length (ft)</th>
+                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary, #0f172a)', textAlign: 'center', background: '#f1f5f9' }}>Nos (pcs)</th>
+                  <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary, #0f172a)', textAlign: 'right', background: '#f1f5f9' }}>CFT</th>
                 </tr>
               </thead>
               <tbody>
@@ -1319,7 +1319,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
                         padding: '0.8rem 1rem',
                         textAlign: 'right',
                         fontWeight: 700,
-                        color: '#0f172a',
+                        color: 'var(--text-primary, #0f172a)',
                         fontSize: '0.95rem',
                         background: idx % 2 === 0 ? '#f8fafc' : '#f1f5f9'
                       }}
@@ -1362,7 +1362,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack, onOpenInvoice }
       {/* Information Footer Card */}
       <div
         style={{
-          background: '#ffffff',
+          background: 'var(--card-bg, #ffffff)',
           borderRadius: '12px',
           border: '1px solid var(--border-color)',
           padding: '1.25rem 1.5rem',

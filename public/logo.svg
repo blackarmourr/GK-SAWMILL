@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14281e"/>
+      <stop offset="50%" stop-color="#1e3a2b"/>
+      <stop offset="100%" stop-color="#0b130e"/>
+    </linearGradient>
+
+    <!-- Timber Wood Ring Gradient -->
+    <radialGradient id="timberGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e0a96d"/>
+      <stop offset="40%" stop-color="#d4a373"/>
+      <stop offset="70%" stop-color="#925c38"/>
+      <stop offset="100%" stop-color="#58311a"/>
+    </radialGradient>
+
+    <!-- Gold Metallic Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdfbf7"/>
+      <stop offset="35%" stop-color="#e0a96d"/>
+      <stop offset="70%" stop-color="#d4a373"/>
+      <stop offset="100%" stop-color="#b07d4b"/>
+    </linearGradient>
+
+    <!-- Emerald Leaf Gradient -->
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#52b788"/>
+      <stop offset="50%" stop-color="#2d6a4f"/>
+      <stop offset="100%" stop-color="#1b4332"/>
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Square App Icon Container -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Outer Border -->
+  <rect width="510" height="510" x="1" y="1" rx="107" fill="none" stroke="url(#goldGrad)" stroke-width="3" opacity="0.4"/>
+
+  <!-- Sawmill Blade Outer Teeth Ring (16 sharp circular teeth) -->
+  <g transform="translate(256, 230)" filter="url(#shadow)">
+    <!-- Rotating Saw Teeth Background Ring -->
+    <circle r="162" fill="none" stroke="#254a35" stroke-width="14" opacity="0.5"/>
+    
+    <!-- 16 Circular Saw Teeth -->
+    <g fill="url(#goldGrad)" opacity="0.95">
+      <!-- 0 deg -->
+      <polygon points="0,-174 14,-156 -14,-156"/>
+      <!-- 22.5 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(22.5)"/>
+      <!-- 45 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(45)"/>
+      <!-- 67.5 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(67.5)"/>
+      <!-- 90 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(90)"/>
+      <!-- 112.5 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(112.5)"/>
+      <!-- 135 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(135)"/>
+      <!-- 157.5 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(157.5)"/>
+      <!-- 180 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(180)"/>
+      <!-- 202.5 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(202.5)"/>
+      <!-- 225 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(225)"/>
+      <!-- 247.5 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(247.5)"/>
+      <!-- 270 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(270)"/>
+      <!-- 292.5 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(292.5)"/>
+      <!-- 315 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(315)"/>
+      <!-- 337.5 deg -->
+      <polygon points="0,-174 14,-156 -14,-156" transform="rotate(337.5)"/>
+    </g>
+
+    <!-- Main Timber Wood Cross Section Core -->
+    <circle r="150" fill="url(#timberGrad)" stroke="#3a1e0f" stroke-width="4"/>
+
+    <!-- Concentric Timber Tree Growth Rings -->
+    <circle r="128" fill="none" stroke="#6f3d1e" stroke-width="2.5" opacity="0.65"/>
+    <circle r="106" fill="none" stroke="#e0a96d" stroke-width="2" opacity="0.55"/>
+    <circle r="84" fill="none" stroke="#58311a" stroke-width="2.5" opacity="0.7"/>
+    <circle r="60" fill="none" stroke="#e0a96d" stroke-width="1.8" opacity="0.5"/>
+    
+    <!-- Central Saw Arbor Hole Plate -->
+    <circle r="36" fill="#14281e" stroke="url(#goldGrad)" stroke-width="3"/>
+    <circle r="14" fill="url(#goldGrad)"/>
+
+    <!-- Majestic Timber Tree & Pine Crest Emblem -->
+    <!-- Tree Trunk -->
+    <rect x="-8" y="24" width="16" height="42" rx="3" fill="#3a1e0f"/>
+    <!-- Tree Layer 3 (Bottom) -->
+    <polygon points="0,-12 56,38 -56,38" fill="url(#emeraldGrad)" filter="url(#shadow)"/>
+    <!-- Tree Layer 2 (Middle) -->
+    <polygon points="0,-48 44,-2 -44,-2" fill="url(#emeraldGrad)"/>
+    <!-- Tree Layer 1 (Top) -->
+    <polygon points="0,-78 32,-36 -32,-36" fill="url(#emeraldGrad)"/>
+    <!-- Star / Timber Peak Crest -->
+    <polygon points="0,-92 5,-82 16,-82 8,-74 11,-63 0,-70 -11,-63 -8,-74 -16,-82 -5,-82" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Brand Typography: G.K. SAWMILL -->
+  <g transform="translate(256, 442)" text-anchor="middle">
+    <!-- "G.K. SAWMILL" Header -->
+    <text y="0" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="900" font-size="34" fill="url(#goldGrad)" letter-spacing="3.5">
+      G.K. SAWMILL
+    </text>
+    <!-- Subtitle: TIMBER & SUITE -->
+    <text y="24" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="700" font-size="12" fill="#a3b899" letter-spacing="4">
+      TIMBER &amp; INVOICING SUITE
+    </text>
+  </g>
+</svg>

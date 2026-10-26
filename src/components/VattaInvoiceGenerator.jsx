@@ -511,8 +511,8 @@ export default function VattaInvoiceGenerator({
               gap: '0.4rem',
               padding: '0.5rem 0.9rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               fontWeight: 600,
               fontSize: '0.825rem',
@@ -539,7 +539,7 @@ export default function VattaInvoiceGenerator({
               >
                 MODULE 01
               </span>
-              <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+              <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', margin: 0 }}>
                 Vatta GST Invoice Generator
               </h1>
             </div>
@@ -561,9 +561,9 @@ export default function VattaInvoiceGenerator({
               gap: '0.35rem',
               padding: '0.45rem 0.75rem',
               borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              background: '#f8fafc',
-              color: '#0f172a',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--tag-bg, #f8fafc)',
+              color: 'var(--text-primary, #0f172a)',
               fontSize: '0.775rem',
               fontWeight: 700,
               cursor: 'pointer'
@@ -583,9 +583,9 @@ export default function VattaInvoiceGenerator({
               gap: '0.35rem',
               padding: '0.45rem 0.75rem',
               borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
-              color: '#475569',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
+              color: 'var(--text-secondary, #475569)',
               fontSize: '0.775rem',
               fontWeight: 600,
               cursor: 'pointer'
@@ -604,8 +604,8 @@ export default function VattaInvoiceGenerator({
               gap: '0.35rem',
               padding: '0.45rem 0.75rem',
               borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#1e3a2b',
               fontSize: '0.775rem',
               fontWeight: 700,
@@ -625,8 +625,8 @@ export default function VattaInvoiceGenerator({
               gap: '0.35rem',
               padding: '0.45rem 0.75rem',
               borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#1e3a2b',
               fontSize: '0.775rem',
               fontWeight: 700,
@@ -647,8 +647,8 @@ export default function VattaInvoiceGenerator({
               gap: '0.35rem',
               padding: '0.45rem 0.75rem',
               borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               fontSize: '0.775rem',
               fontWeight: 700,
@@ -670,7 +670,7 @@ export default function VattaInvoiceGenerator({
               padding: '0.45rem 0.85rem',
               borderRadius: '6px',
               border: '1px solid #1e3a2b',
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               color: '#1e3a2b',
               fontSize: '0.775rem',
               fontWeight: 700,
@@ -690,9 +690,9 @@ export default function VattaInvoiceGenerator({
               gap: '0.35rem',
               padding: '0.45rem 0.85rem',
               borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              background: '#f8fafc',
-              color: '#0f172a',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--tag-bg, #f8fafc)',
+              color: 'var(--text-primary, #0f172a)',
               fontSize: '0.775rem',
               fontWeight: 700,
               cursor: 'pointer'
@@ -756,8 +756,8 @@ export default function VattaInvoiceGenerator({
           {/* Section 1: General Invoice Details */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -768,7 +768,7 @@ export default function VattaInvoiceGenerator({
                 <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                   Section 1
                 </span>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Invoice Identification & Supply Details
                 </h3>
               </div>
@@ -777,7 +777,7 @@ export default function VattaInvoiceGenerator({
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)' }}>
                     Invoice Number *
                   </label>
                   {suggestedSequence && (
@@ -801,14 +801,14 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.invoiceNo}
                   onChange={(e) => handleFieldChange('invoiceNo', e.target.value)}
                   placeholder="e.g. A-22"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700 }}
                 />
                 {suggestedSequence && (
                   <div
                     style={{
                       marginTop: '0.35rem',
                       fontSize: '0.7rem',
-                      color: '#475569',
+                      color: 'var(--text-secondary, #475569)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
@@ -848,7 +848,7 @@ export default function VattaInvoiceGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Purchase Order No <span style={{ color: '#94a3b8', fontWeight: 400 }}>(Optional)</span>
                 </label>
                 <input
@@ -856,18 +856,18 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.purchaseOrderNo}
                   onChange={(e) => handleFieldChange('purchaseOrderNo', e.target.value)}
                   placeholder="e.g. 4100016589 (Omitted if blank)"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Reverse Charge
                 </label>
                 <select
                   value={invoiceForm.reverseCharge}
                   onChange={(e) => handleFieldChange('reverseCharge', e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 >
                   <option value="No">No</option>
                   <option value="Yes">Yes</option>
@@ -876,31 +876,31 @@ export default function VattaInvoiceGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Invoice Date
                 </label>
                 <input
                   type="date"
                   value={invoiceForm.invoiceDate}
                   onChange={(e) => handleFieldChange('invoiceDate', e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Date of Supply
                 </label>
                 <input
                   type="date"
                   value={invoiceForm.dateOfSupply}
                   onChange={(e) => handleFieldChange('dateOfSupply', e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Transportation Mode
                 </label>
                 <input
@@ -908,12 +908,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.transportationMode}
                   onChange={(e) => handleFieldChange('transportationMode', e.target.value)}
                   placeholder="e.g. By Road (or leave blank)"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Seller State
                 </label>
                 <input
@@ -921,12 +921,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.state}
                   onChange={(e) => handleFieldChange('state', e.target.value)}
                   placeholder="e.g. KERALA"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   State Code
                 </label>
                 <input
@@ -934,12 +934,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.stateCode}
                   onChange={(e) => handleFieldChange('stateCode', e.target.value)}
                   placeholder="e.g. 32"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Place of Supply
                 </label>
                 <input
@@ -947,12 +947,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.placeOfSupply}
                   onChange={(e) => handleFieldChange('placeOfSupply', e.target.value)}
                   placeholder="e.g. TAMILNADU"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 600 }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 600 }}
                 />
               </div>
 
               <div style={{ gridColumn: 'span 3' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Vehicle Registration Number
                 </label>
                 <input
@@ -960,7 +960,7 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.vehicleNo}
                   onChange={(e) => handleFieldChange('vehicleNo', e.target.value)}
                   placeholder="e.g. KL-58-D-1555"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700, fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700, fontFamily: 'monospace' }}
                 />
               </div>
             </div>
@@ -969,8 +969,8 @@ export default function VattaInvoiceGenerator({
           {/* Section 2: Parties Details (Receiver & Despatched-To) */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -981,7 +981,7 @@ export default function VattaInvoiceGenerator({
                 <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                   Section 2
                 </span>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Receiver & Despatched-To Profiles
                 </h3>
               </div>
@@ -989,7 +989,7 @@ export default function VattaInvoiceGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               {/* Receiver Block */}
-              <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+              <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
                   <span style={{ fontWeight: 800, fontSize: '0.85rem', color: '#1e3a2b' }}>
                     Details of Receiver (Purchaser)
@@ -998,7 +998,7 @@ export default function VattaInvoiceGenerator({
                     <select
                       value={selectedReceiverId}
                       onChange={(e) => handleSelectReceiver(e.target.value)}
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.725rem', maxWidth: '140px' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.725rem', maxWidth: '140px' }}
                     >
                       <option value="custom">-- Saved Receivers --</option>
                       {savedReceivers.map(r => (
@@ -1009,7 +1009,7 @@ export default function VattaInvoiceGenerator({
                       type="button"
                       onClick={handleQuickSaveReceiver}
                       title="Save this receiver to directory"
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', background: '#ffffff', fontSize: '0.725rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', background: 'var(--card-bg, #ffffff)', fontSize: '0.725rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                     >
                       <Save size={12} /> Save
                     </button>
@@ -1024,7 +1024,7 @@ export default function VattaInvoiceGenerator({
                       value={invoiceForm.receiverName}
                       onChange={(e) => handleFieldChange('receiverName', e.target.value)}
                       placeholder="e.g. M/S. HINDUSTAN PENCILS PVT.LTD"
-                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', fontWeight: 600 }}
+                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem', fontWeight: 600 }}
                     />
                   </div>
                   <div>
@@ -1034,7 +1034,7 @@ export default function VattaInvoiceGenerator({
                       value={invoiceForm.receiverAddress}
                       onChange={(e) => handleFieldChange('receiverAddress', e.target.value)}
                       placeholder="Address..."
-                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
@@ -1045,7 +1045,7 @@ export default function VattaInvoiceGenerator({
                         value={invoiceForm.receiverPinNo}
                         onChange={(e) => handleFieldChange('receiverPinNo', e.target.value)}
                         placeholder="e.g. 396171"
-                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                       />
                     </div>
                     <div>
@@ -1055,7 +1055,7 @@ export default function VattaInvoiceGenerator({
                         value={invoiceForm.receiverMobileNo}
                         onChange={(e) => handleFieldChange('receiverMobileNo', e.target.value)}
                         placeholder="Optional"
-                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                       />
                     </div>
                   </div>
@@ -1066,7 +1066,7 @@ export default function VattaInvoiceGenerator({
                       value={invoiceForm.receiverGstin}
                       onChange={(e) => handleFieldChange('receiverGstin', e.target.value.toUpperCase())}
                       placeholder="e.g. 24AAACH0401R1ZT"
-                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 600 }}
+                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 600 }}
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
@@ -1077,7 +1077,7 @@ export default function VattaInvoiceGenerator({
                         value={invoiceForm.receiverState}
                         onChange={(e) => handleFieldChange('receiverState', e.target.value)}
                         placeholder="e.g. GUJARAT"
-                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                       />
                     </div>
                     <div>
@@ -1087,7 +1087,7 @@ export default function VattaInvoiceGenerator({
                         value={invoiceForm.receiverStateCode}
                         onChange={(e) => handleFieldChange('receiverStateCode', e.target.value)}
                         placeholder="e.g. 24"
-                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                       />
                     </div>
                   </div>
@@ -1095,7 +1095,7 @@ export default function VattaInvoiceGenerator({
               </div>
 
               {/* Despatched-To Block */}
-              <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+              <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
                   <span style={{ fontWeight: 800, fontSize: '0.85rem', color: '#1e3a2b' }}>
                     Details of Despatched (Delivery Site)
@@ -1104,7 +1104,7 @@ export default function VattaInvoiceGenerator({
                     <select
                       value={selectedDespatchedId}
                       onChange={(e) => handleSelectDespatched(e.target.value)}
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.725rem', maxWidth: '140px' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.725rem', maxWidth: '140px' }}
                     >
                       <option value="custom">-- Saved Despatched --</option>
                       {savedDespatched.map(d => (
@@ -1115,7 +1115,7 @@ export default function VattaInvoiceGenerator({
                       type="button"
                       onClick={handleQuickSaveDespatched}
                       title="Save this party to directory"
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', background: '#ffffff', fontSize: '0.725rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', background: 'var(--card-bg, #ffffff)', fontSize: '0.725rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                     >
                       <Save size={12} /> Save
                     </button>
@@ -1130,7 +1130,7 @@ export default function VattaInvoiceGenerator({
                       value={invoiceForm.despatchedName}
                       onChange={(e) => handleFieldChange('despatchedName', e.target.value)}
                       placeholder="e.g. UMESH PENCILS PROCESSORS (P) LTD"
-                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', fontWeight: 600 }}
+                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem', fontWeight: 600 }}
                     />
                   </div>
                   <div>
@@ -1140,7 +1140,7 @@ export default function VattaInvoiceGenerator({
                       value={invoiceForm.despatchedAddress}
                       onChange={(e) => handleFieldChange('despatchedAddress', e.target.value)}
                       placeholder="Address..."
-                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
@@ -1151,7 +1151,7 @@ export default function VattaInvoiceGenerator({
                         value={invoiceForm.despatchedPinNo}
                         onChange={(e) => handleFieldChange('despatchedPinNo', e.target.value)}
                         placeholder="Optional"
-                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                       />
                     </div>
                     <div>
@@ -1161,7 +1161,7 @@ export default function VattaInvoiceGenerator({
                         value={invoiceForm.despatchedMobileNo}
                         onChange={(e) => handleFieldChange('despatchedMobileNo', e.target.value)}
                         placeholder="Optional"
-                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                       />
                     </div>
                   </div>
@@ -1172,7 +1172,7 @@ export default function VattaInvoiceGenerator({
                       value={invoiceForm.despatchedGstin}
                       onChange={(e) => handleFieldChange('despatchedGstin', e.target.value.toUpperCase())}
                       placeholder="e.g. 33AAACU0701F1Z3"
-                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 600 }}
+                      style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 600 }}
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
@@ -1183,7 +1183,7 @@ export default function VattaInvoiceGenerator({
                         value={invoiceForm.despatchedState}
                         onChange={(e) => handleFieldChange('despatchedState', e.target.value)}
                         placeholder="e.g. TAMILNADU"
-                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                       />
                     </div>
                     <div>
@@ -1193,7 +1193,7 @@ export default function VattaInvoiceGenerator({
                         value={invoiceForm.despatchedStateCode}
                         onChange={(e) => handleFieldChange('despatchedStateCode', e.target.value)}
                         placeholder="e.g. 33"
-                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                        style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem' }}
                       />
                     </div>
                   </div>
@@ -1205,8 +1205,8 @@ export default function VattaInvoiceGenerator({
           {/* Section 3: Vatta Product Bag Quantities & Calculations */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1217,7 +1217,7 @@ export default function VattaInvoiceGenerator({
                 <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                   Section 3
                 </span>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Vatta Product Bag Quantities & Pricing
                 </h3>
               </div>
@@ -1249,7 +1249,7 @@ export default function VattaInvoiceGenerator({
                         background: idx % 2 === 0 ? '#ffffff' : '#f8fafc'
                       }}
                     >
-                      <td style={{ padding: '0.5rem', fontWeight: 700, color: '#0f172a' }}>{l.item}</td>
+                      <td style={{ padding: '0.5rem', fontWeight: 700, color: 'var(--text-primary, #0f172a)' }}>{l.item}</td>
                       <td style={{ padding: '0.5rem' }}>
                         <input
                           type="number"
@@ -1261,19 +1261,19 @@ export default function VattaInvoiceGenerator({
                             width: '100%',
                             padding: '0.35rem 0.5rem',
                             borderRadius: '4px',
-                            border: '1px solid #cbd5e1',
+                            border: '1px solid var(--border-color, #cbd5e1)',
                             fontSize: '0.85rem',
                             fontWeight: 700,
                             textAlign: 'center',
-                            background: '#ffffff'
+                            background: 'var(--card-bg, #ffffff)'
                           }}
                         />
                       </td>
-                      <td style={{ padding: '0.5rem', color: '#475569' }}>
+                      <td style={{ padding: '0.5rem', color: 'var(--text-secondary, #475569)' }}>
                         {l.description}
                       </td>
                       <td style={{ padding: '0.5rem', fontFamily: 'monospace', color: '#64748b' }}>{l.hsnCode}</td>
-                      <td style={{ padding: '0.5rem', textAlign: 'right', fontWeight: 600, color: '#0f172a' }}>
+                      <td style={{ padding: '0.5rem', textAlign: 'right', fontWeight: 600, color: 'var(--text-primary, #0f172a)' }}>
                         {l.pieces > 0 ? l.pieces.toLocaleString('en-IN') : '0'}
                       </td>
                       <td style={{ padding: '0.5rem', textAlign: 'right', fontFamily: 'monospace' }}>
@@ -1314,8 +1314,8 @@ export default function VattaInvoiceGenerator({
           {/* Section 4: Forest Pass, Measurement, E-Way Bill & Taxes */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1325,14 +1325,14 @@ export default function VattaInvoiceGenerator({
               <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                 Section 4
               </span>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                 Forest Pass, Transit Documentation & Tax Structure
               </h3>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Forest Pass Number
                 </label>
                 <input
@@ -1340,12 +1340,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.forestPassNo}
                   onChange={(e) => handleFieldChange('forestPassNo', e.target.value)}
                   placeholder="e.g. 140/2026-27"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Total Measurement (CBM)
                 </label>
                 <input
@@ -1353,12 +1353,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.totalMeasurement}
                   onChange={(e) => handleFieldChange('totalMeasurement', e.target.value)}
                   placeholder="e.g. 20.689"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700 }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   E-Way Bill Number
                 </label>
                 <input
@@ -1366,18 +1366,18 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.ewayBillNo}
                   onChange={(e) => handleFieldChange('ewayBillNo', e.target.value)}
                   placeholder="e.g. 5420 8705 0063"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Tax Treatment
                 </label>
                 <select
                   value={invoiceForm.taxTreatment}
                   onChange={(e) => handleFieldChange('taxTreatment', e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 600 }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 600 }}
                 >
                   <option value="IGST">Inter-State (IGST 5%)</option>
                   <option value="CGST_SGST">Intra-State (CGST 2.5% + SGST 2.5%)</option>
@@ -1385,7 +1385,7 @@ export default function VattaInvoiceGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   GST Rate (%)
                 </label>
                 <input
@@ -1394,12 +1394,12 @@ export default function VattaInvoiceGenerator({
                   step="0.1"
                   value={invoiceForm.gstRate}
                   onChange={(e) => handleFieldChange('gstRate', parseFloat(e.target.value) || 0)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Discount (₹)
                 </label>
                 <input
@@ -1408,12 +1408,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.discount}
                   onChange={(e) => handleFieldChange('discount', e.target.value)}
                   placeholder="0.00"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Freight (₹)
                 </label>
                 <input
@@ -1422,12 +1422,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.freight}
                   onChange={(e) => handleFieldChange('freight', e.target.value)}
                   placeholder="0.00"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Insurance (₹)
                 </label>
                 <input
@@ -1436,12 +1436,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.insurance}
                   onChange={(e) => handleFieldChange('insurance', e.target.value)}
                   placeholder="0.00"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Packing & Forwarding (₹)
                 </label>
                 <input
@@ -1450,7 +1450,7 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.packingCharge}
                   onChange={(e) => handleFieldChange('packingCharge', e.target.value)}
                   placeholder="0.00"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
             </div>
@@ -1459,8 +1459,8 @@ export default function VattaInvoiceGenerator({
           {/* Section 5: Bank Details & Terms */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1471,7 +1471,7 @@ export default function VattaInvoiceGenerator({
                 <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                   Section 5
                 </span>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Bank Details & Terms (Optional)
                 </h3>
               </div>
@@ -1479,8 +1479,8 @@ export default function VattaInvoiceGenerator({
                 type="button"
                 onClick={handleSaveBankAndTerms}
                 style={{
-                  border: '1px solid #cbd5e1',
-                  background: '#f8fafc',
+                  border: '1px solid var(--border-color, #cbd5e1)',
+                  background: 'var(--tag-bg, #f8fafc)',
                   color: '#334155',
                   padding: '0.35rem 0.65rem',
                   borderRadius: '6px',
@@ -1499,7 +1499,7 @@ export default function VattaInvoiceGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Bank Name / Account Title
                 </label>
                 <input
@@ -1507,12 +1507,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.bankDetails}
                   onChange={(e) => handleFieldChange('bankDetails', e.target.value)}
                   placeholder="e.g. State Bank of India"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Account Number
                 </label>
                 <input
@@ -1520,12 +1520,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.accountNumber}
                   onChange={(e) => handleFieldChange('accountNumber', e.target.value)}
                   placeholder="e.g. 67012345678"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Branch IFSC
                 </label>
                 <input
@@ -1533,12 +1533,12 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.branchIfsc}
                   onChange={(e) => handleFieldChange('branchIfsc', e.target.value)}
                   placeholder="e.g. SBIN0070000"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                 />
               </div>
 
               <div style={{ gridColumn: 'span 3' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Terms and Conditions
                 </label>
                 <textarea
@@ -1546,7 +1546,7 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.termsAndConditions}
                   onChange={(e) => handleFieldChange('termsAndConditions', e.target.value)}
                   placeholder="Goods once sold will not be taken back..."
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
             </div>
@@ -1565,7 +1565,7 @@ export default function VattaInvoiceGenerator({
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <FileText size={16} color="#1e3a2b" />
-              <h3 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+              <h3 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', margin: 0 }}>
                 Live A4 Form GST Invoice-I Preview
               </h3>
             </div>
@@ -1577,7 +1577,7 @@ export default function VattaInvoiceGenerator({
           {/* Paper Document Preview Card */}
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
               borderRadius: '6px',
               padding: '1.75rem 1.25rem',
@@ -1822,7 +1822,7 @@ export default function VattaInvoiceGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '12px',
               maxWidth: '650px',
               width: '100%',
@@ -1852,7 +1852,7 @@ export default function VattaInvoiceGenerator({
             </p>
 
             {savedInvoices.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '2rem 1rem', background: '#f8fafc', borderRadius: '8px', color: '#94a3b8' }}>
+              <div style={{ textAlign: 'center', padding: '2rem 1rem', background: 'var(--tag-bg, #f8fafc)', borderRadius: '8px', color: '#94a3b8' }}>
                 No saved invoices found. Click "Save Draft" in the top bar to save your active invoice.
               </div>
             ) : (
@@ -1865,13 +1865,13 @@ export default function VattaInvoiceGenerator({
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       padding: '0.85rem 1rem',
-                      background: '#f8fafc',
+                      background: 'var(--tag-bg, #f8fafc)',
                       borderRadius: '8px',
-                      border: '1px solid #e2e8f0'
+                      border: '1px solid var(--border-color, #e2e8f0)'
                     }}
                   >
                     <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>{inv.title}</div>
+                      <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-primary, #0f172a)' }}>{inv.title}</div>
                       <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>
                         Total: <strong>₹{formatIndianCurrency(inv.grandTotal)}</strong> • Saved on: {new Date(inv.savedAt).toLocaleDateString()}
                       </div>
@@ -1949,7 +1949,7 @@ export default function VattaInvoiceGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '12px',
               maxWidth: '720px',
               width: '100%',
@@ -2022,9 +2022,9 @@ export default function VattaInvoiceGenerator({
 
             {/* Profile Form (if adding/editing) */}
             {editingParty ? (
-              <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+              <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '1.25rem', borderRadius: '8px', border: '1px solid var(--border-color, #cbd5e1)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>
-                  <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                     {editingParty.isNew ? 'Add New' : 'Edit'} {partiesTab === 'receivers' ? 'Receiver' : 'Despatched Party'}
                   </h4>
                   <button
@@ -2038,7 +2038,7 @@ export default function VattaInvoiceGenerator({
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                   <div style={{ gridColumn: 'span 2' }}>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                       Company / Party Name *
                     </label>
                     <input
@@ -2046,12 +2046,12 @@ export default function VattaInvoiceGenerator({
                       value={editingParty.name}
                       onChange={(e) => setEditingParty({ ...editingParty, name: e.target.value })}
                       placeholder="e.g. M/S. HINDUSTAN PENCILS PVT.LTD"
-                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                     />
                   </div>
 
                   <div style={{ gridColumn: 'span 2' }}>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                       Address
                     </label>
                     <textarea
@@ -2059,12 +2059,12 @@ export default function VattaInvoiceGenerator({
                       value={editingParty.address}
                       onChange={(e) => setEditingParty({ ...editingParty, address: e.target.value })}
                       placeholder="Address lines..."
-                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                     />
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                       GSTIN / GST Number
                     </label>
                     <input
@@ -2072,12 +2072,12 @@ export default function VattaInvoiceGenerator({
                       value={editingParty.gstin}
                       onChange={(e) => setEditingParty({ ...editingParty, gstin: e.target.value.toUpperCase() })}
                       placeholder="e.g. 24AAACH0401R1ZT"
-                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                     />
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                       PIN Code
                     </label>
                     <input
@@ -2085,12 +2085,12 @@ export default function VattaInvoiceGenerator({
                       value={editingParty.pinNo}
                       onChange={(e) => setEditingParty({ ...editingParty, pinNo: e.target.value })}
                       placeholder="e.g. 396171"
-                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                     />
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                       State
                     </label>
                     <input
@@ -2098,12 +2098,12 @@ export default function VattaInvoiceGenerator({
                       value={editingParty.state}
                       onChange={(e) => setEditingParty({ ...editingParty, state: e.target.value })}
                       placeholder="e.g. GUJARAT"
-                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                     />
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                       State Code
                     </label>
                     <input
@@ -2111,7 +2111,7 @@ export default function VattaInvoiceGenerator({
                       value={editingParty.stateCode}
                       onChange={(e) => setEditingParty({ ...editingParty, stateCode: e.target.value })}
                       placeholder="e.g. 24"
-                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                     />
                   </div>
                 </div>
@@ -2120,7 +2120,7 @@ export default function VattaInvoiceGenerator({
                   <button
                     type="button"
                     onClick={() => setEditingParty(null)}
-                    style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', color: '#475569', padding: '0.45rem 0.9rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
+                    style={{ background: '#f1f5f9', border: '1px solid var(--border-color, #cbd5e1)', color: 'var(--text-secondary, #475569)', padding: '0.45rem 0.9rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
                   >
                     Cancel
                   </button>
@@ -2183,13 +2183,13 @@ export default function VattaInvoiceGenerator({
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '0.75rem',
-                        background: '#f8fafc',
+                        background: 'var(--tag-bg, #f8fafc)',
                         borderRadius: '6px',
-                        border: '1px solid #e2e8f0'
+                        border: '1px solid var(--border-color, #e2e8f0)'
                       }}
                     >
                       <div>
-                        <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f172a' }}>{p.name}</div>
+                        <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary, #0f172a)' }}>{p.name}</div>
                         <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.2rem' }}>
                           <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.15rem 0.45rem', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, fontFamily: 'monospace' }}>
                             GST: {p.gstin || 'None'}
@@ -2217,7 +2217,7 @@ export default function VattaInvoiceGenerator({
                         <button
                           type="button"
                           onClick={() => setEditingParty({ ...p, isNew: false })}
-                          style={{ background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                          style={{ background: '#f1f5f9', color: '#334155', border: '1px solid var(--border-color, #cbd5e1)', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                         >
                           <Edit2 size={12} /> Edit
                         </button>
@@ -2267,7 +2267,7 @@ export default function VattaInvoiceGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '12px',
               maxWidth: '820px',
               width: '100%',
@@ -2301,8 +2301,8 @@ export default function VattaInvoiceGenerator({
                 <div
                   key={p.id}
                   style={{
-                    background: '#f8fafc',
-                    border: '1px solid #e2e8f0',
+                    background: 'var(--tag-bg, #f8fafc)',
+                    border: '1px solid var(--border-color, #e2e8f0)',
                     borderRadius: '8px',
                     padding: '0.75rem 1rem',
                     display: 'grid',
@@ -2321,7 +2321,7 @@ export default function VattaInvoiceGenerator({
                         next[idx].item = e.target.value
                         setTempProducts(next)
                       }}
-                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', fontWeight: 700 }}
+                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem', fontWeight: 700 }}
                     />
                   </div>
 
@@ -2335,7 +2335,7 @@ export default function VattaInvoiceGenerator({
                         next[idx].description = e.target.value
                         setTempProducts(next)
                       }}
-                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.775rem' }}
+                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.775rem' }}
                     />
                   </div>
 
@@ -2349,7 +2349,7 @@ export default function VattaInvoiceGenerator({
                         next[idx].piecesPerBag = parseInt(e.target.value, 10) || 0
                         setTempProducts(next)
                       }}
-                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', textAlign: 'center' }}
+                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem', textAlign: 'center' }}
                     />
                   </div>
 
@@ -2364,7 +2364,7 @@ export default function VattaInvoiceGenerator({
                         next[idx].unitPricePer1000 = parseFloat(e.target.value) || 0
                         setTempProducts(next)
                       }}
-                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', fontWeight: 700, textAlign: 'right' }}
+                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem', fontWeight: 700, textAlign: 'right' }}
                     />
                   </div>
 
@@ -2378,7 +2378,7 @@ export default function VattaInvoiceGenerator({
                         next[idx].hsnCode = e.target.value
                         setTempProducts(next)
                       }}
-                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.8rem', fontFamily: 'monospace' }}
+                      style={{ width: '100%', padding: '0.35rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.8rem', fontFamily: 'monospace' }}
                     />
                   </div>
                 </div>
@@ -2398,7 +2398,7 @@ export default function VattaInvoiceGenerator({
                 <button
                   type="button"
                   onClick={() => setShowProductSettingsModal(false)}
-                  style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', color: '#475569', padding: '0.45rem 0.9rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
+                  style={{ background: '#f1f5f9', border: '1px solid var(--border-color, #cbd5e1)', color: 'var(--text-secondary, #475569)', padding: '0.45rem 0.9rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
                 >
                   Cancel
                 </button>

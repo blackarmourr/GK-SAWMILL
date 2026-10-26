@@ -795,8 +795,8 @@ export default function KeralaVatBillGenerator({
               gap: '0.4rem',
               padding: '0.5rem 0.9rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               fontWeight: 600,
               fontSize: '0.85rem',
@@ -823,7 +823,7 @@ export default function KeralaVatBillGenerator({
               >
                 Module 05
               </span>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', margin: 0 }}>
                 Kerala VAT Bill Generator
               </h2>
             </div>
@@ -865,8 +865,8 @@ export default function KeralaVatBillGenerator({
               gap: '0.4rem',
               padding: '0.55rem 0.85rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               fontWeight: 600,
               fontSize: '0.825rem',
@@ -886,8 +886,8 @@ export default function KeralaVatBillGenerator({
               gap: '0.4rem',
               padding: '0.55rem 0.85rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               fontWeight: 600,
               fontSize: '0.825rem',
@@ -907,8 +907,8 @@ export default function KeralaVatBillGenerator({
               gap: '0.4rem',
               padding: '0.55rem 0.85rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#1e3a2b',
               fontWeight: 700,
               fontSize: '0.825rem',
@@ -952,8 +952,8 @@ export default function KeralaVatBillGenerator({
               width: '36px',
               height: '36px',
               borderRadius: '8px',
-              border: '1px solid #e2e8f0',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #e2e8f0)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#64748b',
               cursor: 'pointer'
             }}
@@ -1063,8 +1063,8 @@ export default function KeralaVatBillGenerator({
           {/* Card 1: Field 1 - Consigner Profile & Field 5 */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1075,7 +1075,7 @@ export default function KeralaVatBillGenerator({
                 <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                   Field 1 & 5
                 </span>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Consigner Details (Seller / Principal Agent)
                 </h3>
               </div>
@@ -1101,7 +1101,7 @@ export default function KeralaVatBillGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Name of Consigner
                 </label>
                 <input
@@ -1109,12 +1109,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consignerName}
                   onChange={(e) => handleFieldChange('consignerName', e.target.value)}
                   placeholder="e.g. Anil Kumar.G"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Business Name
                 </label>
                 <input
@@ -1122,12 +1122,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consignerBusinessName}
                   onChange={(e) => handleFieldChange('consignerBusinessName', e.target.value)}
                   placeholder="e.g. G.K. Saw Mill"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Address
                 </label>
                 <input
@@ -1135,12 +1135,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consignerAddress}
                   onChange={(e) => handleFieldChange('consignerAddress', e.target.value)}
                   placeholder="e.g. Kattur, Nedumpana, Kollam"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   TIN / CST RC / GSTIN
                 </label>
                 <input
@@ -1148,12 +1148,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consignerRegistration}
                   onChange={(e) => handleFieldChange('consignerRegistration', e.target.value)}
                   placeholder="e.g. 32AHOPG1823G1ZP"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   PIN Code
                 </label>
                 <input
@@ -1161,12 +1161,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consignerPin}
                   onChange={(e) => handleFieldChange('consignerPin', e.target.value)}
                   placeholder="e.g. 691576"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 5: Seller / Principal Agent
                 </label>
                 <input
@@ -1174,12 +1174,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consignerSeller}
                   onChange={(e) => handleFieldChange('consignerSeller', e.target.value)}
                   placeholder="e.g. G.K. SAW MILL"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   PAN / Phone (Optional)
                 </label>
                 <input
@@ -1187,7 +1187,7 @@ export default function KeralaVatBillGenerator({
                   value={billData.consignerPan}
                   onChange={(e) => handleFieldChange('consignerPan', e.target.value)}
                   placeholder="e.g. AHOPG1823G"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
             </div>
@@ -1196,8 +1196,8 @@ export default function KeralaVatBillGenerator({
           {/* Card 2: Field 4 - Consignee Directory */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1208,7 +1208,7 @@ export default function KeralaVatBillGenerator({
                 <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                   Field 4
                 </span>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Consignee Details (Purchaser)
                 </h3>
               </div>
@@ -1220,7 +1220,7 @@ export default function KeralaVatBillGenerator({
                   style={{
                     padding: '0.35rem 0.6rem',
                     borderRadius: '6px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.775rem',
                     fontWeight: 600,
                     color: '#334155',
@@ -1238,8 +1238,8 @@ export default function KeralaVatBillGenerator({
                   onClick={handleQuickSaveConsignee}
                   title="Save this consignee to directory"
                   style={{
-                    border: '1px solid #cbd5e1',
-                    background: '#f8fafc',
+                    border: '1px solid var(--border-color, #cbd5e1)',
+                    background: 'var(--tag-bg, #f8fafc)',
                     color: '#334155',
                     padding: '0.35rem 0.6rem',
                     borderRadius: '6px',
@@ -1259,7 +1259,7 @@ export default function KeralaVatBillGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
               <div style={{ gridColumn: 'span 2' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Company Name
                 </label>
                 <input
@@ -1267,12 +1267,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consigneeName}
                   onChange={(e) => handleFieldChange('consigneeName', e.target.value)}
                   placeholder="e.g. M/S. HINDUSTAN PENCILS PVT. LTD"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Address
                 </label>
                 <input
@@ -1280,12 +1280,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consigneeAddress}
                   onChange={(e) => handleFieldChange('consigneeAddress', e.target.value)}
                   placeholder="e.g. 217/1 GIDC Estate"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   GSTIN
                 </label>
                 <input
@@ -1293,12 +1293,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.consigneeGstin}
                   onChange={(e) => handleFieldChange('consigneeGstin', e.target.value)}
                   placeholder="e.g. 24AAACH0401R1ZT"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   City / State / TIN (Optional)
                 </label>
                 <input
@@ -1306,7 +1306,7 @@ export default function KeralaVatBillGenerator({
                   value={billData.consigneeCity}
                   onChange={(e) => handleFieldChange('consigneeCity', e.target.value)}
                   placeholder="e.g. Valsad, Gujarat"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
             </div>
@@ -1315,8 +1315,8 @@ export default function KeralaVatBillGenerator({
           {/* Card 3: Field 6 - Consigner / Principal Agent Details */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1327,7 +1327,7 @@ export default function KeralaVatBillGenerator({
                 <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                   Field 6
                 </span>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Principal Agent / Consigner Details
                 </h3>
               </div>
@@ -1338,7 +1338,7 @@ export default function KeralaVatBillGenerator({
                 style={{
                   padding: '0.35rem 0.6rem',
                   borderRadius: '6px',
-                  border: '1px solid #cbd5e1',
+                  border: '1px solid var(--border-color, #cbd5e1)',
                   fontSize: '0.775rem',
                   fontWeight: 600,
                   color: '#334155',
@@ -1354,7 +1354,7 @@ export default function KeralaVatBillGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Company Name
                 </label>
                 <input
@@ -1362,12 +1362,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.principalAgentName}
                   onChange={(e) => handleFieldChange('principalAgentName', e.target.value)}
                   placeholder="e.g. UMESH PENCILS PROCESSORS (P) LTD"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   GSTIN
                 </label>
                 <input
@@ -1375,7 +1375,7 @@ export default function KeralaVatBillGenerator({
                   value={billData.principalAgentGstin}
                   onChange={(e) => handleFieldChange('principalAgentGstin', e.target.value)}
                   placeholder="e.g. 33AAACU0701F1Z3"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                 />
               </div>
             </div>
@@ -1384,8 +1384,8 @@ export default function KeralaVatBillGenerator({
           {/* Card 4: Fields 2, 3, 7, 8 - Transaction, Goods & Bill Value */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1395,14 +1395,14 @@ export default function KeralaVatBillGenerator({
               <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                 Fields 2, 3, 7, 8
               </span>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                 Bill Number, Value, E-Way Bill & Goods
               </h3>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 8: Bill / Invoice No.
                 </label>
                 <input
@@ -1410,24 +1410,24 @@ export default function KeralaVatBillGenerator({
                   value={billData.billNo}
                   onChange={(e) => handleFieldChange('billNo', e.target.value)}
                   placeholder="e.g. A-22"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700 }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 8: Bill Date
                 </label>
                 <input
                   type="date"
                   value={billData.billDate}
                   onChange={(e) => handleFieldChange('billDate', e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 8: Bill Value (Rs.)
                 </label>
                 <input
@@ -1436,12 +1436,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.billValue}
                   onChange={(e) => handleFieldChange('billValue', e.target.value)}
                   placeholder="e.g. 781292.93"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700 }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 2: E-Way Bill Number
                 </label>
                 <input
@@ -1449,18 +1449,18 @@ export default function KeralaVatBillGenerator({
                   value={billData.ewayBillNo}
                   onChange={(e) => handleFieldChange('ewayBillNo', e.target.value)}
                   placeholder="e.g. 5420 8705 0063"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                 />
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 3: Transaction Type
                 </label>
                 <select
                   value={billData.transactionType}
                   onChange={(e) => handleFieldChange('transactionType', e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 >
                   <option value="Regular">Regular</option>
                   <option value="Interstate Purchase">Interstate Purchase</option>
@@ -1472,7 +1472,7 @@ export default function KeralaVatBillGenerator({
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 7: Goods Description
                 </label>
                 <input
@@ -1480,12 +1480,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.goodsDescription}
                   onChange={(e) => handleFieldChange('goodsDescription', e.target.value)}
                   placeholder="e.g. Vatta wood & Pencil Slats"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 7: Quantity (Bags)
                 </label>
                 <input
@@ -1494,7 +1494,7 @@ export default function KeralaVatBillGenerator({
                   value={billData.bagQuantity}
                   onChange={(e) => handleFieldChange('bagQuantity', e.target.value)}
                   placeholder="e.g. 285"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700 }}
                 />
               </div>
             </div>
@@ -1503,8 +1503,8 @@ export default function KeralaVatBillGenerator({
           {/* Card 5: Fields 9, 10, 11, 12 - Transport, Logistics, Carrier & Driver */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1514,20 +1514,20 @@ export default function KeralaVatBillGenerator({
               <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                 Fields 9, 10, 11, 12
               </span>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                 Transport, Carrier & Driver Information
               </h3>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 9: Mode of Transport
                 </label>
                 <select
                   value={billData.transportMode}
                   onChange={(e) => handleFieldChange('transportMode', e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 >
                   <option value="By Road">By Road</option>
                   <option value="By Rail">By Rail</option>
@@ -1537,7 +1537,7 @@ export default function KeralaVatBillGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Field 9: Vehicle Number
                 </label>
                 <input
@@ -1545,21 +1545,21 @@ export default function KeralaVatBillGenerator({
                   value={billData.vehicleNo}
                   onChange={(e) => handleFieldChange('vehicleNo', e.target.value)}
                   placeholder="e.g. KL-58-D-1555 (or leave blank)"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                 />
               </div>
 
               {/* Field 10: Transporter */}
               <div style={{ gridColumn: 'span 2' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)' }}>
                     Field 10: Transporter / Logistics Company
                   </label>
                   <div style={{ display: 'flex', gap: '0.4rem' }}>
                     <select
                       value={selectedTransporterId}
                       onChange={(e) => handleSelectTransporter(e.target.value)}
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.725rem' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.725rem' }}
                     >
                       <option value="custom">-- Saved Transporters --</option>
                       {savedTransporters.map(t => (
@@ -1570,7 +1570,7 @@ export default function KeralaVatBillGenerator({
                       type="button"
                       onClick={handleQuickSaveTransporter}
                       title="Save this transporter to directory"
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '0.725rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', background: 'var(--tag-bg, #f8fafc)', fontSize: '0.725rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                     >
                       <Save size={12} /> Save
                     </button>
@@ -1582,14 +1582,14 @@ export default function KeralaVatBillGenerator({
                     value={billData.transporterName}
                     onChange={(e) => handleFieldChange('transporterName', e.target.value)}
                     placeholder="e.g. TOTAL LOGISTICS (INDIA) PVT. LTD."
-                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                   />
                   <input
                     type="text"
                     value={billData.transporterGstin || ''}
                     onChange={(e) => handleFieldChange('transporterGstin', e.target.value)}
                     placeholder="Transporter GSTIN (Optional)"
-                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                   />
                 </div>
               </div>
@@ -1597,14 +1597,14 @@ export default function KeralaVatBillGenerator({
               {/* Field 11: Carrier */}
               <div style={{ gridColumn: 'span 2' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)' }}>
                     Field 11: Carrier (Transporter Co. or Vehicle Owner)
                   </label>
                   <div style={{ display: 'flex', gap: '0.4rem' }}>
                     <select
                       value={selectedCarrierId}
                       onChange={(e) => handleSelectCarrier(e.target.value)}
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.725rem' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.725rem' }}
                     >
                       <option value="custom">-- Saved Carriers --</option>
                       {savedCarriers.map(c => (
@@ -1615,7 +1615,7 @@ export default function KeralaVatBillGenerator({
                       type="button"
                       onClick={handleQuickSaveCarrier}
                       title="Save this carrier to directory"
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '0.725rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', background: 'var(--tag-bg, #f8fafc)', fontSize: '0.725rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                     >
                       <Save size={12} /> Save
                     </button>
@@ -1627,21 +1627,21 @@ export default function KeralaVatBillGenerator({
                     value={billData.carrierName}
                     onChange={(e) => handleFieldChange('carrierName', e.target.value)}
                     placeholder="Carrier Name (e.g. JEILANI P)"
-                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                   />
                   <input
                     type="text"
                     value={billData.carrierGstin || ''}
                     onChange={(e) => handleFieldChange('carrierGstin', e.target.value)}
                     placeholder="Carrier GSTIN (Optional)"
-                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                   />
                   <input
                     type="text"
                     value={billData.carrierAddress}
                     onChange={(e) => handleFieldChange('carrierAddress', e.target.value)}
                     placeholder="Address (Optional)"
-                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                   />
                 </div>
               </div>
@@ -1649,14 +1649,14 @@ export default function KeralaVatBillGenerator({
               {/* Field 12: Driver */}
               <div style={{ gridColumn: 'span 2' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)' }}>
                     Field 12: Driver Details & Driving Licence
                   </label>
                   <div style={{ display: 'flex', gap: '0.4rem' }}>
                     <select
                       value={selectedDriverId}
                       onChange={(e) => handleSelectDriver(e.target.value)}
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.725rem' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.725rem' }}
                     >
                       <option value="custom">-- Saved Drivers --</option>
                       {savedDrivers.map(d => (
@@ -1666,7 +1666,7 @@ export default function KeralaVatBillGenerator({
                     <button
                       type="button"
                       onClick={handleQuickSaveDriver}
-                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '0.725rem', cursor: 'pointer' }}
+                      style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border-color, #cbd5e1)', background: 'var(--tag-bg, #f8fafc)', fontSize: '0.725rem', cursor: 'pointer' }}
                     >
                       Save
                     </button>
@@ -1679,21 +1679,21 @@ export default function KeralaVatBillGenerator({
                     value={billData.driverName}
                     onChange={(e) => handleFieldChange('driverName', e.target.value)}
                     placeholder="Driver Name (e.g. JEILANI P)"
-                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                   />
                   <input
                     type="text"
                     value={billData.driverLicenceNo}
                     onChange={(e) => handleFieldChange('driverLicenceNo', e.target.value)}
                     placeholder="DL No: TN 41 19970001161"
-                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                   />
                   <input
                     type="text"
                     value={billData.driverState}
                     onChange={(e) => handleFieldChange('driverState', e.target.value)}
                     placeholder="State (e.g. TAMILNADU)"
-                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                    style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                   />
                 </div>
               </div>
@@ -1703,8 +1703,8 @@ export default function KeralaVatBillGenerator({
           {/* Card 6: Declaration & Sign-off Details */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
@@ -1714,26 +1714,26 @@ export default function KeralaVatBillGenerator({
               <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800 }}>
                 Declaration
               </span>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                 Declaration, Place, Date & Signatory
               </h3>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Declaration Date
                 </label>
                 <input
                   type="date"
                   value={billData.declarationDate}
                   onChange={(e) => handleFieldChange('declarationDate', e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Declaration Place
                 </label>
                 <input
@@ -1741,12 +1741,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.declarationPlace}
                   onChange={(e) => handleFieldChange('declarationPlace', e.target.value)}
                   placeholder="e.g. Nedumpana"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Signatory Name
                 </label>
                 <input
@@ -1754,12 +1754,12 @@ export default function KeralaVatBillGenerator({
                   value={billData.signatoryName}
                   onChange={(e) => handleFieldChange('signatoryName', e.target.value)}
                   placeholder="e.g. G. Anil Kumar"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontWeight: 700 }}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700 }}
                 />
               </div>
             </div>
 
-            <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+            <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '0.75rem', borderRadius: '6px', border: '1px solid var(--border-color, #e2e8f0)' }}>
               <div style={{ fontSize: '0.725rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                 Declaration Statement (Auto-Generated):
               </div>
@@ -1782,7 +1782,7 @@ export default function KeralaVatBillGenerator({
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <FileText size={16} color="#1e3a2b" />
-              <h3 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+              <h3 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', margin: 0 }}>
                 Live A4 Form 8F Replica
               </h3>
             </div>
@@ -1794,7 +1794,7 @@ export default function KeralaVatBillGenerator({
           {/* Paper Document Preview Card */}
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
               borderRadius: '6px',
               padding: '2.4rem 2rem',
@@ -2007,7 +2007,7 @@ export default function KeralaVatBillGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '12px',
               maxWidth: '600px',
               width: '100%',
@@ -2037,7 +2037,7 @@ export default function KeralaVatBillGenerator({
             </p>
 
             {savedBills.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '2rem 1rem', background: '#f8fafc', borderRadius: '8px', color: '#94a3b8' }}>
+              <div style={{ textAlign: 'center', padding: '2rem 1rem', background: 'var(--tag-bg, #f8fafc)', borderRadius: '8px', color: '#94a3b8' }}>
                 No saved bills found. Click "Save Draft" in the top bar to save your current bill.
               </div>
             ) : (
@@ -2050,13 +2050,13 @@ export default function KeralaVatBillGenerator({
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       padding: '0.85rem 1rem',
-                      background: '#f8fafc',
+                      background: 'var(--tag-bg, #f8fafc)',
                       borderRadius: '8px',
-                      border: '1px solid #e2e8f0'
+                      border: '1px solid var(--border-color, #e2e8f0)'
                     }}
                   >
                     <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>{b.title}</div>
+                      <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-primary, #0f172a)' }}>{b.title}</div>
                       <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.15rem' }}>
                         Saved: {new Date(b.savedAt).toLocaleDateString()} {new Date(b.savedAt).toLocaleTimeString()}
                       </div>
@@ -2131,7 +2131,7 @@ export default function KeralaVatBillGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '12px',
               maxWidth: '720px',
               width: '100%',
@@ -2187,9 +2187,9 @@ export default function KeralaVatBillGenerator({
 
             {/* If Editing a Profile */}
             {editingProfile ? (
-              <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+              <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '1.25rem', borderRadius: '8px', border: '1px solid var(--border-color, #cbd5e1)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>
-                  <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                     {editingProfile.isNew ? 'Add New' : 'Edit'} {
                       activeProfilesTab === 'consignees' ? 'Consignee' :
                       activeProfilesTab === 'agents' ? 'Field 6 Agent' :
@@ -2209,7 +2209,7 @@ export default function KeralaVatBillGenerator({
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                   {/* Name field */}
                   <div style={{ gridColumn: 'span 2' }}>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                       {activeProfilesTab === 'consignees' ? 'Company Name *' :
                        activeProfilesTab === 'agents' ? 'Principal / Agent Name *' :
                        activeProfilesTab === 'transporters' ? 'Transporter / Logistics Company Name *' :
@@ -2220,14 +2220,14 @@ export default function KeralaVatBillGenerator({
                       value={editingProfile.companyName || editingProfile.name || ''}
                       onChange={(e) => setEditingProfile(prev => ({ ...prev, companyName: e.target.value, name: e.target.value }))}
                       placeholder="Enter name"
-                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                      style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                     />
                   </div>
 
                   {/* GSTIN field for consignees, agents, transporters, carriers */}
                   {activeProfilesTab !== 'drivers' && (
                     <div style={{ gridColumn: activeProfilesTab === 'agents' ? 'span 2' : 'auto' }}>
-                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                         GSTIN / GST Number {activeProfilesTab === 'consignees' ? '*' : '(Optional)'}
                       </label>
                       <input
@@ -2235,7 +2235,7 @@ export default function KeralaVatBillGenerator({
                         value={editingProfile.gstin || ''}
                         onChange={(e) => setEditingProfile(prev => ({ ...prev, gstin: e.target.value.toUpperCase() }))}
                         placeholder="e.g. 24AAACH0401R1ZT"
-                        style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                        style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                       />
                     </div>
                   )}
@@ -2243,7 +2243,7 @@ export default function KeralaVatBillGenerator({
                   {/* TIN/CST for Consignees */}
                   {activeProfilesTab === 'consignees' && (
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                         TIN / CST RC No. (Optional)
                       </label>
                       <input
@@ -2251,7 +2251,7 @@ export default function KeralaVatBillGenerator({
                         value={editingProfile.tinCst || ''}
                         onChange={(e) => setEditingProfile(prev => ({ ...prev, tinCst: e.target.value }))}
                         placeholder="e.g. 24040100000"
-                        style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                       />
                     </div>
                   )}
@@ -2260,7 +2260,7 @@ export default function KeralaVatBillGenerator({
                   {activeProfilesTab === 'drivers' && (
                     <>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                           Driving Licence No.
                         </label>
                         <input
@@ -2268,11 +2268,11 @@ export default function KeralaVatBillGenerator({
                           value={editingProfile.licenceNo || ''}
                           onChange={(e) => setEditingProfile(prev => ({ ...prev, licenceNo: e.target.value }))}
                           placeholder="e.g. TN 41 19970001161"
-                          style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', fontFamily: 'monospace' }}
+                          style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontFamily: 'monospace' }}
                         />
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                           State
                         </label>
                         <input
@@ -2280,7 +2280,7 @@ export default function KeralaVatBillGenerator({
                           value={editingProfile.state || ''}
                           onChange={(e) => setEditingProfile(prev => ({ ...prev, state: e.target.value }))}
                           placeholder="e.g. TAMILNADU"
-                          style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                          style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                         />
                       </div>
                     </>
@@ -2289,7 +2289,7 @@ export default function KeralaVatBillGenerator({
                   {/* Address field for consignees, transporters, carriers, drivers */}
                   {activeProfilesTab !== 'agents' && (
                     <div style={{ gridColumn: 'span 2' }}>
-                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                         Address
                       </label>
                       <input
@@ -2297,7 +2297,7 @@ export default function KeralaVatBillGenerator({
                         value={editingProfile.address || ''}
                         onChange={(e) => setEditingProfile(prev => ({ ...prev, address: e.target.value }))}
                         placeholder="Enter full address"
-                        style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                       />
                     </div>
                   )}
@@ -2306,7 +2306,7 @@ export default function KeralaVatBillGenerator({
                   {activeProfilesTab === 'consignees' && (
                     <>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                           City
                         </label>
                         <input
@@ -2314,11 +2314,11 @@ export default function KeralaVatBillGenerator({
                           value={editingProfile.city || ''}
                           onChange={(e) => setEditingProfile(prev => ({ ...prev, city: e.target.value }))}
                           placeholder="e.g. Ankleshwar"
-                          style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                          style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                         />
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                           State
                         </label>
                         <input
@@ -2326,7 +2326,7 @@ export default function KeralaVatBillGenerator({
                           value={editingProfile.state || ''}
                           onChange={(e) => setEditingProfile(prev => ({ ...prev, state: e.target.value }))}
                           placeholder="e.g. Gujarat"
-                          style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                          style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                         />
                       </div>
                     </>
@@ -2335,7 +2335,7 @@ export default function KeralaVatBillGenerator({
                   {/* Phone for Transporters, Carriers, Drivers */}
                   {(activeProfilesTab === 'transporters' || activeProfilesTab === 'carriers' || activeProfilesTab === 'drivers') && (
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.25rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                         Phone / Contact (Optional)
                       </label>
                       <input
@@ -2343,7 +2343,7 @@ export default function KeralaVatBillGenerator({
                         value={editingProfile.phone || ''}
                         onChange={(e) => setEditingProfile(prev => ({ ...prev, phone: e.target.value }))}
                         placeholder="e.g. 9876543210"
-                        style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                       />
                     </div>
                   )}
@@ -2355,8 +2355,8 @@ export default function KeralaVatBillGenerator({
                     onClick={() => setEditingProfile(null)}
                     style={{
                       background: '#f1f5f9',
-                      border: '1px solid #cbd5e1',
-                      color: '#475569',
+                      border: '1px solid var(--border-color, #cbd5e1)',
+                      color: 'var(--text-secondary, #475569)',
                       padding: '0.5rem 1rem',
                       borderRadius: '6px',
                       fontSize: '0.825rem',
@@ -2405,9 +2405,9 @@ export default function KeralaVatBillGenerator({
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {savedConsignees.map(c => (
-                        <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                        <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: 'var(--tag-bg, #f8fafc)', borderRadius: '6px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                           <div>
-                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f172a' }}>{c.companyName}</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary, #0f172a)' }}>{c.companyName}</div>
                             <div style={{ fontSize: '0.775rem', color: '#64748b', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.2rem' }}>
                               {c.address && <span>{c.address}</span>}
                               {c.city && <span>• {c.city}</span>}
@@ -2431,7 +2431,7 @@ export default function KeralaVatBillGenerator({
                               type="button"
                               onClick={() => handleEditProfile('consignees', c)}
                               title="Edit Consignee"
-                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid var(--border-color, #cbd5e1)', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                             >
                               <Edit2 size={12} /> Edit
                             </button>
@@ -2470,9 +2470,9 @@ export default function KeralaVatBillGenerator({
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {savedPrincipalAgents.map(a => (
-                        <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                        <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: 'var(--tag-bg, #f8fafc)', borderRadius: '6px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                           <div>
-                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f172a' }}>{a.name}</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary, #0f172a)' }}>{a.name}</div>
                             <div style={{ fontSize: '0.775rem', color: '#64748b', marginTop: '0.2rem' }}>
                               <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.15rem 0.45rem', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, fontFamily: 'monospace' }}>
                                 GST: {a.gstin || 'None'}
@@ -2494,7 +2494,7 @@ export default function KeralaVatBillGenerator({
                               type="button"
                               onClick={() => handleEditProfile('agents', a)}
                               title="Edit Agent"
-                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid var(--border-color, #cbd5e1)', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                             >
                               <Edit2 size={12} /> Edit
                             </button>
@@ -2533,9 +2533,9 @@ export default function KeralaVatBillGenerator({
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {savedTransporters.map(t => (
-                        <div key={t.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                        <div key={t.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: 'var(--tag-bg, #f8fafc)', borderRadius: '6px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                           <div>
-                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f172a' }}>{t.name}</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary, #0f172a)' }}>{t.name}</div>
                             <div style={{ fontSize: '0.775rem', color: '#64748b', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.2rem' }}>
                               <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.15rem 0.45rem', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, fontFamily: 'monospace' }}>
                                 GST: {t.gstin || 'None'}
@@ -2559,7 +2559,7 @@ export default function KeralaVatBillGenerator({
                               type="button"
                               onClick={() => handleEditProfile('transporters', t)}
                               title="Edit Transporter"
-                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid var(--border-color, #cbd5e1)', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                             >
                               <Edit2 size={12} /> Edit
                             </button>
@@ -2598,9 +2598,9 @@ export default function KeralaVatBillGenerator({
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {savedCarriers.map(c => (
-                        <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                        <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: 'var(--tag-bg, #f8fafc)', borderRadius: '6px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                           <div>
-                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f172a' }}>{c.name}</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary, #0f172a)' }}>{c.name}</div>
                             <div style={{ fontSize: '0.775rem', color: '#64748b', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.2rem' }}>
                               <span style={{ background: '#eaf3ed', color: '#1e3a2b', padding: '0.15rem 0.45rem', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, fontFamily: 'monospace' }}>
                                 GST: {c.gstin || 'None'}
@@ -2624,7 +2624,7 @@ export default function KeralaVatBillGenerator({
                               type="button"
                               onClick={() => handleEditProfile('carriers', c)}
                               title="Edit Carrier"
-                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid var(--border-color, #cbd5e1)', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                             >
                               <Edit2 size={12} /> Edit
                             </button>
@@ -2663,9 +2663,9 @@ export default function KeralaVatBillGenerator({
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {savedDrivers.map(d => (
-                        <div key={d.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                        <div key={d.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: 'var(--tag-bg, #f8fafc)', borderRadius: '6px', border: '1px solid var(--border-color, #e2e8f0)' }}>
                           <div>
-                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f172a' }}>{d.name}</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary, #0f172a)' }}>{d.name}</div>
                             <div style={{ fontSize: '0.775rem', color: '#64748b', marginTop: '0.2rem' }}>
                               DL: {d.licenceNo || 'None'} {d.state ? `• ${d.state}` : ''} {d.phone ? `• Ph: ${d.phone}` : ''}
                             </div>
@@ -2685,7 +2685,7 @@ export default function KeralaVatBillGenerator({
                               type="button"
                               onClick={() => handleEditProfile('drivers', d)}
                               title="Edit Driver"
-                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                              style={{ background: '#f1f5f9', color: '#334155', border: '1px solid var(--border-color, #cbd5e1)', padding: '0.3rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
                             >
                               <Edit2 size={12} /> Edit
                             </button>
@@ -2711,10 +2711,10 @@ export default function KeralaVatBillGenerator({
             )}
 
             {/* LocalStorage Note */}
-            <div style={{ marginTop: '1.5rem', padding: '0.75rem', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+            <div style={{ marginTop: '1.5rem', padding: '0.75rem', background: 'var(--tag-bg, #f8fafc)', borderRadius: '8px', border: '1px solid var(--border-color, #e2e8f0)', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
               <Info size={16} color="#64748b" style={{ flexShrink: 0, marginTop: '2px' }} />
               <div style={{ fontSize: '0.75rem', color: '#64748b', lineHeight: '1.4' }}>
-                <strong>Storage Notice:</strong> All profiles are saved in your local browser's storage (<code style={{ color: '#0f172a' }}>localStorage</code>). They will remain available on this computer whenever you open this site, but will not automatically synchronize across different devices.
+                <strong>Storage Notice:</strong> All profiles are saved in your local browser's storage (<code style={{ color: 'var(--text-primary, #0f172a)' }}>localStorage</code>). They will remain available on this computer whenever you open this site, but will not automatically synchronize across different devices.
               </div>
             </div>
           </div>

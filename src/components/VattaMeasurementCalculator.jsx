@@ -328,7 +328,7 @@ export default function VattaMeasurementCalculator({
             padding: '0.6rem 1rem',
             borderRadius: '8px',
             border: '1px solid var(--border-color)',
-            background: '#ffffff',
+            background: 'var(--card-bg, #ffffff)',
             color: 'var(--text-primary)',
             fontWeight: 600,
             fontSize: '0.875rem',
@@ -351,8 +351,8 @@ export default function VattaMeasurementCalculator({
                 gap: '0.4rem',
                 padding: '0.55rem 0.85rem',
                 borderRadius: '8px',
-                border: '1px solid #cbd5e1',
-                background: '#ffffff',
+                border: '1px solid var(--border-color, #cbd5e1)',
+                background: 'var(--card-bg, #ffffff)',
                 color: '#1e3a2b',
                 fontWeight: 700,
                 fontSize: '0.8rem',
@@ -374,8 +374,8 @@ export default function VattaMeasurementCalculator({
                 gap: '0.4rem',
                 padding: '0.55rem 0.85rem',
                 borderRadius: '8px',
-                border: '1px solid #cbd5e1',
-                background: '#ffffff',
+                border: '1px solid var(--border-color, #cbd5e1)',
+                background: 'var(--card-bg, #ffffff)',
                 color: '#925c38',
                 fontWeight: 700,
                 fontSize: '0.8rem',
@@ -419,7 +419,7 @@ export default function VattaMeasurementCalculator({
               padding: '0.55rem 0.85rem',
               borderRadius: '8px',
               border: '1px solid var(--border-color)',
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               color: 'var(--text-primary)',
               fontWeight: 700,
               fontSize: '0.8rem',
@@ -460,7 +460,7 @@ export default function VattaMeasurementCalculator({
       {/* Main Container */}
       <div
         style={{
-          background: '#ffffff',
+          background: 'var(--card-bg, #ffffff)',
           borderRadius: '16px',
           border: '1px solid var(--border-color)',
           boxShadow: 'var(--shadow-md)',
@@ -537,7 +537,7 @@ export default function VattaMeasurementCalculator({
                 padding: '0.6rem 1.25rem',
                 borderRadius: '8px',
                 border: 'none',
-                background: '#ffffff',
+                background: 'var(--card-bg, #ffffff)',
                 color: '#1e3a2b',
                 fontSize: '0.825rem',
                 fontWeight: 900,
@@ -647,8 +647,8 @@ export default function VattaMeasurementCalculator({
           {/* Section 1: Document Details */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               marginBottom: '1.5rem',
@@ -667,7 +667,7 @@ export default function VattaMeasurementCalculator({
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Lorry Reg. Number *
                 </label>
                 <input
@@ -679,7 +679,7 @@ export default function VattaMeasurementCalculator({
                     width: '100%',
                     padding: '0.65rem 0.8rem',
                     borderRadius: '7px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontWeight: 700,
                     textTransform: 'uppercase',
                     boxSizing: 'border-box'
@@ -688,7 +688,7 @@ export default function VattaMeasurementCalculator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Invoice Number
                 </label>
                 <input
@@ -700,7 +700,7 @@ export default function VattaMeasurementCalculator({
                     width: '100%',
                     padding: '0.65rem 0.8rem',
                     borderRadius: '7px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontWeight: 700,
                     boxSizing: 'border-box'
                   }}
@@ -708,7 +708,7 @@ export default function VattaMeasurementCalculator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Pass Number
                 </label>
                 <input
@@ -720,7 +720,7 @@ export default function VattaMeasurementCalculator({
                     width: '100%',
                     padding: '0.65rem 0.8rem',
                     borderRadius: '7px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontWeight: 700,
                     boxSizing: 'border-box'
                   }}
@@ -728,7 +728,7 @@ export default function VattaMeasurementCalculator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Date
                 </label>
                 <input
@@ -739,7 +739,7 @@ export default function VattaMeasurementCalculator({
                     width: '100%',
                     padding: '0.6rem 0.8rem',
                     borderRadius: '7px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontWeight: 600,
                     boxSizing: 'border-box'
                   }}
@@ -747,7 +747,7 @@ export default function VattaMeasurementCalculator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Place
                 </label>
                 <input
@@ -759,7 +759,7 @@ export default function VattaMeasurementCalculator({
                     width: '100%',
                     padding: '0.65rem 0.8rem',
                     borderRadius: '7px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontWeight: 700,
                     boxSizing: 'border-box'
                   }}
@@ -771,8 +771,8 @@ export default function VattaMeasurementCalculator({
           {/* Section 2: Six Standard Vatta Ply Rows Input Table */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               marginBottom: '1.5rem',
@@ -795,13 +795,13 @@ export default function VattaMeasurementCalculator({
                   type="button"
                   onClick={handleResetBags}
                   style={{
-                    background: '#f8fafc',
-                    border: '1px solid #cbd5e1',
+                    background: 'var(--tag-bg, #f8fafc)',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     padding: '0.4rem 0.75rem',
                     borderRadius: '6px',
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    color: '#475569',
+                    color: 'var(--text-secondary, #475569)',
                     cursor: 'pointer',
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -851,7 +851,7 @@ export default function VattaMeasurementCalculator({
                     <th style={{ padding: '0.65rem 0.75rem', textAlign: 'right' }}>Total Nos.</th>
                     <th style={{ padding: '0.65rem 0.75rem', textAlign: 'right' }}>Total CBM</th>
                   </tr>
-                  <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', fontSize: '0.75rem', color: '#64748b', textAlign: 'center' }}>
+                  <tr style={{ background: 'var(--tag-bg, #f8fafc)', borderBottom: '1px solid #e2e8f0', fontSize: '0.75rem', color: '#64748b', textAlign: 'center' }}>
                     <th colSpan={2}></th>
                     <th style={{ padding: '0.35rem 0.5rem' }}>Length</th>
                     <th style={{ padding: '0.35rem 0.5rem' }}>Width</th>
@@ -875,13 +875,13 @@ export default function VattaMeasurementCalculator({
                       <td style={{ padding: '0.75rem 0.75rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                         {row.item}
                       </td>
-                      <td style={{ padding: '0.75rem 0.5rem', textAlign: 'center', color: '#475569' }}>
+                      <td style={{ padding: '0.75rem 0.5rem', textAlign: 'center', color: 'var(--text-secondary, #475569)' }}>
                         {row.length}
                       </td>
-                      <td style={{ padding: '0.75rem 0.5rem', textAlign: 'center', color: '#475569' }}>
+                      <td style={{ padding: '0.75rem 0.5rem', textAlign: 'center', color: 'var(--text-secondary, #475569)' }}>
                         {row.width}
                       </td>
-                      <td style={{ padding: '0.75rem 0.5rem', textAlign: 'center', color: '#475569' }}>
+                      <td style={{ padding: '0.75rem 0.5rem', textAlign: 'center', color: 'var(--text-secondary, #475569)' }}>
                         {row.thickness.toFixed(1)}
                       </td>
                       <td style={{ padding: '0.5rem 0.6rem', textAlign: 'center', background: row.bags > 0 ? '#f0fdf4' : 'transparent' }}>
@@ -909,7 +909,7 @@ export default function VattaMeasurementCalculator({
                       <td style={{ padding: '0.75rem 0.5rem', textAlign: 'center', color: '#64748b', fontWeight: 600 }}>
                         {row.eachContains}
                       </td>
-                      <td style={{ padding: '0.75rem 0.75rem', textAlign: 'right', fontWeight: 700, color: '#0f172a' }}>
+                      <td style={{ padding: '0.75rem 0.75rem', textAlign: 'right', fontWeight: 700, color: 'var(--text-primary, #0f172a)' }}>
                         {row.totalPieces.toLocaleString('en-US')}
                       </td>
                       <td style={{ padding: '0.75rem 0.75rem', textAlign: 'right', fontWeight: 800, color: 'var(--wood-accent)' }}>
@@ -919,15 +919,15 @@ export default function VattaMeasurementCalculator({
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr style={{ background: '#f8fafc', borderTop: '2px solid #0f172a', fontWeight: 800 }}>
-                    <td colSpan={5} style={{ padding: '0.85rem 0.75rem', textAlign: 'right', textTransform: 'uppercase', fontSize: '0.8rem', color: '#475569' }}>
+                  <tr style={{ background: 'var(--tag-bg, #f8fafc)', borderTop: '2px solid #0f172a', fontWeight: 800 }}>
+                    <td colSpan={5} style={{ padding: '0.85rem 0.75rem', textAlign: 'right', textTransform: 'uppercase', fontSize: '0.8rem', color: 'var(--text-secondary, #475569)' }}>
                       Grand Totals:
                     </td>
                     <td style={{ padding: '0.85rem 0.5rem', textAlign: 'center', fontSize: '1.1rem', color: 'var(--primary)' }}>
                       {calculations.grandTotalBags} Bags
                     </td>
                     <td></td>
-                    <td style={{ padding: '0.85rem 0.75rem', textAlign: 'right', fontSize: '1rem', color: '#0f172a' }}>
+                    <td style={{ padding: '0.85rem 0.75rem', textAlign: 'right', fontSize: '1rem', color: 'var(--text-primary, #0f172a)' }}>
                       {calculations.grandTotalPieces.toLocaleString('en-US')} Nos
                     </td>
                     <td style={{ padding: '0.85rem 0.75rem', textAlign: 'right', fontSize: '1.15rem', color: 'var(--wood-accent)' }}>
@@ -950,8 +950,8 @@ export default function VattaMeasurementCalculator({
           >
             <div
               style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
+                background: 'var(--card-bg, #ffffff)',
+                border: '1px solid var(--border-color, #e2e8f0)',
                 borderRadius: '12px',
                 padding: '1.25rem',
                 borderLeft: '5px solid var(--primary)',
@@ -969,8 +969,8 @@ export default function VattaMeasurementCalculator({
 
             <div
               style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
+                background: 'var(--card-bg, #ffffff)',
+                border: '1px solid var(--border-color, #e2e8f0)',
                 borderRadius: '12px',
                 padding: '1.25rem',
                 borderLeft: '5px solid #2563eb',
@@ -980,7 +980,7 @@ export default function VattaMeasurementCalculator({
               <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#64748b' }}>
                 Total Pencil Slat Pieces
               </span>
-              <div style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a', marginTop: '0.25rem' }}>
+              <div style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--text-primary, #0f172a)', marginTop: '0.25rem' }}>
                 {calculations.grandTotalPieces.toLocaleString('en-US')}
                 <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#64748b', marginLeft: '0.35rem' }}>Nos</span>
               </div>
@@ -988,8 +988,8 @@ export default function VattaMeasurementCalculator({
 
             <div
               style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
+                background: 'var(--card-bg, #ffffff)',
+                border: '1px solid var(--border-color, #e2e8f0)',
                 borderRadius: '12px',
                 padding: '1.25rem',
                 borderLeft: '5px solid var(--wood-accent)',
@@ -1009,8 +1009,8 @@ export default function VattaMeasurementCalculator({
           {/* Section 4: Live Printable Sheet Preview */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.5rem',
               boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
@@ -1056,8 +1056,8 @@ export default function VattaMeasurementCalculator({
               style={{
                 maxWidth: '750px',
                 margin: '0 auto',
-                background: '#ffffff',
-                border: '1px solid #cbd5e1',
+                background: 'var(--card-bg, #ffffff)',
+                border: '1px solid var(--border-color, #cbd5e1)',
                 padding: '2.5rem 2rem 3rem',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
                 fontFamily: '"Times New Roman", Times, serif',
@@ -1189,7 +1189,7 @@ export default function VattaMeasurementCalculator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '16px',
               maxWidth: '650px',
               width: '100%',
@@ -1231,8 +1231,8 @@ export default function VattaMeasurementCalculator({
                       style={{
                         padding: '1rem',
                         borderRadius: '10px',
-                        border: '1px solid #e2e8f0',
-                        background: '#f8fafc',
+                        border: '1px solid var(--border-color, #e2e8f0)',
+                        background: 'var(--tag-bg, #f8fafc)',
                         cursor: 'pointer',
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -1293,7 +1293,7 @@ export default function VattaMeasurementCalculator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '14px',
               maxWidth: '420px',
               width: '100%',
@@ -1305,7 +1305,7 @@ export default function VattaMeasurementCalculator({
             <h4 style={{ margin: '0 0 0.5rem', fontSize: '1.1rem', fontWeight: 800, color: '#991b1b' }}>
               Clear Measurement Sheet?
             </h4>
-            <p style={{ margin: '0 0 1.25rem', fontSize: '0.875rem', color: '#475569', lineHeight: 1.5 }}>
+            <p style={{ margin: '0 0 1.25rem', fontSize: '0.875rem', color: 'var(--text-secondary, #475569)', lineHeight: 1.5 }}>
               This will clear all entered bag quantities and invoice details. Persistent vehicle and place settings will be preserved.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
@@ -1315,8 +1315,8 @@ export default function VattaMeasurementCalculator({
                 style={{
                   padding: '0.55rem 1rem',
                   borderRadius: '7px',
-                  border: '1px solid #cbd5e1',
-                  background: '#ffffff',
+                  border: '1px solid var(--border-color, #cbd5e1)',
+                  background: 'var(--card-bg, #ffffff)',
                   fontWeight: 600,
                   fontSize: '0.85rem',
                   cursor: 'pointer'

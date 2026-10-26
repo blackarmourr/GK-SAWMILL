@@ -480,8 +480,8 @@ export default function DebitNoteGenerator({
               gap: '0.4rem',
               padding: '0.5rem 0.9rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               cursor: 'pointer',
               fontWeight: 600,
@@ -520,7 +520,7 @@ export default function DebitNoteGenerator({
                 Incentive & Bonus Billing
               </span>
             </div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', margin: '0.2rem 0 0 0' }}>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', margin: '0.2rem 0 0 0' }}>
               Debit Note Generator
             </h1>
             <p style={{ margin: 0, fontSize: '0.825rem', color: '#64748b' }}>
@@ -540,8 +540,8 @@ export default function DebitNoteGenerator({
               gap: '0.4rem',
               padding: '0.5rem 0.85rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               cursor: 'pointer',
               fontWeight: 600,
@@ -562,7 +562,7 @@ export default function DebitNoteGenerator({
               padding: '0.5rem 0.9rem',
               borderRadius: '8px',
               border: '1px solid #2d6a4f',
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               color: '#2d6a4f',
               cursor: 'pointer',
               fontWeight: 700,
@@ -623,8 +623,8 @@ export default function DebitNoteGenerator({
       {/* Benchmark Reference Quick Bar */}
       <div
         style={{
-          background: '#f8fafc',
-          border: '1px solid #e2e8f0',
+          background: 'var(--tag-bg, #f8fafc)',
+          border: '1px solid var(--border-color, #e2e8f0)',
           borderRadius: '10px',
           padding: '0.75rem 1rem',
           marginBottom: '1.25rem',
@@ -650,9 +650,9 @@ export default function DebitNoteGenerator({
               fontWeight: 700,
               padding: '0.35rem 0.75rem',
               borderRadius: '6px',
-              background: '#ffffff',
-              border: '1px solid #cbd5e1',
-              color: '#0f172a',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              color: 'var(--text-primary, #0f172a)',
               cursor: 'pointer'
             }}
           >
@@ -666,9 +666,9 @@ export default function DebitNoteGenerator({
               fontWeight: 700,
               padding: '0.35rem 0.75rem',
               borderRadius: '6px',
-              background: '#ffffff',
-              border: '1px solid #cbd5e1',
-              color: '#0f172a',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              color: 'var(--text-primary, #0f172a)',
               cursor: 'pointer'
             }}
           >
@@ -682,9 +682,9 @@ export default function DebitNoteGenerator({
               fontWeight: 700,
               padding: '0.35rem 0.75rem',
               borderRadius: '6px',
-              background: '#ffffff',
-              border: '1px solid #cbd5e1',
-              color: '#0f172a',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              color: 'var(--text-primary, #0f172a)',
               cursor: 'pointer'
             }}
           >
@@ -749,8 +749,8 @@ export default function DebitNoteGenerator({
           {/* Card 1: Document Identifiers & Consignee */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
@@ -759,7 +759,7 @@ export default function DebitNoteGenerator({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Hash size={18} color="#1e3a2b" />
-                <h2 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h2 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Debit Note Details & Consignee
                 </h2>
               </div>
@@ -787,7 +787,7 @@ export default function DebitNoteGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '0.85rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Debit Note No *
                 </label>
                 <input
@@ -798,17 +798,17 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '6px',
                     fontSize: '0.85rem',
                     fontWeight: 700,
-                    color: '#0f172a'
+                    color: 'var(--text-primary, #0f172a)'
                   }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Debit Note Date *
                 </label>
                 <input
@@ -818,7 +818,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '6px',
                     fontSize: '0.85rem'
                   }}
@@ -826,7 +826,7 @@ export default function DebitNoteGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Reference No (Optional)
                 </label>
                 <input
@@ -837,7 +837,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '6px',
                     fontSize: '0.85rem'
                   }}
@@ -848,7 +848,7 @@ export default function DebitNoteGenerator({
             {/* Consignee / Receiver Fields */}
             <div style={{ marginTop: '0.85rem', paddingTop: '0.85rem', borderTop: '1px dashed #e2e8f0' }}>
               <div style={{ marginBottom: '0.75rem' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Party Name (Consignee) *
                 </label>
                 <input
@@ -859,7 +859,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '6px',
                     fontSize: '0.85rem',
                     fontWeight: 600
@@ -868,7 +868,7 @@ export default function DebitNoteGenerator({
               </div>
 
               <div style={{ marginBottom: '0.75rem' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Address
                 </label>
                 <textarea
@@ -879,7 +879,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '6px',
                     fontSize: '0.825rem',
                     resize: 'vertical'
@@ -889,7 +889,7 @@ export default function DebitNoteGenerator({
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                     GSTIN
                   </label>
                   <input
@@ -900,7 +900,7 @@ export default function DebitNoteGenerator({
                     style={{
                       width: '100%',
                       padding: '0.45rem 0.65rem',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       borderRadius: '6px',
                       fontSize: '0.825rem',
                       fontFamily: 'monospace'
@@ -908,7 +908,7 @@ export default function DebitNoteGenerator({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                     State
                   </label>
                   <input
@@ -919,14 +919,14 @@ export default function DebitNoteGenerator({
                     style={{
                       width: '100%',
                       padding: '0.45rem 0.65rem',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       borderRadius: '6px',
                       fontSize: '0.825rem'
                     }}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                     State Code
                   </label>
                   <input
@@ -937,7 +937,7 @@ export default function DebitNoteGenerator({
                     style={{
                       width: '100%',
                       padding: '0.45rem 0.65rem',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       borderRadius: '6px',
                       fontSize: '0.825rem'
                     }}
@@ -950,8 +950,8 @@ export default function DebitNoteGenerator({
           {/* Card 2: Bonus / Incentive Description & Tax Parameters */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
@@ -959,7 +959,7 @@ export default function DebitNoteGenerator({
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.85rem' }}>
               <Layers size={18} color="#1e3a2b" />
-              <h2 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+              <h2 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                 Description of Goods & Tax Settings
               </h2>
             </div>
@@ -993,7 +993,7 @@ export default function DebitNoteGenerator({
             </div>
 
             <div style={{ marginBottom: '0.85rem' }}>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                 Description of Goods (Debit Note Header / Default) *
               </label>
               <input
@@ -1004,7 +1004,7 @@ export default function DebitNoteGenerator({
                 style={{
                   width: '100%',
                   padding: '0.5rem 0.75rem',
-                  border: '1px solid #cbd5e1',
+                  border: '1px solid var(--border-color, #cbd5e1)',
                   borderRadius: '6px',
                   fontSize: '0.85rem',
                   fontWeight: 600
@@ -1014,7 +1014,7 @@ export default function DebitNoteGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   HSN Code
                 </label>
                 <input
@@ -1025,7 +1025,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '6px',
                     fontSize: '0.85rem',
                     fontFamily: 'monospace'
@@ -1034,7 +1034,7 @@ export default function DebitNoteGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   Tax Treatment
                 </label>
                 <select
@@ -1043,7 +1043,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '6px',
                     fontSize: '0.85rem',
                     fontWeight: 600
@@ -1055,7 +1055,7 @@ export default function DebitNoteGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
                   GST Rate (%)
                 </label>
                 <select
@@ -1064,7 +1064,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '6px',
                     fontSize: '0.85rem',
                     fontWeight: 700
@@ -1082,8 +1082,8 @@ export default function DebitNoteGenerator({
           {/* Card 3: Multi-Bill Line Items Builder */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
@@ -1091,7 +1091,7 @@ export default function DebitNoteGenerator({
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem' }}>
               <div>
-                <h2 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>
+                <h2 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text-primary, #0f172a)' }}>
                   Bill Quantities & Incentive Rates ({form.items.length} {form.items.length === 1 ? 'Bill' : 'Bills'})
                 </h2>
                 <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>
@@ -1131,8 +1131,8 @@ export default function DebitNoteGenerator({
                   <div
                     key={item.id || index}
                     style={{
-                      background: '#f8fafc',
-                      border: '1px solid #cbd5e1',
+                      background: 'var(--tag-bg, #f8fafc)',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       borderRadius: '8px',
                       padding: '0.85rem',
                       position: 'relative'
@@ -1175,7 +1175,7 @@ export default function DebitNoteGenerator({
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.65rem', marginBottom: '0.65rem' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: '#475569', marginBottom: '0.2rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.2rem' }}>
                           Bill No *
                         </label>
                         <input
@@ -1186,7 +1186,7 @@ export default function DebitNoteGenerator({
                           style={{
                             width: '100%',
                             padding: '0.4rem 0.6rem',
-                            border: '1px solid #cbd5e1',
+                            border: '1px solid var(--border-color, #cbd5e1)',
                             borderRadius: '6px',
                             fontSize: '0.825rem',
                             fontWeight: 700
@@ -1195,7 +1195,7 @@ export default function DebitNoteGenerator({
                       </div>
 
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: '#475569', marginBottom: '0.2rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.2rem' }}>
                           Bill Date
                         </label>
                         <input
@@ -1205,7 +1205,7 @@ export default function DebitNoteGenerator({
                           style={{
                             width: '100%',
                             padding: '0.4rem 0.6rem',
-                            border: '1px solid #cbd5e1',
+                            border: '1px solid var(--border-color, #cbd5e1)',
                             borderRadius: '6px',
                             fontSize: '0.825rem'
                           }}
@@ -1213,7 +1213,7 @@ export default function DebitNoteGenerator({
                       </div>
 
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: '#475569', marginBottom: '0.2rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.2rem' }}>
                           Bags Qty *
                         </label>
                         <input
@@ -1225,7 +1225,7 @@ export default function DebitNoteGenerator({
                           style={{
                             width: '100%',
                             padding: '0.4rem 0.6rem',
-                            border: '1px solid #cbd5e1',
+                            border: '1px solid var(--border-color, #cbd5e1)',
                             borderRadius: '6px',
                             fontSize: '0.825rem',
                             fontWeight: 700
@@ -1234,7 +1234,7 @@ export default function DebitNoteGenerator({
                       </div>
 
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: '#475569', marginBottom: '0.2rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.2rem' }}>
                           Rate Per Bag (₹) *
                         </label>
                         <input
@@ -1247,7 +1247,7 @@ export default function DebitNoteGenerator({
                           style={{
                             width: '100%',
                             padding: '0.4rem 0.6rem',
-                            border: '1px solid #cbd5e1',
+                            border: '1px solid var(--border-color, #cbd5e1)',
                             borderRadius: '6px',
                             fontSize: '0.825rem',
                             fontWeight: 700
@@ -1259,24 +1259,24 @@ export default function DebitNoteGenerator({
                     {/* Row Financial Computations Bar */}
                     <div
                       style={{
-                        background: '#ffffff',
-                        border: '1px solid #e2e8f0',
+                        background: 'var(--card-bg, #ffffff)',
+                        border: '1px solid var(--border-color, #e2e8f0)',
                         borderRadius: '6px',
                         padding: '0.45rem 0.75rem',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         fontSize: '0.75rem',
-                        color: '#475569'
+                        color: 'var(--text-secondary, #475569)'
                       }}
                     >
                       <div>
                         <span>Taxable: </span>
-                        <strong style={{ color: '#0f172a' }}>₹{formatIndianCurrency(rowTaxable)}</strong>
+                        <strong style={{ color: 'var(--text-primary, #0f172a)' }}>₹{formatIndianCurrency(rowTaxable)}</strong>
                       </div>
                       <div>
                         <span>{form.taxTreatment === 'IGST' ? `IGST (${form.gstRate}%): ` : `GST (${form.gstRate}%): `}</span>
-                        <strong style={{ color: '#0f172a' }}>₹{formatIndianCurrency(rowGst)}</strong>
+                        <strong style={{ color: 'var(--text-primary, #0f172a)' }}>₹{formatIndianCurrency(rowGst)}</strong>
                       </div>
                       <div>
                         <span style={{ fontWeight: 700 }}>Row Total: </span>
@@ -1294,8 +1294,8 @@ export default function DebitNoteGenerator({
         <div style={{ position: 'sticky', top: '1rem' }}>
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #cbd5e1',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #cbd5e1)',
               borderRadius: '8px',
               padding: '1.25rem',
               boxShadow: '0 4px 14px rgba(0,0,0,0.08)',
@@ -1327,8 +1327,8 @@ export default function DebitNoteGenerator({
                     fontSize: '0.72rem',
                     padding: '0.3rem 0.6rem',
                     borderRadius: '4px',
-                    border: '1px solid #cbd5e1',
-                    background: '#ffffff',
+                    border: '1px solid var(--border-color, #cbd5e1)',
+                    background: 'var(--card-bg, #ffffff)',
                     cursor: 'pointer',
                     fontWeight: 600
                   }}
@@ -1359,7 +1359,7 @@ export default function DebitNoteGenerator({
               style={{
                 border: '1.5px solid #000000',
                 padding: '1.25rem',
-                background: '#ffffff',
+                background: 'var(--card-bg, #ffffff)',
                 fontSize: '0.74rem',
                 color: '#000000',
                 lineHeight: 1.4
@@ -1428,7 +1428,7 @@ export default function DebitNoteGenerator({
 
                 {/* Right Column: Details of Consignee / Receiver */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ borderBottom: '1px solid #000000', padding: '0.35rem 0.5rem', textAlign: 'center', fontWeight: 800, background: '#f8fafc' }}>
+                  <div style={{ borderBottom: '1px solid #000000', padding: '0.35rem 0.5rem', textAlign: 'center', fontWeight: 800, background: 'var(--tag-bg, #f8fafc)' }}>
                     Details of Consignee / Receiver
                   </div>
                   <div style={{ padding: '0.55rem', flex: 1 }}>
@@ -1437,7 +1437,7 @@ export default function DebitNoteGenerator({
                       {form.receiverAddress || '—'}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', padding: '0.35rem 0.55rem', borderTop: '1px solid #e2e8f0', background: '#f8fafc' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', padding: '0.35rem 0.55rem', borderTop: '1px solid #e2e8f0', background: 'var(--tag-bg, #f8fafc)' }}>
                     <span>State: <strong>{form.receiverState || '—'}</strong></span>
                     <span>State Code: <strong>{form.receiverStateCode || '—'}</strong></span>
                     <span>GSTIN: <strong>{form.receiverGstin || '—'}</strong></span>
@@ -1453,7 +1453,7 @@ export default function DebitNoteGenerator({
                   fontWeight: 800,
                   fontSize: '0.75rem',
                   marginBottom: '0.65rem',
-                  background: '#f8fafc'
+                  background: 'var(--tag-bg, #f8fafc)'
                 }}
               >
                 {form.goodsDescription || 'Annual Bonus / Incentive'}
@@ -1520,7 +1520,7 @@ export default function DebitNoteGenerator({
                   ))}
 
                   {/* Totals Summary Row */}
-                  <tr style={{ background: '#f8fafc', fontWeight: 800, borderTop: '2px solid #000000' }}>
+                  <tr style={{ background: 'var(--tag-bg, #f8fafc)', fontWeight: 800, borderTop: '2px solid #000000' }}>
                     <td colSpan={5} style={{ border: '1px solid #000000', padding: '0.35rem 0.3rem', textAlign: 'right' }}>
                       TOTAL:
                     </td>
@@ -1614,7 +1614,7 @@ export default function DebitNoteGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '12px',
               maxWidth: '680px',
               width: '100%',
@@ -1637,7 +1637,7 @@ export default function DebitNoteGenerator({
               }}
             >
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>
+                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                   Pick Saved Vatta GST Invoice
                 </h3>
                 <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>
@@ -1654,7 +1654,7 @@ export default function DebitNoteGenerator({
             </div>
 
             {/* Search Input */}
-            <div style={{ padding: '0.85rem 1.25rem', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
+            <div style={{ padding: '0.85rem 1.25rem', borderBottom: '1px solid #e2e8f0', background: 'var(--tag-bg, #f8fafc)' }}>
               <div style={{ position: 'relative' }}>
                 <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)' }} />
                 <input
@@ -1665,7 +1665,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.5rem 0.75rem 0.5rem 2.25rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '8px',
                     fontSize: '0.85rem'
                   }}
@@ -1692,7 +1692,7 @@ export default function DebitNoteGenerator({
                       key={inv.id}
                       onClick={() => handlePickVattaInvoice(inv)}
                       style={{
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         borderRadius: '8px',
                         padding: '0.85rem',
                         cursor: 'pointer',
@@ -1701,7 +1701,7 @@ export default function DebitNoteGenerator({
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         gap: '1rem',
-                        background: '#ffffff'
+                        background: 'var(--card-bg, #ffffff)'
                       }}
                       onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#1e3a2b')}
                       onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#cbd5e1')}
@@ -1729,7 +1729,7 @@ export default function DebitNoteGenerator({
                       </div>
 
                       <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '0.825rem', fontWeight: 700, color: '#0f172a' }}>
+                        <div style={{ fontSize: '0.825rem', fontWeight: 700, color: 'var(--text-primary, #0f172a)' }}>
                           ₹{formatIndianCurrency(invTotals.grandTotal || inv.grandTotal || 0)}
                         </div>
                         <div style={{ fontSize: '0.72rem', color: '#2d6a4f', fontWeight: 600, marginTop: '0.2rem' }}>
@@ -1763,7 +1763,7 @@ export default function DebitNoteGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '12px',
               maxWidth: '780px',
               width: '100%',
@@ -1786,7 +1786,7 @@ export default function DebitNoteGenerator({
               }}
             >
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>
+                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                   Debit Note Records History ({savedDebitNotesList.length})
                 </h3>
                 <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>
@@ -1803,7 +1803,7 @@ export default function DebitNoteGenerator({
             </div>
 
             {/* Search */}
-            <div style={{ padding: '0.85rem 1.25rem', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
+            <div style={{ padding: '0.85rem 1.25rem', borderBottom: '1px solid #e2e8f0', background: 'var(--tag-bg, #f8fafc)' }}>
               <div style={{ position: 'relative' }}>
                 <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)' }} />
                 <input
@@ -1814,7 +1814,7 @@ export default function DebitNoteGenerator({
                   style={{
                     width: '100%',
                     padding: '0.5rem 0.75rem 0.5rem 2.25rem',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     borderRadius: '8px',
                     fontSize: '0.85rem'
                   }}
@@ -1837,14 +1837,14 @@ export default function DebitNoteGenerator({
                   <div
                     key={dn.id}
                     style={{
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       borderRadius: '8px',
                       padding: '0.85rem',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       gap: '1rem',
-                      background: '#ffffff'
+                      background: 'var(--card-bg, #ffffff)'
                     }}
                   >
                     <div>
@@ -1869,7 +1869,7 @@ export default function DebitNoteGenerator({
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                       <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#0f172a' }}>
+                        <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                           ₹{formatIndianCurrency(dn.totalDnAmt || dn.totalDnAmount || 0)}
                         </div>
                         <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
@@ -1884,7 +1884,7 @@ export default function DebitNoteGenerator({
                           padding: '0.35rem 0.75rem',
                           borderRadius: '6px',
                           border: '1px solid #1e3a2b',
-                          background: '#ffffff',
+                          background: 'var(--card-bg, #ffffff)',
                           color: '#1e3a2b',
                           cursor: 'pointer',
                           fontWeight: 700,
@@ -1954,7 +1954,7 @@ export default function DebitNoteGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '12px',
               maxWidth: '850px',
               width: '100%',
@@ -2019,7 +2019,7 @@ export default function DebitNoteGenerator({
               style={{
                 border: '2px solid #000000',
                 padding: '1.5rem',
-                background: '#ffffff',
+                background: 'var(--card-bg, #ffffff)',
                 fontFamily: '"Helvetica Neue", Arial, sans-serif',
                 fontSize: '0.8rem',
                 lineHeight: 1.4
@@ -2078,7 +2078,7 @@ export default function DebitNoteGenerator({
 
                 {/* Right Column: Details of Consignee / Receiver */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ borderBottom: '1px solid #000000', padding: '0.4rem 0.75rem', textAlign: 'center', fontWeight: 800, background: '#f8fafc' }}>
+                  <div style={{ borderBottom: '1px solid #000000', padding: '0.4rem 0.75rem', textAlign: 'center', fontWeight: 800, background: 'var(--tag-bg, #f8fafc)' }}>
                     Details of Consignee / Receiver
                   </div>
                   <div style={{ padding: '0.75rem', flex: 1 }}>
@@ -2087,7 +2087,7 @@ export default function DebitNoteGenerator({
                       {form.receiverAddress || '—'}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', padding: '0.45rem 0.75rem', borderTop: '1px solid #e2e8f0', background: '#f8fafc' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', padding: '0.45rem 0.75rem', borderTop: '1px solid #e2e8f0', background: 'var(--tag-bg, #f8fafc)' }}>
                     <span>State: <strong>{form.receiverState || '—'}</strong></span>
                     <span>State Code: <strong>{form.receiverStateCode || '—'}</strong></span>
                     <span>GSTIN: <strong>{form.receiverGstin || '—'}</strong></span>
@@ -2095,7 +2095,7 @@ export default function DebitNoteGenerator({
                 </div>
               </div>
 
-              <div style={{ border: '1px solid #000000', padding: '0.45rem 0.65rem', fontWeight: 800, fontSize: '0.85rem', marginBottom: '0.85rem', background: '#f8fafc' }}>
+              <div style={{ border: '1px solid #000000', padding: '0.45rem 0.65rem', fontWeight: 800, fontSize: '0.85rem', marginBottom: '0.85rem', background: 'var(--tag-bg, #f8fafc)' }}>
                 {form.goodsDescription}
               </div>
 
@@ -2131,7 +2131,7 @@ export default function DebitNoteGenerator({
                       <td style={{ border: '1px solid #000000', padding: '0.45rem 0.25rem', textAlign: 'right', fontWeight: 800 }}>{formatIndianCurrency(item.totalDnAmt)}</td>
                     </tr>
                   ))}
-                  <tr style={{ background: '#f8fafc', fontWeight: 800, borderTop: '2px solid #000000' }}>
+                  <tr style={{ background: 'var(--tag-bg, #f8fafc)', fontWeight: 800, borderTop: '2px solid #000000' }}>
                     <td colSpan={5} style={{ border: '1px solid #000000', padding: '0.45rem 0.4rem', textAlign: 'right' }}>TOTAL:</td>
                     <td style={{ border: '1px solid #000000', padding: '0.45rem 0.25rem', textAlign: 'right' }}>{totals.totalBags}</td>
                     <td style={{ border: '1px solid #000000', padding: '0.45rem 0.25rem' }}></td>

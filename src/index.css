@@ -429,15 +429,62 @@ body {
   color: #64748b !important;
 }
 
+/* Force dark card surface on all container elements with white or light inline backgrounds */
+[data-theme='dark'] div[style*="#ffffff"],
+[data-theme='dark'] div[style*="rgb(255, 255, 255)"],
+[data-theme='dark'] div[style*="#f8fafc"],
+[data-theme='dark'] div[style*="rgb(248, 250, 252)"],
+[data-theme='dark'] div[style*="#f1f5f9"],
+[data-theme='dark'] div[style*="rgb(241, 245, 249)"],
+[data-theme='dark'] div[style*="#fff;"],
+[data-theme='dark'] section[style*="#ffffff"],
+[data-theme='dark'] section[style*="rgb(255, 255, 255)"],
 [data-theme='dark'] .card,
 [data-theme='dark'] .calculator-container,
 [data-theme='dark'] .panel-box,
 [data-theme='dark'] .bg-white {
   background-color: var(--card-bg) !important;
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
   border-color: var(--card-border) !important;
 }
 
+/* Secondary muted surfaces & sub-panels */
+[data-theme='dark'] div[style*="#f5efe6"],
+[data-theme='dark'] div[style*="rgb(245, 239, 230)"],
+[data-theme='dark'] div[style*="#fffbf5"],
+[data-theme='dark'] div[style*="rgb(255, 251, 245)"] {
+  background-color: var(--tag-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Buttons with white or light gray backgrounds */
+[data-theme='dark'] button[style*="#ffffff"],
+[data-theme='dark'] button[style*="rgb(255, 255, 255)"],
+[data-theme='dark'] button[style*="#f8fafc"],
+[data-theme='dark'] button[style*="rgb(248, 250, 252)"] {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Headings and labels with dark inline colors */
+[data-theme='dark'] [style*="color: #0f172a"],
+[data-theme='dark'] [style*="color: rgb(15, 23, 42)"],
+[data-theme='dark'] [style*="color: #1e293b"],
+[data-theme='dark'] [style*="color: rgb(30, 41, 59)"],
+[data-theme='dark'] [style*="color: #334155"],
+[data-theme='dark'] [style*="color: rgb(51, 65, 85)"] {
+  color: var(--text-primary) !important;
+}
+
+[data-theme='dark'] [style*="color: #475569"],
+[data-theme='dark'] [style*="color: rgb(71, 85, 105)"],
+[data-theme='dark'] [style*="color: #64748b"],
+[data-theme='dark'] [style*="color: rgb(100, 116, 139)"] {
+  color: var(--text-secondary) !important;
+}
+
+/* Tables in dark mode */
 [data-theme='dark'] table {
   color: var(--text-primary);
 }
@@ -450,19 +497,37 @@ body {
 
 [data-theme='dark'] td {
   border-color: var(--border-color) !important;
+  color: var(--text-primary);
+}
+
+/* Modal windows & dialogs */
+[data-theme='dark'] .modal-content,
+[data-theme='dark'] div[style*="maxHeight: '90vh'"],
+[data-theme='dark'] div[style*="maxHeight: '85vh'"],
+[data-theme='dark'] div[style*="maxHeight: '92vh'"] {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--card-border) !important;
 }
 
 /* Protect physical A4 printable paper preview from being inverted */
 .a4-sheet-preview,
+.a4-sheet-preview *,
 div[id*="pdf-preview"],
-div[id*="print-preview"] {
+div[id*="pdf-preview"] *,
+div[id*="print-preview"],
+div[id*="print-preview"] *,
+#printable-gst-statement,
+#printable-gst-statement * {
   background-color: #ffffff !important;
   color: #000000 !important;
+  border-color: #000000 !important;
 }
 .a4-sheet-preview *,
 div[id*="pdf-preview"] *,
-div[id*="print-preview"] * {
-  color: inherit;
+div[id*="print-preview"] *,
+#printable-gst-statement * {
+  color: inherit !important;
 }
 
 /* ==========================================================================

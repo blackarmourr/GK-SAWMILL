@@ -31,6 +31,7 @@ import {
   getSavedCreditNotes,
   saveCreditNoteRecord,
   deleteCreditNoteRecord,
+  DEFAULT_VATTA_PLY_LIST,
   DEFAULT_CREDIT_REASONS,
   DEFAULT_CREDIT_NOTE_SETTINGS,
   SAMPLE_BENCHMARK_CREDIT_NOTE_CN09
@@ -87,9 +88,10 @@ export default function CreditNoteGenerator({
     despatchedState: '',
     despatchedStateCode: '',
 
-    // Goods & Reason
-    goodsDescription: 'Vatta wood Pencil Slats\n(Rejection Refund)',
-    creditReason: 'Rejection Refund',
+    // Goods & Reason (with Ply specification)
+    ply: '8-Ply',
+    goodsDescription: 'Vatta wood Pencil Slats (8-Ply)\n(Short Width of 8-Ply)',
+    creditReason: 'Short Width of 8-Ply',
     hsnCode: '44219140',
 
     // Financial Inputs
@@ -312,6 +314,7 @@ export default function CreditNoteGenerator({
       despatchedState: creditNoteForm.despatchedState,
       despatchedStateCode: creditNoteForm.despatchedStateCode,
 
+      ply: creditNoteForm.ply || '8-Ply',
       goodsDescription: creditNoteForm.goodsDescription,
       creditReason: creditNoteForm.creditReason,
       hsnCode: creditNoteForm.hsnCode,
@@ -389,6 +392,7 @@ export default function CreditNoteGenerator({
   const handleOpenFromHistory = (cn) => {
     setCreditNoteForm({
       ...cn,
+      ply: cn.ply || '8-Ply',
       creditMode: cn.creditMode || 'direct',
       directTaxableAmount: String(cn.taxableAmount || '0'),
       itemRejections: cn.itemRejections || {}
@@ -512,7 +516,7 @@ export default function CreditNoteGenerator({
             type="button"
             onClick={onBack}
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               border: 'none',
               color: '#1e3a2b',
               padding: '0.55rem 1rem',
@@ -608,9 +612,9 @@ export default function CreditNoteGenerator({
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '14px',
-              border: '1px solid #e2e8f0',
+              border: '1px solid var(--border-color, #e2e8f0)',
               padding: '1.25rem',
               boxShadow: '0 2px 10px rgba(0, 0, 0, 0.04)'
             }}
@@ -623,7 +627,7 @@ export default function CreditNoteGenerator({
               <span
                 style={{
                   background: '#f1f5f9',
-                  color: '#475569',
+                  color: 'var(--text-secondary, #475569)',
                   padding: '0.2rem 0.5rem',
                   borderRadius: '9999px',
                   fontSize: '0.75rem',
@@ -659,7 +663,7 @@ export default function CreditNoteGenerator({
                   width: '100%',
                   padding: '0.55rem 0.75rem 0.55rem 2.25rem',
                   borderRadius: '8px',
-                  border: '1px solid #cbd5e1',
+                  border: '1px solid var(--border-color, #cbd5e1)',
                   fontSize: '0.82rem',
                   outline: 'none',
                   boxSizing: 'border-box'
@@ -704,7 +708,7 @@ export default function CreditNoteGenerator({
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748b' }}>
                         <span>Lorry: {data.vehicleNo || 'N/A'}</span>
-                        <strong style={{ color: '#0f172a' }}>
+                        <strong style={{ color: 'var(--text-primary, #0f172a)' }}>
                           ₹{formatIndianCurrency(inv.grandTotal || inv.totals?.grandTotal || 0)}
                         </strong>
                       </div>
@@ -719,9 +723,9 @@ export default function CreditNoteGenerator({
           {selectedInvoice && (
             <div
               style={{
-                background: '#f8fafc',
+                background: 'var(--tag-bg, #f8fafc)',
                 borderRadius: '14px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-color, #e2e8f0)',
                 padding: '1.25rem'
               }}
             >
@@ -763,9 +767,9 @@ export default function CreditNoteGenerator({
           {/* Main Details Card */}
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '14px',
-              border: '1px solid #e2e8f0',
+              border: '1px solid var(--border-color, #e2e8f0)',
               padding: '1.5rem',
               boxShadow: '0 2px 10px rgba(0, 0, 0, 0.04)'
             }}
@@ -788,8 +792,8 @@ export default function CreditNoteGenerator({
                   style={{
                     padding: '0.5rem 0.85rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    background: '#f8fafc',
+                    border: '1px solid var(--border-color, #cbd5e1)',
+                    background: 'var(--tag-bg, #f8fafc)',
                     color: '#334155',
                     fontSize: '0.8rem',
                     fontWeight: 700,
@@ -848,7 +852,7 @@ export default function CreditNoteGenerator({
             {/* Row 1: Document Reference Numbers */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Credit Note No *
                 </label>
                 <input
@@ -860,7 +864,7 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.55rem 0.75rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.85rem',
                     fontWeight: 700,
                     boxSizing: 'border-box'
@@ -869,7 +873,7 @@ export default function CreditNoteGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Credit Note Date *
                 </label>
                 <input
@@ -880,7 +884,7 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.55rem 0.75rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.85rem',
                     boxSizing: 'border-box'
                   }}
@@ -888,7 +892,7 @@ export default function CreditNoteGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Reference No (Ref)
                 </label>
                 <input
@@ -900,7 +904,7 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.55rem 0.75rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.85rem',
                     boxSizing: 'border-box'
                   }}
@@ -908,7 +912,7 @@ export default function CreditNoteGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Original Invoice Date
                 </label>
                 <input
@@ -919,7 +923,7 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.55rem 0.75rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.85rem',
                     boxSizing: 'border-box'
                   }}
@@ -932,8 +936,8 @@ export default function CreditNoteGenerator({
               {/* Receiver (Purchaser) */}
               <div
                 style={{
-                  background: '#f8fafc',
-                  border: '1px solid #e2e8f0',
+                  background: 'var(--tag-bg, #f8fafc)',
+                  border: '1px solid var(--border-color, #e2e8f0)',
                   borderRadius: '10px',
                   padding: '1rem'
                 }}
@@ -951,7 +955,7 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.45rem 0.65rem',
                     borderRadius: '6px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.82rem',
                     fontWeight: 700,
                     marginBottom: '0.4rem',
@@ -967,7 +971,7 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.45rem 0.65rem',
                     borderRadius: '6px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.8rem',
                     marginBottom: '0.4rem',
                     boxSizing: 'border-box'
@@ -982,7 +986,7 @@ export default function CreditNoteGenerator({
                     style={{
                       padding: '0.4rem 0.6rem',
                       borderRadius: '6px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '0.78rem',
                       boxSizing: 'border-box'
                     }}
@@ -995,7 +999,7 @@ export default function CreditNoteGenerator({
                     style={{
                       padding: '0.4rem 0.6rem',
                       borderRadius: '6px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '0.78rem',
                       boxSizing: 'border-box'
                     }}
@@ -1006,8 +1010,8 @@ export default function CreditNoteGenerator({
               {/* Despatched */}
               <div
                 style={{
-                  background: '#f8fafc',
-                  border: '1px solid #e2e8f0',
+                  background: 'var(--tag-bg, #f8fafc)',
+                  border: '1px solid var(--border-color, #e2e8f0)',
                   borderRadius: '10px',
                   padding: '1rem'
                 }}
@@ -1025,7 +1029,7 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.45rem 0.65rem',
                     borderRadius: '6px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.82rem',
                     fontWeight: 700,
                     marginBottom: '0.4rem',
@@ -1041,7 +1045,7 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.45rem 0.65rem',
                     borderRadius: '6px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.8rem',
                     marginBottom: '0.4rem',
                     boxSizing: 'border-box'
@@ -1056,7 +1060,7 @@ export default function CreditNoteGenerator({
                     style={{
                       padding: '0.4rem 0.6rem',
                       borderRadius: '6px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '0.78rem',
                       boxSizing: 'border-box'
                     }}
@@ -1069,7 +1073,7 @@ export default function CreditNoteGenerator({
                     style={{
                       padding: '0.4rem 0.6rem',
                       borderRadius: '6px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '0.78rem',
                       boxSizing: 'border-box'
                     }}
@@ -1078,30 +1082,152 @@ export default function CreditNoteGenerator({
               </div>
             </div>
 
+            {/* Dedicated Ply Specification Selector & Quick Presets (as required by Hindustan Pencils) */}
+            <div
+              style={{
+                marginBottom: '1.25rem',
+                padding: '0.9rem 1rem',
+                borderRadius: '10px',
+                background: 'var(--tag-bg, #f5efe6)',
+                border: '1px solid var(--border-color, #e2dcd2)'
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: '0.6rem',
+                  flexWrap: 'wrap',
+                  gap: '0.5rem'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 800, fontSize: '0.82rem', color: 'var(--text-primary)' }}>
+                  <Layers size={16} color="var(--wood-accent, #925c38)" />
+                  <span>Specify Ply (Required by Buyer / Hindustan Pencils):</span>
+                </div>
+                <span
+                  style={{
+                    fontSize: '0.74rem',
+                    fontWeight: 800,
+                    padding: '0.15rem 0.5rem',
+                    borderRadius: '12px',
+                    background: 'var(--primary, #1e3a2b)',
+                    color: '#ffffff'
+                  }}
+                >
+                  Selected: {creditNoteForm.ply || '8-Ply'}
+                </span>
+              </div>
+
+              {/* Ply Button Pills */}
+              <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+                {DEFAULT_VATTA_PLY_LIST.map((plyItem) => {
+                  const isSelected = (creditNoteForm.ply || '8-Ply') === plyItem
+                  return (
+                    <button
+                      key={plyItem}
+                      type="button"
+                      onClick={() => {
+                        const curReason = creditNoteForm.creditReason || 'Short Width of 8-Ply'
+                        const updatedReason = curReason.includes('Ply')
+                          ? curReason.replace(/\d-Ply/g, plyItem)
+                          : `${curReason} (${plyItem})`
+                        setCreditNoteForm({
+                          ...creditNoteForm,
+                          ply: plyItem,
+                          creditReason: updatedReason,
+                          goodsDescription: `Vatta wood Pencil Slats (${plyItem})\n(${updatedReason})`
+                        })
+                      }}
+                      style={{
+                        padding: '0.35rem 0.75rem',
+                        borderRadius: '6px',
+                        border: isSelected ? '1.5px solid var(--primary, #1e3a2b)' : '1px solid var(--border-color)',
+                        background: isSelected ? 'var(--primary, #1e3a2b)' : 'var(--card-bg, #ffffff)',
+                        color: isSelected ? '#ffffff' : 'var(--text-primary)',
+                        fontWeight: isSelected ? 800 : 600,
+                        fontSize: '0.78rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.12s ease'
+                      }}
+                    >
+                      {plyItem}
+                    </button>
+                  )
+                })}
+              </div>
+
+              {/* Company Presets Matching Hindustan Pencils Debit Note */}
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.35rem' }}>
+                Quick Reason Presets from Hindustan Pencils:
+              </div>
+              <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+                {[
+                  `Short Width of ${creditNoteForm.ply || '8-Ply'}`,
+                  `Shortage Qty - ${creditNoteForm.ply || '8-Ply'}`,
+                  `Thickness Less than 5.0mm (${creditNoteForm.ply || '8-Ply'})`,
+                  `Major Wood Defect (${creditNoteForm.ply || '8-Ply'})`,
+                  `Heavy Crack (${creditNoteForm.ply || '8-Ply'})`,
+                  `Length Less than 186mm (${creditNoteForm.ply || '8-Ply'})`,
+                  `Major Bend (${creditNoteForm.ply || '8-Ply'})`
+                ].map((preset) => {
+                  const isSelected = creditNoteForm.creditReason === preset
+                  return (
+                    <button
+                      key={preset}
+                      type="button"
+                      onClick={() => {
+                        setCreditNoteForm({
+                          ...creditNoteForm,
+                          creditReason: preset,
+                          goodsDescription: `Vatta wood Pencil Slats (${creditNoteForm.ply || '8-Ply'})\n(${preset})`
+                        })
+                      }}
+                      style={{
+                        padding: '0.25rem 0.55rem',
+                        borderRadius: '5px',
+                        border: isSelected ? '1px solid #925c38' : '1px solid var(--border-color)',
+                        background: isSelected ? '#fffbf5' : 'var(--card-bg)',
+                        color: isSelected ? '#925c38' : 'var(--text-secondary)',
+                        fontSize: '0.72rem',
+                        fontWeight: isSelected ? 800 : 500,
+                        cursor: 'pointer'
+                      }}
+                    >
+                      + {preset}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
             {/* Row 3: Goods Description & Reason */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
                   Reason for Credit Note
                 </label>
                 <select
                   value={creditNoteForm.creditReason}
                   onChange={(e) => {
                     const r = e.target.value
+                    const curPly = creditNoteForm.ply || '8-Ply'
                     setCreditNoteForm({
                       ...creditNoteForm,
                       creditReason: r,
-                      goodsDescription: `Vatta wood Pencil Slats\n(${r})`
+                      goodsDescription: `Vatta wood Pencil Slats (${curPly})\n(${r})`
                     })
                   }}
                   style={{
                     width: '100%',
                     padding: '0.55rem 0.75rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--input-border, #cbd5e1)',
                     fontSize: '0.85rem',
                     boxSizing: 'border-box',
-                    background: '#ffffff'
+                    background: 'var(--input-bg, #ffffff)',
+                    color: 'var(--input-text)'
                   }}
                 >
                   {DEFAULT_CREDIT_REASONS.map((reason) => (
@@ -1113,7 +1239,7 @@ export default function CreditNoteGenerator({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
                   HSN Code
                 </label>
                 <input
@@ -1124,15 +1250,17 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.55rem 0.75rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--input-border, #cbd5e1)',
                     fontSize: '0.85rem',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    background: 'var(--input-bg, #ffffff)',
+                    color: 'var(--input-text)'
                   }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
                   GST Tax Treatment
                 </label>
                 <select
@@ -1142,10 +1270,11 @@ export default function CreditNoteGenerator({
                     width: '100%',
                     padding: '0.55rem 0.75rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--input-border, #cbd5e1)',
                     fontSize: '0.85rem',
                     boxSizing: 'border-box',
-                    background: '#ffffff'
+                    background: 'var(--input-bg, #ffffff)',
+                    color: 'var(--input-text)'
                   }}
                 >
                   <option value="IGST">Inter-State (IGST 5%)</option>
@@ -1156,7 +1285,7 @@ export default function CreditNoteGenerator({
 
             {/* Description of Goods field */}
             <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                 Description of Goods (Appears on Printed Table)
               </label>
               <textarea
@@ -1167,7 +1296,7 @@ export default function CreditNoteGenerator({
                   width: '100%',
                   padding: '0.55rem 0.75rem',
                   borderRadius: '8px',
-                  border: '1px solid #cbd5e1',
+                  border: '1px solid var(--border-color, #cbd5e1)',
                   fontSize: '0.85rem',
                   boxSizing: 'border-box'
                 }}
@@ -1177,8 +1306,8 @@ export default function CreditNoteGenerator({
             {/* Credit Amount Input Modes */}
             <div
               style={{
-                background: '#f8fafc',
-                border: '1px solid #e2e8f0',
+                background: 'var(--tag-bg, #f8fafc)',
+                border: '1px solid var(--border-color, #e2e8f0)',
                 borderRadius: '12px',
                 padding: '1.25rem',
                 marginBottom: '1.5rem'
@@ -1240,7 +1369,7 @@ export default function CreditNoteGenerator({
                       maxWidth: '300px',
                       padding: '0.65rem 0.85rem',
                       borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '1rem',
                       fontWeight: 800,
                       color: '#1e3a2b',
@@ -1270,9 +1399,9 @@ export default function CreditNoteGenerator({
                             alignItems: 'center',
                             gap: '0.75rem',
                             padding: '0.5rem 0.75rem',
-                            background: '#ffffff',
+                            background: 'var(--card-bg, #ffffff)',
                             borderRadius: '8px',
-                            border: '1px solid #e2e8f0',
+                            border: '1px solid var(--border-color, #e2e8f0)',
                             fontSize: '0.82rem'
                           }}
                         >
@@ -1303,13 +1432,13 @@ export default function CreditNoteGenerator({
                                 width: '100%',
                                 padding: '0.35rem 0.5rem',
                                 borderRadius: '6px',
-                                border: '1px solid #cbd5e1',
+                                border: '1px solid var(--border-color, #cbd5e1)',
                                 fontSize: '0.82rem',
                                 boxSizing: 'border-box'
                               }}
                             />
                           </div>
-                          <div style={{ textAlign: 'right', color: '#475569', fontSize: '0.78rem' }}>
+                          <div style={{ textAlign: 'right', color: 'var(--text-secondary, #475569)', fontSize: '0.78rem' }}>
                             = ₹{formatIndianCurrency(lineRejectionVal)}
                           </div>
                         </div>
@@ -1324,7 +1453,7 @@ export default function CreditNoteGenerator({
             <div
               style={{
                 background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-                border: '1px solid #cbd5e1',
+                border: '1px solid var(--border-color, #cbd5e1)',
                 borderRadius: '12px',
                 padding: '1.25rem'
               }}
@@ -1332,7 +1461,7 @@ export default function CreditNoteGenerator({
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
                 <div>
                   <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Taxable Amount:</span>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                     ₹{formatIndianCurrency(calculated.taxableAmount)}
                   </div>
                 </div>
@@ -1340,13 +1469,13 @@ export default function CreditNoteGenerator({
                   <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
                     {calculated.taxTreatment === 'CGST_SGST' ? 'CGST + SGST (5%):' : 'IGST (5%):'}
                   </span>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                     ₹{formatIndianCurrency(calculated.totalGst)}
                   </div>
                 </div>
                 <div>
                   <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Round Off:</span>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                     {calculated.roundOff >= 0 ? `+${calculated.roundOff.toFixed(2)}` : calculated.roundOff.toFixed(2)}
                   </div>
                 </div>
@@ -1360,10 +1489,10 @@ export default function CreditNoteGenerator({
 
               <div
                 style={{
-                  background: '#ffffff',
+                  background: 'var(--card-bg, #ffffff)',
                   padding: '0.65rem 0.85rem',
                   borderRadius: '8px',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-color, #e2e8f0)',
                   fontSize: '0.8rem',
                   color: '#334155'
                 }}
@@ -1396,7 +1525,7 @@ export default function CreditNoteGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '16px',
               maxWidth: '820px',
               width: '100%',
@@ -1465,7 +1594,7 @@ export default function CreditNoteGenerator({
                 padding: '1.5rem',
                 fontFamily: 'serif',
                 color: '#000000',
-                background: '#ffffff'
+                background: 'var(--card-bg, #ffffff)'
               }}
             >
               {/* Header */}
@@ -1673,7 +1802,7 @@ export default function CreditNoteGenerator({
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '16px',
               maxWidth: '780px',
               width: '100%',
@@ -1731,7 +1860,7 @@ export default function CreditNoteGenerator({
                   width: '100%',
                   padding: '0.55rem 0.75rem 0.55rem 2.25rem',
                   borderRadius: '8px',
-                  border: '1px solid #cbd5e1',
+                  border: '1px solid var(--border-color, #cbd5e1)',
                   fontSize: '0.85rem',
                   boxSizing: 'border-box'
                 }}
@@ -1756,8 +1885,8 @@ export default function CreditNoteGenerator({
                     style={{
                       padding: '1rem',
                       borderRadius: '10px',
-                      border: '1px solid #e2e8f0',
-                      background: '#ffffff',
+                      border: '1px solid var(--border-color, #e2e8f0)',
+                      background: 'var(--card-bg, #ffffff)',
                       display: 'flex',
                       flexWrap: 'wrap',
                       alignItems: 'center',
@@ -1811,8 +1940,8 @@ export default function CreditNoteGenerator({
                           style={{
                             padding: '0.4rem 0.7rem',
                             borderRadius: '6px',
-                            border: '1px solid #cbd5e1',
-                            background: '#f8fafc',
+                            border: '1px solid var(--border-color, #cbd5e1)',
+                            background: 'var(--tag-bg, #f8fafc)',
                             color: '#334155',
                             fontSize: '0.75rem',
                             fontWeight: 700,

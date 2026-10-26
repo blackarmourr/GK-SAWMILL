@@ -452,7 +452,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
             padding: '0.6rem 1rem',
             borderRadius: '8px',
             border: '1px solid var(--border-color)',
-            background: '#ffffff',
+            background: 'var(--card-bg, #ffffff)',
             color: 'var(--text-primary)',
             fontWeight: 600,
             fontSize: '0.875rem',
@@ -474,8 +474,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               gap: '0.4rem',
               padding: '0.6rem 0.9rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#1e3a2b',
               fontWeight: 700,
               fontSize: '0.825rem',
@@ -495,8 +495,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               gap: '0.4rem',
               padding: '0.6rem 0.9rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               fontWeight: 600,
               fontSize: '0.825rem',
@@ -516,8 +516,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               gap: '0.4rem',
               padding: '0.6rem 0.9rem',
               borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
+              border: '1px solid var(--border-color, #cbd5e1)',
+              background: 'var(--card-bg, #ffffff)',
               color: '#334155',
               fontWeight: 600,
               fontSize: '0.825rem',
@@ -577,7 +577,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
       {/* Main Form Container */}
       <div
         style={{
-          background: '#ffffff',
+          background: 'var(--card-bg, #ffffff)',
           borderRadius: '16px',
           border: '1px solid var(--border-color)',
           boxShadow: 'var(--shadow-md)',
@@ -668,8 +668,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
           {/* SECTION A: Invoice Details */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               marginBottom: '1.5rem',
@@ -684,7 +684,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)' }}>
                     Invoice Number *
                   </label>
                   {suggestedSequence && (
@@ -708,14 +708,14 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={invoiceNo}
                   onChange={(e) => setInvoiceNo(e.target.value)}
                   placeholder="e.g. A-22"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 700, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 700, boxSizing: 'border-box' }}
                 />
                 {suggestedSequence && (
                   <div
                     style={{
                       marginTop: '0.35rem',
                       fontSize: '0.72rem',
-                      color: '#475569',
+                      color: 'var(--text-secondary, #475569)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
@@ -755,7 +755,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Invoice Date *
                 </label>
                 <input
@@ -763,12 +763,12 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={invoiceDate}
                   onChange={(e) => setInvoiceDate(e.target.value)}
                   placeholder="DD-MM-YYYY"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 600, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 600, boxSizing: 'border-box' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Vehicle Number
                 </label>
                 <input
@@ -776,12 +776,12 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={vehicleNo}
                   onChange={(e) => setVehicleNo(e.target.value)}
                   placeholder="e.g. KL-02-AN-7779"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 600, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 600, boxSizing: 'border-box' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Date of Supply
                 </label>
                 <input
@@ -789,12 +789,12 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={dateOfSupply}
                   onChange={(e) => setDateOfSupply(e.target.value)}
                   placeholder="DD-MM-YYYY"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 600, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 600, boxSizing: 'border-box' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Transportation Mode
                 </label>
                 <input
@@ -802,12 +802,12 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={transportationMode}
                   onChange={(e) => setTransportationMode(e.target.value)}
                   placeholder="e.g. Road / By Road"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Place of Supply
                 </label>
                 <input
@@ -815,12 +815,12 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={placeOfSupply}
                   onChange={(e) => setPlaceOfSupply(e.target.value)}
                   placeholder="e.g. Tamil Nadu"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 600, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 600, boxSizing: 'border-box' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Supplier State & Code
                 </label>
                 <div style={{ display: 'flex', gap: '0.4rem' }}>
@@ -829,20 +829,20 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     placeholder="State"
-                    style={{ flex: 3, padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                    style={{ flex: 3, padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                   />
                   <input
                     type="text"
                     value={stateCode}
                     onChange={(e) => setStateCode(e.target.value)}
                     placeholder="Code"
-                    style={{ flex: 1, padding: '0.65rem 0.4rem', borderRadius: '7px', border: '1px solid #cbd5e1', textAlign: 'center', fontWeight: 700, boxSizing: 'border-box' }}
+                    style={{ flex: 1, padding: '0.65rem 0.4rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', textAlign: 'center', fontWeight: 700, boxSizing: 'border-box' }}
                   />
                 </div>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   E-way Bill Number
                 </label>
                 <input
@@ -850,7 +850,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={ewayBillNo}
                   onChange={(e) => setEwayBillNo(e.target.value)}
                   placeholder="e.g. 5720 8197 3570"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 600, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 600, boxSizing: 'border-box' }}
                 />
               </div>
             </div>
@@ -859,8 +859,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
           {/* SECTION B: Receiver & Dispatched Details */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               marginBottom: '1.5rem',
@@ -886,7 +886,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                       fontSize: '0.75rem',
                       fontWeight: 600,
                       borderRadius: '5px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       background: receiverName === c.name ? '#eaf3ed' : '#ffffff',
                       color: receiverName === c.name ? 'var(--primary)' : '#334155',
                       cursor: 'pointer'
@@ -903,9 +903,9 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     fontSize: '0.75rem',
                     fontWeight: 700,
                     borderRadius: '5px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     background: '#f1f5f9',
-                    color: '#475569',
+                    color: 'var(--text-secondary, #475569)',
                     cursor: 'pointer'
                   }}
                 >
@@ -916,7 +916,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Receiver Name *
                 </label>
                 <input
@@ -924,10 +924,10 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={receiverName}
                   onChange={(e) => setReceiverName(e.target.value)}
                   placeholder="e.g. SREE AMMAN TRADERS"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 700, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 700, boxSizing: 'border-box' }}
                 />
 
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginTop: '0.75rem', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginTop: '0.75rem', marginBottom: '0.3rem' }}>
                   Receiver GSTIN
                 </label>
                 <input
@@ -935,12 +935,12 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={receiverGstin}
                   onChange={(e) => setReceiverGstin(e.target.value)}
                   placeholder="e.g. 33JYGPK7174A1ZF"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 600, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 600, boxSizing: 'border-box' }}
                 />
 
                 <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
                   <div style={{ flex: 3 }}>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                       Receiver State
                     </label>
                     <input
@@ -948,11 +948,11 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                       value={receiverState}
                       onChange={(e) => setReceiverState(e.target.value)}
                       placeholder="e.g. Tamil Nadu"
-                      style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                     />
                   </div>
                   <div style={{ flex: 1.5 }}>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                       State Code
                     </label>
                     <input
@@ -960,14 +960,14 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                       value={receiverStateCode}
                       onChange={(e) => setReceiverStateCode(e.target.value)}
                       placeholder="e.g. 33"
-                      style={{ width: '100%', padding: '0.65rem 0.5rem', borderRadius: '7px', border: '1px solid #cbd5e1', textAlign: 'center', fontWeight: 700, boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '0.65rem 0.5rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', textAlign: 'center', fontWeight: 700, boxSizing: 'border-box' }}
                     />
                   </div>
                 </div>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Receiver Address (Multi-line)
                 </label>
                 <textarea
@@ -979,7 +979,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     width: '100%',
                     padding: '0.65rem 0.8rem',
                     borderRadius: '7px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid var(--border-color, #cbd5e1)',
                     fontSize: '0.85rem',
                     fontFamily: 'inherit',
                     lineHeight: 1.4,
@@ -1014,7 +1014,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     value={dispatchedDetails}
                     onChange={(e) => setDispatchedDetails(e.target.value)}
                     placeholder="Enter dispatch address or consignee details if different from receiver..."
-                    style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', boxSizing: 'border-box' }}
                   />
                 </div>
               )}
@@ -1024,8 +1024,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
           {/* SECTION C: Products, Taxable Values & Automated CFT */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               marginBottom: '1.5rem',
@@ -1046,14 +1046,14 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               <div
                 style={{
                   background: mahoganyEnabled ? '#ffffff' : '#f8fafc',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-color, #e2e8f0)',
                   borderRadius: '10px',
                   padding: '1rem',
                   opacity: mahoganyEnabled ? 1 : 0.6
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '0.95rem', color: '#0f172a', cursor: 'pointer' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-primary, #0f172a)', cursor: 'pointer' }}>
                     <input
                       type="checkbox"
                       checked={mahoganyEnabled}
@@ -1069,7 +1069,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                       Rate per CFT (₹) *
                     </label>
                     <input
@@ -1079,7 +1079,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                       value={mahoganyRate}
                       disabled={!mahoganyEnabled}
                       onChange={(e) => setMahoganyRate(e.target.value)}
-                      style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 700, boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 700, boxSizing: 'border-box' }}
                     />
                   </div>
 
@@ -1123,14 +1123,14 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               <div
                 style={{
                   background: manjiyamEnabled ? '#ffffff' : '#f8fafc',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-color, #e2e8f0)',
                   borderRadius: '10px',
                   padding: '1rem',
                   opacity: manjiyamEnabled ? 1 : 0.6
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '0.95rem', color: '#0f172a', cursor: 'pointer' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-primary, #0f172a)', cursor: 'pointer' }}>
                     <input
                       type="checkbox"
                       checked={manjiyamEnabled}
@@ -1146,7 +1146,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                       Rate per CFT (₹) *
                     </label>
                     <input
@@ -1156,7 +1156,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                       value={manjiyamRate}
                       disabled={!manjiyamEnabled}
                       onChange={(e) => setManjiyamRate(e.target.value)}
-                      style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 700, boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 700, boxSizing: 'border-box' }}
                     />
                   </div>
 
@@ -1199,8 +1199,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               {/* Combined Volume Banner (CFT & CBM) */}
               <div
                 style={{
-                  background: '#f8fafc',
-                  border: '1px solid #cbd5e1',
+                  background: 'var(--tag-bg, #f8fafc)',
+                  border: '1px solid var(--border-color, #cbd5e1)',
                   borderRadius: '10px',
                   padding: '1rem 1.25rem',
                   display: 'flex',
@@ -1214,7 +1214,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>
                     Combined Total Quantity:
                   </span>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 900, color: '#0f172a' }}>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary, #0f172a)' }}>
                     {calculations.totalCft.toFixed(2)} CFT
                   </div>
                   <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>
@@ -1237,7 +1237,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                         width: '120px',
                         padding: '0.45rem 0.6rem',
                         borderRadius: '6px',
-                        border: '1px solid #cbd5e1',
+                        border: '1px solid var(--border-color, #cbd5e1)',
                         fontSize: '0.85rem',
                         fontWeight: 700,
                         textAlign: 'center'
@@ -1266,8 +1266,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
           {/* SECTION D: Tax Treatment & GST Breakdown */}
           <div
             style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
+              background: 'var(--card-bg, #ffffff)',
+              border: '1px solid var(--border-color, #e2e8f0)',
               borderRadius: '12px',
               padding: '1.25rem',
               marginBottom: '1.5rem',
@@ -1281,7 +1281,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   GST Tax Treatment
                 </label>
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -1323,7 +1323,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Total GST Rate (%)
                 </label>
                 <input
@@ -1331,12 +1331,12 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   step="any"
                   value={gstRate}
                   onChange={(e) => setGstRate(e.target.value)}
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', fontWeight: 700, boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 700, boxSizing: 'border-box' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Freight Charges (₹)
                 </label>
                 <input
@@ -1345,12 +1345,12 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={freight}
                   onChange={(e) => setFreight(e.target.value)}
                   placeholder="Optional"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.3rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
                   Discount (₹)
                 </label>
                 <input
@@ -1359,7 +1359,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   value={discount}
                   onChange={(e) => setDiscount(e.target.value)}
                   placeholder="Optional"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                 />
               </div>
             </div>
@@ -1368,7 +1368,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
           {/* SECTION E: Live Invoice Summary & Grand Total Card */}
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               border: '2px solid var(--primary)',
               borderRadius: '12px',
               padding: '1.5rem',
@@ -1379,7 +1379,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
               <div>
                 <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>Sub Total</span>
-                <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a' }}>₹{calculations.subTotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+                <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>₹{calculations.subTotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
               </div>
 
               <div>
@@ -1391,7 +1391,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                 <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>
                   {taxTreatment === 'IGST' ? `IGST (${calculations.igstRate}%)` : `CGST (${calculations.cgstRate}%) + SGST (${calculations.sgstRate}%)`}
                 </span>
-                <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a' }}>₹{calculations.totalGst.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+                <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>₹{calculations.totalGst.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
               </div>
 
               <div style={{ background: '#eaf3ed', padding: '0.75rem 1rem', borderRadius: '10px' }}>
@@ -1401,7 +1401,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
             </div>
 
             {/* In Words */}
-            <div style={{ background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.85rem' }}>
+            <div style={{ background: 'var(--tag-bg, #f8fafc)', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--border-color, #e2e8f0)', fontSize: '0.85rem' }}>
               <strong>Grand Total in Words:</strong> ( {calculations.grandTotalWords} )
             </div>
           </div>
@@ -1441,8 +1441,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   gap: '0.45rem',
                   padding: '0.85rem 1.25rem',
                   borderRadius: '10px',
-                  border: '1px solid #cbd5e1',
-                  background: '#ffffff',
+                  border: '1px solid var(--border-color, #cbd5e1)',
+                  background: 'var(--card-bg, #ffffff)',
                   color: '#334155',
                   fontWeight: 700,
                   fontSize: '0.9rem',
@@ -1479,7 +1479,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '16px',
               maxWidth: '600px',
               width: '100%',
@@ -1512,7 +1512,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   type="text"
                   value={settings.businessName}
                   onChange={(e) => setSettings({ ...settings, businessName: e.target.value })}
-                  style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                 />
               </div>
 
@@ -1523,7 +1523,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     type="text"
                     value={settings.gstin}
                     onChange={(e) => setSettings({ ...settings, gstin: e.target.value })}
-                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                   />
                 </div>
                 <div>
@@ -1532,7 +1532,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     type="text"
                     value={settings.telephone}
                     onChange={(e) => setSettings({ ...settings, telephone: e.target.value })}
-                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                   />
                 </div>
               </div>
@@ -1543,7 +1543,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   type="text"
                   value={settings.email}
                   onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                  style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                 />
               </div>
 
@@ -1554,7 +1554,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     type="number"
                     value={settings.mahoganyDefaultRate}
                     onChange={(e) => setSettings({ ...settings, mahoganyDefaultRate: parseFloat(e.target.value) || 215 })}
-                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                   />
                 </div>
                 <div>
@@ -1563,7 +1563,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     type="number"
                     value={settings.manjiyamDefaultRate}
                     onChange={(e) => setSettings({ ...settings, manjiyamDefaultRate: parseFloat(e.target.value) || 210 })}
-                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                   />
                 </div>
               </div>
@@ -1575,7 +1575,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                     type="number"
                     value={settings.defaultGstRate}
                     onChange={(e) => setSettings({ ...settings, defaultGstRate: parseFloat(e.target.value) || 18 })}
-                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                   />
                 </div>
                 <div>
@@ -1583,7 +1583,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   <select
                     value={settings.roundingMode}
                     onChange={(e) => setSettings({ ...settings, roundingMode: e.target.value })}
-                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '0.55rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', boxSizing: 'border-box' }}
                   >
                     <option value="exact">Exact (Show exact paise)</option>
                     <option value="nearest_rupee">Nearest Rupee (Round off)</option>
@@ -1636,7 +1636,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
         >
           <div
             style={{
-              background: '#ffffff',
+              background: 'var(--card-bg, #ffffff)',
               borderRadius: '16px',
               maxWidth: '650px',
               width: '100%',
@@ -1672,7 +1672,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                   <div
                     key={inv.id}
                     style={{
-                      border: '1px solid #e2e8f0',
+                      border: '1px solid var(--border-color, #e2e8f0)',
                       borderRadius: '8px',
                       padding: '0.85rem 1rem',
                       display: 'flex',
@@ -1685,7 +1685,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
                       <div style={{ fontWeight: 800, color: 'var(--primary)', fontSize: '0.95rem' }}>
                         Invoice #{inv.invoiceNo} &bull; {inv.invoiceDate}
                       </div>
-                      <div style={{ fontSize: '0.8rem', color: '#475569' }}>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary, #475569)' }}>
                         Customer: {inv.receiverName || 'N/A'} | Vehicle: {inv.vehicleNo || 'N/A'}
                       </div>
                     </div>

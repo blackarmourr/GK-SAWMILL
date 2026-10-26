@@ -1506,8 +1506,8 @@ export default function GstMonthlyFilingRegister({
         >
           <div
             style={{
-              background: '#ffffff',
-              color: '#0f172a',
+              background: 'var(--card-bg, #ffffff)',
+              color: 'var(--text-primary, #0f172a)',
               borderRadius: '16px',
               maxWidth: '900px',
               width: '100%',
@@ -1561,8 +1561,8 @@ export default function GstMonthlyFilingRegister({
                   style={{
                     padding: '0.5rem 0.8rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    background: '#f8fafc',
+                    border: '1px solid var(--border-color, #cbd5e1)',
+                    background: 'var(--tag-bg, #f8fafc)',
                     cursor: 'pointer',
                     fontWeight: 700
                   }}
@@ -1579,13 +1579,13 @@ export default function GstMonthlyFilingRegister({
                 <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900, color: '#1e3a2b', letterSpacing: '0.04em' }}>
                   G.K. SAW MILL
                 </h2>
-                <div style={{ fontSize: '0.85rem', color: '#475569', marginTop: '0.2rem' }}>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #475569)', marginTop: '0.2rem' }}>
                   KATOOR, NEDUMPANA - P.O., KOLLAM, KERALA - 691576
                 </div>
-                <div style={{ fontSize: '0.85rem', color: '#475569', marginTop: '0.1rem' }}>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #475569)', marginTop: '0.1rem' }}>
                   Telephone: 9446786175 • Email: anilkumarkottiyam175@gmail.com
                 </div>
-                <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f172a', marginTop: '0.35rem' }}>
+                <div style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', marginTop: '0.35rem' }}>
                   GSTIN: 32AHOPG1823G1ZP (STATE CODE: 32 - KERALA)
                 </div>
               </div>
@@ -1595,8 +1595,8 @@ export default function GstMonthlyFilingRegister({
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  background: '#f8fafc',
-                  border: '1px solid #e2e8f0',
+                  background: 'var(--tag-bg, #f8fafc)',
+                  border: '1px solid var(--border-color, #e2e8f0)',
                   borderRadius: '8px',
                   padding: '0.85rem 1.25rem',
                   marginBottom: '1.25rem'
@@ -1615,7 +1615,7 @@ export default function GstMonthlyFilingRegister({
                   <div style={{ fontSize: '0.78rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700 }}>
                     Tax Period
                   </div>
-                  <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0f172a' }}>
+                  <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
                     {activeMonth.label} ({activeMonth.financialYear})
                   </div>
                   <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
@@ -1665,10 +1665,10 @@ export default function GstMonthlyFilingRegister({
               {/* Tax Reconciliation Summary Table */}
               <div
                 style={{
-                  border: '1px solid #cbd5e1',
+                  border: '1px solid var(--border-color, #cbd5e1)',
                   borderRadius: '8px',
                   padding: '1rem',
-                  background: '#f8fafc',
+                  background: 'var(--tag-bg, #f8fafc)',
                   marginBottom: '2rem'
                 }}
               >

@@ -12,9 +12,27 @@ export const CREDIT_NOTE_STORAGE_KEYS = {
   CREDIT_NOTES: 'gk_sawmill_credit_notes_records'
 }
 
+export const DEFAULT_VATTA_PLY_LIST = [
+  '8-Ply',
+  '7-Ply',
+  '6-Ply',
+  '5-Ply',
+  '4-Ply',
+  '3-Ply',
+  'All Plies'
+]
+
 export const DEFAULT_CREDIT_REASONS = [
+  'Short Width of 8-Ply',
+  'Shortage Qty - 8 Ply',
+  'Short Width (Rate Difference)',
+  'Shortage Quantity',
+  'Thickness Less than 5.0mm',
+  'Major Wood Defect',
+  'Heavy Crack',
+  'Length Less than 186mm',
+  'Major Bend',
   'Rejection Refund',
-  'Shortage Refund',
   'Rate Difference Adjustment',
   'Quality Discount',
   'Damaged / Defective Slats Returned',
@@ -36,6 +54,9 @@ export const SAMPLE_BENCHMARK_CREDIT_NOTE_CN09 = {
   creditNoteNo: 'CN-09',
   creditNoteDate: '2026-10-17',
   referenceNo: '',
+
+  // Ply specification
+  ply: '8-Ply',
 
   // Linked to original Vatta invoice A-20
   originalInvoiceId: 'vatta_inv_sample_a20',
@@ -61,8 +82,8 @@ export const SAMPLE_BENCHMARK_CREDIT_NOTE_CN09 = {
   despatchedStateCode: '33',
 
   // Goods and credit item
-  goodsDescription: 'Vatta wood Pencil Slats\n(Rejection Refund)',
-  creditReason: 'Rejection Refund',
+  goodsDescription: 'Vatta wood Pencil Slats (8-Ply)\n(Short Width of 8-Ply)',
+  creditReason: 'Short Width of 8-Ply',
   hsnCode: '44219140',
 
   // Calculations matching benchmark image exactly

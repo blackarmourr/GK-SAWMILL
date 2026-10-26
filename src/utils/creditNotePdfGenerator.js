@@ -337,17 +337,30 @@ export function generateCreditNotePdf(creditNoteData, save = true) {
   // SL No
   doc.text('1', colX.slNo + colW.slNo / 2, itemY, { align: 'center' })
 
-  // Description of Goods (multiline if contains reason)
-  const descLines = goodsDescription.split('\n')
+  // Description of Goods (incorporating ply specification if not already present)
+  const ply = creditNoteData.ply || ''
+  let finalDesc = (goodsDescription || 'Vatta wood Pencil Slats').trim()
+  if (ply && !finalDesc.toLowerCase().includes(ply.toLowerCase())) {
+    // If not already in first line, include ply clearly
+    const lines = finalDesc.split('\n')
+    lines[0] = `${lines[0]} (${ply})`
+    finalDesc = lines.join('\n')
+  }
+
+  const descParagraphs = finalDesc.split('\n')
   let curDescY = itemY
-  descLines.forEach((dLine, idx) => {
+  const maxDescWidth = colW.desc - 5
+  descParagraphs.forEach((dLine, idx) => {
     if (idx === 0) {
       doc.setFont('times', 'bold')
     } else {
       doc.setFont('times', 'normal')
     }
-    doc.text(dLine.trim(), colX.desc + 2.5, curDescY)
-    curDescY += 4.5
+    const wrapped = doc.splitTextToSize(dLine.trim(), maxDescWidth)
+    wrapped.forEach(w => {
+      doc.text(w, colX.desc + 2.5, curDescY)
+      curDescY += 4.2
+    })
   })
 
   // HSN Code

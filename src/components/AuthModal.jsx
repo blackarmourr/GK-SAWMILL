@@ -176,13 +176,13 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
     >
       <div
         style={{
-          background: '#ffffff',
+          background: 'var(--card-bg, #ffffff)',
           borderRadius: '16px',
           maxWidth: '460px',
           width: '100%',
           overflow: 'hidden',
           boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-color, #e2e8f0)'
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -300,7 +300,7 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.35rem',
-                    background: '#ffffff',
+                    background: 'var(--card-bg, #ffffff)',
                     border: '1px solid #86efac',
                     borderRadius: '9999px',
                     padding: '0.25rem 0.75rem',
@@ -343,9 +343,9 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
                     flex: 1,
                     padding: '0.65rem',
                     borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    background: '#f8fafc',
-                    color: '#475569',
+                    border: '1px solid var(--border-color, #cbd5e1)',
+                    background: 'var(--tag-bg, #f8fafc)',
+                    color: 'var(--text-secondary, #475569)',
                     fontWeight: 700,
                     cursor: 'pointer'
                   }}
@@ -405,7 +405,7 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
                   onClick={handleTestPing}
                   disabled={pinging}
                   style={{
-                    background: '#ffffff',
+                    background: 'var(--card-bg, #ffffff)',
                     border: '1px solid #86efac',
                     borderRadius: '6px',
                     padding: '0.35rem 0.65rem',
@@ -471,7 +471,7 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
                       width: '100%',
                       padding: '0.65rem 0.75rem 0.65rem 2.25rem',
                       borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '0.88rem',
                       outline: 'none',
                       boxSizing: 'border-box'
@@ -513,7 +513,7 @@ export default function AuthModal({ isOpen, onClose, onAuthChange }) {
                       width: '100%',
                       padding: '0.65rem 0.75rem 0.65rem 2.25rem',
                       borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid var(--border-color, #cbd5e1)',
                       fontSize: '0.88rem',
                       outline: 'none',
                       boxSizing: 'border-box'
