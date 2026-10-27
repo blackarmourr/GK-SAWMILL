@@ -549,7 +549,7 @@ export async function syncVattaInvoiceToSupabase(record) {
     forest_pass_no: data.forestPassNo || null,
     total_measurement: Number(data.totalMeasurement) || null,
     eway_bill_no: data.ewayBillNo || null,
-    reverse_charge: data.reverseCharge || 'No',
+    reverse_charge: data.reverseCharge !== undefined && data.reverseCharge !== null ? data.reverseCharge : '',
 
     receiver_name: data.receiverName || 'Unnamed Purchaser',
     receiver_address: data.receiverAddress || null,

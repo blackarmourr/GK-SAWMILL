@@ -499,7 +499,7 @@ export default function VattaMeasurementCalculator({
         )}
 
         {/* Form Body */}
-        <div style={{ padding: '1.5rem', background: '#fafbfc' }}>
+        <div style={{ padding: '1.5rem', background: 'var(--card-bg)' }}>
           
           {/* Link & Load from Vatta GST Invoice Bar */}
           <div

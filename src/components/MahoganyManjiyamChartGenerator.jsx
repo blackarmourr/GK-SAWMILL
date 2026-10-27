@@ -976,7 +976,7 @@ export default function MahoganyManjiyamChartGenerator({ onBack }) {
         <div
           style={{
             padding: '1rem 1.5rem',
-            background: '#f1f5f9',
+            background: 'var(--tag-bg)',
             borderBottom: '1px solid var(--border-color)',
             display: 'flex',
             alignItems: 'center',

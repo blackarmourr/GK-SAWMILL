@@ -128,7 +128,9 @@ function App() {
     window.history.replaceState({ view: initialView }, '', initialView === 'home' ? '#' : `#${initialView}`)
 
     const handlePopState = (event) => {
-      const targetView = event.state?.view || (window.location.hash ? window.location.hash.replace('#', '') : 'home')
+      const hash = window.location.hash.replace('#', '')
+      const targetView = event.state?.view || (hash && hash !== 'home' ? hash : 'home')
+      setDocToLoad(null)
       setCurrentView(targetView || 'home')
     }
 
@@ -143,10 +145,10 @@ function App() {
   }
 
   const handleGoHome = () => {
-    if (window.history.state?.view && window.history.state.view !== 'home') {
-      window.history.back()
-    } else {
-      navigateToView('home')
+    setDocToLoad(null)
+    setCurrentView('home')
+    if (window.location.hash && window.location.hash !== '#' && window.location.hash !== '#home') {
+      window.history.pushState({ view: 'home' }, '', '#')
     }
   }
 

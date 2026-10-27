@@ -564,14 +564,14 @@ export default function CreditNoteGenerator({
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-              <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: 800, color: '#1e293b', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <FileText size={18} color="#1e3a2b" />
+              <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <FileText size={18} color="var(--primary)" />
                 Select Vatta Invoice
               </h2>
               <span
                 style={{
-                  background: '#f1f5f9',
-                  color: 'var(--text-secondary, #475569)',
+                  background: 'var(--tag-bg)',
+                  color: 'var(--text-secondary)',
                   padding: '0.2rem 0.5rem',
                   borderRadius: '9999px',
                   fontSize: '0.75rem',
@@ -1759,10 +1759,10 @@ export default function CreditNoteGenerator({
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: '#1e3a2b' }}>
+                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                   Saved Credit Notes History
                 </h3>
-                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
                   {savedCreditNotesList.length} credit notes recorded
                 </span>
               </div>
@@ -1771,9 +1771,9 @@ export default function CreditNoteGenerator({
                 onClick={() => setShowHistoryModal(false)}
                 style={{
                   padding: '0.4rem 0.8rem',
-                  background: '#e2e8f0',
-                  color: '#334155',
-                  border: 'none',
+                  background: 'var(--tag-bg)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontWeight: 700,
                   cursor: 'pointer'

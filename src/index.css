@@ -605,6 +605,9 @@ body {
 
 /* Modal windows & dialogs */
 [data-theme='dark'] .modal-content,
+[data-theme='dark'] div[style*="max-height: 90vh"],
+[data-theme='dark'] div[style*="max-height: 85vh"],
+[data-theme='dark'] div[style*="max-height: 92vh"],
 [data-theme='dark'] div[style*="maxHeight: '90vh'"],
 [data-theme='dark'] div[style*="maxHeight: '85vh'"],
 [data-theme='dark'] div[style*="maxHeight: '92vh'"] {
