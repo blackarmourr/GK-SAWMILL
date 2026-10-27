@@ -216,6 +216,13 @@ export default function VattaMeasurementCalculator({
     notify('Measurement form cleared.')
   }
 
+  // Header Reset Action
+  const handleReset = () => {
+    if (window.confirm('Reset this measurement form to a blank draft?')) {
+      handleConfirmClear()
+    }
+  }
+
   // Save current sheet to localStorage
   const handleSaveSheet = () => {
     if (!lorryRegNo.trim()) {
