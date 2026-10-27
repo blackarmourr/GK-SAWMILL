@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import {
+  ArrowLeft,
   FolderArchive,
   Folder,
   FolderOpen,
@@ -322,81 +323,24 @@ export default function GstMonthlyFilingRegister({
         </div>
       )}
 
-      {/* Top Navigation & Brand Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          marginBottom: '1.5rem',
-          paddingBottom: '1rem',
-          borderBottom: '1px solid var(--border-color, #e2dcd2)'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+      {/* Standardized Module Header */}
+      <div className="module-top-header">
+        <div className="module-top-left">
           <button
             type="button"
             onClick={onBack}
-            className="back-nav-btn"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.55rem 1rem',
-              borderRadius: '8px',
-              border: '1px solid var(--border-color, #cbd5e1)',
-              background: 'var(--card-bg, #ffffff)',
-              color: 'var(--text-primary, #1e293b)',
-              fontWeight: 700,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
+            className="module-back-btn"
+            aria-label="Back to Dashboard"
           >
-            &larr; Back to Dashboard
+            <ArrowLeft size={16} />
+            <span>Back to Dashboard</span>
           </button>
-
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '8px',
-                  background: 'var(--primary, #1e3a2b)',
-                  color: '#ffffff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
-                <FolderArchive size={18} />
-              </div>
-              <h1 style={{ fontSize: '1.35rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>
-                GST Monthly Register & GSTR-1 Filing
-              </h1>
-              <span
-                style={{
-                  fontSize: '0.72rem',
-                  fontWeight: 800,
-                  padding: '0.2rem 0.6rem',
-                  borderRadius: '20px',
-                  background: '#2d6a4f',
-                  color: '#ffffff',
-                  letterSpacing: '0.04em'
-                }}
-              >
-                MODULE 08
-              </span>
-            </div>
-            <p style={{ margin: '0.2rem 0 0', fontSize: '0.82rem', color: 'var(--text-muted, #64748b)' }}>
-              Monthly outward invoice dossier for GSTR-1 return filing & GSTR-3B tax payment
-            </p>
-          </div>
+          <h1 className="module-page-title">
+            GST Monthly Invoices & Filing (GSTR-1)
+          </h1>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+        <div className="module-top-actions">
           <div
             style={{
               display: 'inline-flex',

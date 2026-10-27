@@ -67,9 +67,6 @@ import { downloadVatPdf } from '../utils/vatPdfGenerator.js'
 
 export default function KeralaVatBillGenerator({
   onBack,
-  onOpenVatta,
-  onOpenInvoice,
-  onOpenSizeChart,
   initialRecord
 }) {
   // Stored Profiles & Defaults
@@ -773,68 +770,24 @@ export default function KeralaVatBillGenerator({
       )}
 
       {/* Top Header & Navigation Bar */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          marginBottom: '1.5rem',
-          paddingBottom: '1rem',
-          borderBottom: '1px solid #e2e8f0'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+      <div className="module-top-header">
+        <div className="module-top-left">
           <button
             type="button"
             onClick={onBack}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.5rem 0.9rem',
-              borderRadius: '8px',
-              border: '1px solid var(--border-color, #cbd5e1)',
-              background: 'var(--card-bg, #ffffff)',
-              color: '#334155',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer'
-            }}
+            className="module-back-btn"
+            aria-label="Back to Dashboard"
           >
             <ArrowLeft size={16} />
-            Dashboard
+            <span>Back to Dashboard</span>
           </button>
-
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span
-                style={{
-                  background: '#1e3a2b',
-                  color: '#ffffff',
-                  fontSize: '0.7rem',
-                  fontWeight: 800,
-                  padding: '0.2rem 0.5rem',
-                  borderRadius: '4px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em'
-                }}
-              >
-                Module 05
-              </span>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', margin: 0 }}>
-                Kerala VAT Bill Generator
-              </h2>
-            </div>
-            <p style={{ margin: '0.15rem 0 0', fontSize: '0.825rem', color: '#64748b' }}>
-              Kerala Value Added Tax Rules - 2005 Form No. 8F • Interstate Purchase / Stock Transfer Bill (Rule 66(6))
-            </p>
-          </div>
+          <h1 className="module-page-title">
+            Kerala VAT Bill Generator
+          </h1>
         </div>
 
         {/* Action Buttons */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.5rem' }}>
+        <div className="module-top-actions">
           <button
             type="button"
             onClick={handleLoadSample}

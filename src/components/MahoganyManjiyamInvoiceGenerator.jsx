@@ -35,7 +35,7 @@ import { convertNumberToIndianWords } from '../utils/numberToWords.js'
 import { generateInvoicePdf } from '../utils/invoicePdfGenerator.js'
 import { getNextSuggestedInvoice } from '../utils/invoiceSequenceHelper.js'
 
-export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeChart, initialRecord }) {
+export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord }) {
   // Settings & Storage State
   const [settings, setSettings] = useState(() => getStoredSettings())
   const [savedCustomers, setSavedCustomers] = useState(() => getSavedCustomers())
@@ -440,50 +440,43 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1.5rem 1rem 3rem' }}>
       
-      {/* Top Navigation & Action Controls */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-        <button
-          type="button"
-          onClick={onBack}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.6rem 1rem',
-            borderRadius: '8px',
-            border: '1px solid var(--border-color)',
-            background: 'var(--card-bg, #ffffff)',
-            color: 'var(--text-primary)',
-            fontWeight: 600,
-            fontSize: '0.875rem',
-            cursor: 'pointer',
-            boxShadow: 'var(--shadow-sm)'
-          }}
-        >
-          <ArrowLeft size={16} />
-          Back to Dashboard
-        </button>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+      {/* Standardized Module Header */}
+      <div className="module-top-header">
+        <div className="module-top-left">
           <button
             type="button"
-            onClick={onOpenSizeChart}
+            onClick={onBack}
+            className="module-back-btn"
+            aria-label="Back to Dashboard"
+          >
+            <ArrowLeft size={16} />
+            <span>Back to Dashboard</span>
+          </button>
+          <h1 className="module-page-title">
+            Mahogany & Manjiyam Invoice Generator
+          </h1>
+        </div>
+
+        <div className="module-top-actions">
+          <button
+            type="button"
+            onClick={handleNewInvoice}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              padding: '0.6rem 0.9rem',
+              padding: '0.5rem 0.85rem',
               borderRadius: '8px',
-              border: '1px solid var(--border-color, #cbd5e1)',
-              background: 'var(--card-bg, #ffffff)',
-              color: '#1e3a2b',
+              border: '1px solid var(--border-color)',
+              background: 'var(--tag-bg)',
+              color: 'var(--text-primary)',
               fontWeight: 700,
-              fontSize: '0.825rem',
+              fontSize: '0.8rem',
               cursor: 'pointer'
             }}
           >
-            <Sparkles size={14} color="#925c38" />
-            Size Chart Generator &rarr;
+            <RotateCcw size={14} />
+            New Invoice
           </button>
 
           <button
@@ -493,17 +486,17 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              padding: '0.6rem 0.9rem',
+              padding: '0.5rem 0.85rem',
               borderRadius: '8px',
-              border: '1px solid var(--border-color, #cbd5e1)',
-              background: 'var(--card-bg, #ffffff)',
-              color: '#334155',
-              fontWeight: 600,
-              fontSize: '0.825rem',
+              border: '1px solid var(--border-color)',
+              background: 'var(--card-bg)',
+              color: 'var(--text-primary)',
+              fontWeight: 700,
+              fontSize: '0.8rem',
               cursor: 'pointer'
             }}
           >
-            <FolderOpen size={15} />
+            <FolderOpen size={14} />
             Saved Invoices ({savedInvoices.length})
           </button>
 
@@ -514,18 +507,40 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              padding: '0.6rem 0.9rem',
+              padding: '0.5rem 0.85rem',
               borderRadius: '8px',
-              border: '1px solid var(--border-color, #cbd5e1)',
-              background: 'var(--card-bg, #ffffff)',
-              color: '#334155',
-              fontWeight: 600,
-              fontSize: '0.825rem',
+              border: '1px solid var(--border-color)',
+              background: 'var(--card-bg)',
+              color: 'var(--text-primary)',
+              fontWeight: 700,
+              fontSize: '0.8rem',
               cursor: 'pointer'
             }}
           >
-            <Settings size={15} />
+            <Settings size={14} />
             Settings
+          </button>
+
+          <button
+            type="button"
+            onClick={handleSaveInvoice}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 0.95rem',
+              borderRadius: '8px',
+              border: 'none',
+              background: '#d4a373',
+              color: '#1e3a2b',
+              fontWeight: 800,
+              fontSize: '0.8rem',
+              cursor: 'pointer',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
+            }}
+          >
+            <Save size={14} />
+            Save Invoice
           </button>
         </div>
       </div>
@@ -535,19 +550,19 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
         <div
           style={{
             marginBottom: '1rem',
-            background: '#ecfdf5',
-            border: '1px solid #a7f3d0',
+            background: 'var(--primary-soft, #eaf3ed)',
+            border: '1px solid var(--primary)',
             borderRadius: '8px',
             padding: '0.75rem 1rem',
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            color: '#065f46',
+            color: 'var(--text-primary)',
             fontSize: '0.875rem',
             fontWeight: 700
           }}
         >
-          <CheckCircle2 size={18} />
+          <CheckCircle2 size={18} color="#10b981" />
           <span>{notification}</span>
         </div>
       )}
@@ -557,7 +572,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
         <div
           style={{
             marginBottom: '1rem',
-            background: '#fef2f2',
+            background: '#fee2e2',
             border: '1px solid #fecaca',
             borderRadius: '8px',
             padding: '0.75rem 1rem',
@@ -585,85 +600,8 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, onOpenSizeCha
           marginBottom: '2rem'
         }}
       >
-        {/* Module Header Bar */}
-        <div
-          style={{
-            background: 'linear-gradient(135deg, #162c20 0%, #1e3a2b 100%)',
-            color: '#ffffff',
-            padding: '1.5rem',
-            borderBottom: '3px solid #d4a373',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '1rem'
-          }}
-        >
-          <div>
-            <span
-              style={{
-                fontSize: '0.75rem',
-                fontWeight: 800,
-                textTransform: 'uppercase',
-                letterSpacing: '0.06em',
-                background: 'rgba(255,255,255,0.15)',
-                padding: '0.25rem 0.65rem',
-                borderRadius: '9999px',
-                color: '#fef3c7'
-              }}
-            >
-              FORM GST INVOICE - I
-            </span>
-            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '0.35rem' }}>
-              Mahogany & Manjiyam Invoice Generator
-            </h2>
-            <p style={{ fontSize: '0.85rem', color: '#a7f3d0' }}>
-              Enter taxable amounts to auto-calculate wood CFT & CBM volume, compute GST, and print official A4 tax invoices.
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button
-              type="button"
-              onClick={handleNewInvoice}
-              style={{
-                padding: '0.6rem 0.9rem',
-                borderRadius: '8px',
-                border: '1px solid rgba(255,255,255,0.3)',
-                background: 'rgba(255,255,255,0.1)',
-                color: '#ffffff',
-                fontSize: '0.825rem',
-                fontWeight: 600,
-                cursor: 'pointer'
-              }}
-            >
-              New Invoice
-            </button>
-            <button
-              type="button"
-              onClick={handleSaveInvoice}
-              style={{
-                padding: '0.6rem 1rem',
-                borderRadius: '8px',
-                border: 'none',
-                background: '#d4a373',
-                color: '#1e3a2b',
-                fontSize: '0.825rem',
-                fontWeight: 800,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem'
-              }}
-            >
-              <Save size={15} />
-              Save Invoice
-            </button>
-          </div>
-        </div>
-
         {/* Form Body */}
-        <div style={{ padding: '1.5rem', background: '#fafbfc' }}>
+        <div style={{ padding: '1.5rem', background: 'var(--card-bg)' }}>
           
           {/* SECTION A: Invoice Details */}
           <div

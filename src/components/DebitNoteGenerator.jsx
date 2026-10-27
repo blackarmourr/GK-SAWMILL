@@ -43,8 +43,6 @@ import { isSupabaseConfigured, supabase } from '../lib/supabaseClient.js'
 
 export default function DebitNoteGenerator({
   onBack,
-  onOpenVattaInvoice,
-  onOpenCreditNote,
   initialRecord
 }) {
   // Saved Vatta Invoices list (for picking bills)
@@ -457,80 +455,25 @@ export default function DebitNoteGenerator({
         </div>
       )}
 
-      {/* Module Header Bar */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          marginBottom: '1.25rem',
-          paddingBottom: '1rem',
-          borderBottom: '1px solid #e2e8f0'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      {/* Top Header & Navigation Bar */}
+      <div className="module-top-header">
+        <div className="module-top-left">
           <button
             type="button"
             onClick={onBack}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.5rem 0.9rem',
-              borderRadius: '8px',
-              border: '1px solid var(--border-color, #cbd5e1)',
-              background: 'var(--card-bg, #ffffff)',
-              color: '#334155',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '0.85rem'
-            }}
+            className="module-back-btn"
+            aria-label="Back to Dashboard"
           >
             <ArrowLeft size={16} />
-            Dashboard
+            <span>Back to Dashboard</span>
           </button>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span
-                style={{
-                  background: '#eaf3ed',
-                  color: '#1e3a2b',
-                  fontSize: '0.72rem',
-                  fontWeight: 800,
-                  padding: '0.2rem 0.6rem',
-                  borderRadius: '9999px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px'
-                }}
-              >
-                Module 07
-              </span>
-              <span
-                style={{
-                  background: '#fef3c7',
-                  color: '#92400e',
-                  fontSize: '0.72rem',
-                  fontWeight: 700,
-                  padding: '0.2rem 0.6rem',
-                  borderRadius: '9999px'
-                }}
-              >
-                Incentive & Bonus Billing
-              </span>
-            </div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', margin: '0.2rem 0 0 0' }}>
-              Debit Note Generator
-            </h1>
-            <p style={{ margin: 0, fontSize: '0.825rem', color: '#64748b' }}>
-              Form GST Debit Note for Vatta wood pencil slats incentive & annual bonus on earlier delivered loads
-            </p>
-          </div>
+          <h1 className="module-page-title">
+            Debit Note Generator
+          </h1>
         </div>
 
         {/* Action Buttons Toolbar */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <div className="module-top-actions">
           <button
             type="button"
             onClick={() => setShowHistoryModal(true)}

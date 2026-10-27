@@ -414,6 +414,70 @@ body {
 }
 
 /* ==========================================================================
+   Standardized Module Header & Controls across all modules
+   ========================================================================== */
+.module-top-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.module-top-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.module-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--radius-sm, 8px);
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+.module-back-btn:hover {
+  background: var(--tag-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateX(-2px);
+}
+
+[data-theme='dark'] .module-back-btn:hover {
+  border-color: #34d399;
+  color: #34d399;
+}
+
+.module-page-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.module-top-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
    Global Dark Mode Overrides for Modules, Forms & Containers
    ========================================================================== */
 [data-theme='dark'] input:not([type='checkbox']):not([type='radio']),
@@ -432,6 +496,8 @@ body {
 /* Force dark card surface on all container elements with white or light inline backgrounds */
 [data-theme='dark'] div[style*="#ffffff"],
 [data-theme='dark'] div[style*="rgb(255, 255, 255)"],
+[data-theme='dark'] div[style*="#fafbfc"],
+[data-theme='dark'] div[style*="rgb(250, 251, 252)"],
 [data-theme='dark'] div[style*="#f8fafc"],
 [data-theme='dark'] div[style*="rgb(248, 250, 252)"],
 [data-theme='dark'] div[style*="#f1f5f9"],
@@ -452,7 +518,10 @@ body {
 [data-theme='dark'] div[style*="#f5efe6"],
 [data-theme='dark'] div[style*="rgb(245, 239, 230)"],
 [data-theme='dark'] div[style*="#fffbf5"],
-[data-theme='dark'] div[style*="rgb(255, 251, 245)"] {
+[data-theme='dark'] div[style*="rgb(255, 251, 245)"],
+[data-theme='dark'] div[style*="linear-gradient(135deg, #f8fafc"],
+[data-theme='dark'] div[style*="linear-gradient(135deg, rgb(248, 250, 252)"] {
+  background: var(--tag-bg) !important;
   background-color: var(--tag-bg) !important;
   border-color: var(--border-color) !important;
 }
@@ -461,10 +530,32 @@ body {
 [data-theme='dark'] button[style*="#ffffff"],
 [data-theme='dark'] button[style*="rgb(255, 255, 255)"],
 [data-theme='dark'] button[style*="#f8fafc"],
-[data-theme='dark'] button[style*="rgb(248, 250, 252)"] {
+[data-theme='dark'] button[style*="rgb(248, 250, 252)"],
+[data-theme='dark'] button[style*="#f1f5f9"],
+[data-theme='dark'] button[style*="rgb(241, 245, 249)"] {
   background-color: var(--card-bg) !important;
   color: var(--text-primary) !important;
   border-color: var(--border-color) !important;
+}
+
+/* Soft colored status badges & highlight chips in dark mode */
+[data-theme='dark'] [style*="#eaf3ed"],
+[data-theme='dark'] [style*="rgb(234, 243, 237)"] {
+  background-color: rgba(45, 106, 79, 0.28) !important;
+  color: #86efac !important;
+}
+
+[data-theme='dark'] [style*="#fef3c7"],
+[data-theme='dark'] [style*="rgb(254, 243, 199)"] {
+  background-color: rgba(245, 158, 11, 0.2) !important;
+  color: #fcd34d !important;
+}
+
+[data-theme='dark'] [style*="#fee2e2"],
+[data-theme='dark'] [style*="#fef2f2"],
+[data-theme='dark'] [style*="rgb(254, 226, 226)"] {
+  background-color: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
 }
 
 /* Headings and labels with dark inline colors */
@@ -498,6 +589,18 @@ body {
 [data-theme='dark'] td {
   border-color: var(--border-color) !important;
   color: var(--text-primary);
+}
+
+[data-theme='dark'] tr[style*="#ffffff"],
+[data-theme='dark'] tr[style*="rgb(255, 255, 255)"],
+[data-theme='dark'] tr[style*="#fafbfc"],
+[data-theme='dark'] tr[style*="rgb(250, 251, 252)"],
+[data-theme='dark'] tr[style*="#f8fafc"],
+[data-theme='dark'] tr[style*="rgb(248, 250, 252)"],
+[data-theme='dark'] tr[style*="#f1f5f9"],
+[data-theme='dark'] tr[style*="rgb(241, 245, 249)"] {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
 }
 
 /* Modal windows & dialogs */

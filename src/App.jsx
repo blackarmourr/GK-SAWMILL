@@ -82,7 +82,24 @@ const MODULES = [
 ]
 
 function App() {
-  const [currentView, setCurrentView] = useState('home')
+  const [currentView, setCurrentView] = useState(() => {
+    try {
+      const hash = window.location.hash.replace('#', '')
+      const validViews = [
+        'vatta-invoice',
+        'vatta-measurement',
+        'invoice-generator',
+        'size-chart',
+        'kerala-vat',
+        'credit-note',
+        'debit-note',
+        'gst-monthly-filing'
+      ]
+      return validViews.includes(hash) ? hash : 'home'
+    } catch {
+      return 'home'
+    }
+  })
   const [docToLoad, setDocToLoad] = useState(null)
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [cloudSession, setCloudSession] = useState(null)
@@ -105,6 +122,34 @@ function App() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
   }
 
+  // Synchronize browser history and back-button navigation
+  useEffect(() => {
+    const initialView = currentView
+    window.history.replaceState({ view: initialView }, '', initialView === 'home' ? '#' : `#${initialView}`)
+
+    const handlePopState = (event) => {
+      const targetView = event.state?.view || (window.location.hash ? window.location.hash.replace('#', '') : 'home')
+      setCurrentView(targetView || 'home')
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  const navigateToView = (view) => {
+    setDocToLoad(null)
+    setCurrentView(view)
+    window.history.pushState({ view }, '', view === 'home' ? '#' : `#${view}`)
+  }
+
+  const handleGoHome = () => {
+    if (window.history.state?.view && window.history.state.view !== 'home') {
+      window.history.back()
+    } else {
+      navigateToView('home')
+    }
+  }
+
   useEffect(() => {
     if (isSupabaseConfigured && supabase) {
       supabase.auth.getSession().then(({ data: { session } }) => {
@@ -121,23 +166,25 @@ function App() {
 
   const handleCardClick = (mod) => {
     setDocToLoad(null)
+    let view = 'home'
     if (mod.id === 'gst-monthly-filing') {
-      setCurrentView('gst-monthly-filing')
+      view = 'gst-monthly-filing'
     } else if (mod.id === 'debit-note') {
-      setCurrentView('debit-note')
+      view = 'debit-note'
     } else if (mod.id === 'credit-note') {
-      setCurrentView('credit-note')
+      view = 'credit-note'
     } else if (mod.id === 'vatta-invoice') {
-      setCurrentView('vatta-invoice')
+      view = 'vatta-invoice'
     } else if (mod.id === 'kerala-vat-bill') {
-      setCurrentView('kerala-vat')
+      view = 'kerala-vat'
     } else if (mod.id === 'vatta-measurement') {
-      setCurrentView('vatta-measurement')
+      view = 'vatta-measurement'
     } else if (mod.id === 'mahogany-manjiyam-invoice') {
-      setCurrentView('invoice-generator')
+      view = 'invoice-generator'
     } else if (mod.id === 'mahogany-manjiyam-size-chart') {
-      setCurrentView('size-chart')
+      view = 'size-chart'
     }
+    navigateToView(view)
   }
 
   return (
@@ -148,8 +195,9 @@ function App() {
           <div className="brand-section">
             <div
               className="brand-logo-title"
-              onClick={() => setCurrentView('home')}
+              onClick={handleGoHome}
               style={{ cursor: 'pointer' }}
+              title="G.K. SAWMILL - Return to Home"
             >
               <div className="logo-icon-wrapper" style={{ padding: 0, overflow: 'hidden', background: 'transparent', border: 'none' }}>
                 <SawmillLogo size={34} />
@@ -160,15 +208,6 @@ function App() {
             </div>
 
             <div className="header-right-actions">
-              {currentView !== 'home' && (
-                <button
-                  type="button"
-                  onClick={() => setCurrentView('home')}
-                  className="back-nav-btn"
-                >
-                  &larr; Back to Dashboard
-                </button>
-              )}
               <div
                 className="server-signal"
                 title={
@@ -200,26 +239,26 @@ function App() {
       {currentView === 'gst-monthly-filing' ? (
         <main style={{ flex: 1 }}>
           <GstMonthlyFilingRegister
-            onBack={() => setCurrentView('home')}
+            onBack={handleGoHome}
             onOpenVattaInvoice={(rec) => {
               setDocToLoad(rec)
-              setCurrentView('vatta-invoice')
+              navigateToView('vatta-invoice')
             }}
             onOpenTimberInvoice={(rec) => {
               setDocToLoad(rec)
-              setCurrentView('invoice-generator')
+              navigateToView('invoice-generator')
             }}
             onOpenCreditNote={(rec) => {
               setDocToLoad(rec)
-              setCurrentView('credit-note')
+              navigateToView('credit-note')
             }}
             onOpenDebitNote={(rec) => {
               setDocToLoad(rec)
-              setCurrentView('debit-note')
+              navigateToView('debit-note')
             }}
             onOpenKeralaVat={(rec) => {
               setDocToLoad(rec)
-              setCurrentView('kerala-vat')
+              navigateToView('kerala-vat')
             }}
           />
         </main>
@@ -227,62 +266,47 @@ function App() {
         <main style={{ flex: 1 }}>
           <DebitNoteGenerator
             initialRecord={docToLoad}
-            onBack={() => setCurrentView('home')}
-            onOpenVattaInvoice={() => setCurrentView('vatta-invoice')}
-            onOpenCreditNote={() => setCurrentView('credit-note')}
+            onBack={handleGoHome}
           />
         </main>
       ) : currentView === 'credit-note' ? (
         <main style={{ flex: 1 }}>
           <CreditNoteGenerator
             initialRecord={docToLoad}
-            onBack={() => setCurrentView('home')}
-            onOpenVattaInvoice={() => setCurrentView('vatta-invoice')}
-            onOpenVattaMeasurement={() => setCurrentView('vatta-measurement')}
+            onBack={handleGoHome}
           />
         </main>
       ) : currentView === 'vatta-invoice' ? (
         <main style={{ flex: 1 }}>
           <VattaInvoiceGenerator
             initialRecord={docToLoad}
-            onBack={() => setCurrentView('home')}
-            onOpenMeasurement={() => setCurrentView('vatta-measurement')}
-            onOpenMahoganyInvoice={() => setCurrentView('invoice-generator')}
-            onOpenSizeChart={() => setCurrentView('size-chart')}
-            onOpenKeralaVat={() => setCurrentView('kerala-vat')}
+            onBack={handleGoHome}
           />
         </main>
       ) : currentView === 'kerala-vat' ? (
         <main style={{ flex: 1 }}>
           <KeralaVatBillGenerator
             initialRecord={docToLoad}
-            onBack={() => setCurrentView('home')}
-            onOpenVatta={() => setCurrentView('vatta-measurement')}
-            onOpenInvoice={() => setCurrentView('invoice-generator')}
-            onOpenSizeChart={() => setCurrentView('size-chart')}
+            onBack={handleGoHome}
           />
         </main>
       ) : currentView === 'vatta-measurement' ? (
         <main style={{ flex: 1 }}>
           <VattaMeasurementCalculator
-            onBack={() => setCurrentView('home')}
-            onOpenInvoice={() => setCurrentView('invoice-generator')}
-            onOpenSizeChart={() => setCurrentView('size-chart')}
+            onBack={handleGoHome}
           />
         </main>
       ) : currentView === 'invoice-generator' ? (
         <main style={{ flex: 1 }}>
           <MahoganyManjiyamInvoiceGenerator
             initialRecord={docToLoad}
-            onBack={() => setCurrentView('home')}
-            onOpenSizeChart={() => setCurrentView('size-chart')}
+            onBack={handleGoHome}
           />
         </main>
       ) : currentView === 'size-chart' ? (
         <main style={{ flex: 1 }}>
           <MahoganyManjiyamChartGenerator
-            onBack={() => setCurrentView('home')}
-            onOpenInvoice={() => setCurrentView('invoice-generator')}
+            onBack={handleGoHome}
           />
         </main>
       ) : (

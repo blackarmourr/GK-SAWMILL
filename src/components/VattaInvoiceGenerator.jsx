@@ -59,10 +59,6 @@ import { getNextSuggestedInvoice } from '../utils/invoiceSequenceHelper.js'
 
 export default function VattaInvoiceGenerator({
   onBack,
-  onOpenMeasurement,
-  onOpenMahoganyInvoice,
-  onOpenSizeChart,
-  onOpenKeralaVat,
   initialRecord
 }) {
   // Stored Configurations & Directory Profiles
@@ -489,68 +485,24 @@ export default function VattaInvoiceGenerator({
       )}
 
       {/* Top Header & Navigation Bar */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          marginBottom: '1.5rem',
-          paddingBottom: '1rem',
-          borderBottom: '1px solid #e2e8f0'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+      <div className="module-top-header">
+        <div className="module-top-left">
           <button
             type="button"
             onClick={onBack}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.5rem 0.9rem',
-              borderRadius: '8px',
-              border: '1px solid var(--border-color, #cbd5e1)',
-              background: 'var(--card-bg, #ffffff)',
-              color: '#334155',
-              fontWeight: 600,
-              fontSize: '0.825rem',
-              cursor: 'pointer',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
-            }}
+            className="module-back-btn"
+            aria-label="Back to Dashboard"
           >
             <ArrowLeft size={16} />
-            Back to Dashboard
+            <span>Back to Dashboard</span>
           </button>
-
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span
-                style={{
-                  background: '#1e3a2b',
-                  color: '#ffffff',
-                  fontSize: '0.7rem',
-                  fontWeight: 800,
-                  padding: '0.2rem 0.55rem',
-                  borderRadius: '4px',
-                  letterSpacing: '0.05em'
-                }}
-              >
-                MODULE 01
-              </span>
-              <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)', margin: 0 }}>
-                Vatta GST Invoice Generator
-              </h1>
-            </div>
-            <p style={{ margin: '0.2rem 0 0', fontSize: '0.8rem', color: '#64748b' }}>
-              Official FORM GST INVOICE - I for Vatta Wood Pencil Slats • Rates per 1,000 pieces • A4 Printable PDF
-            </p>
-          </div>
+          <h1 className="module-page-title">
+            Vatta GST Invoice Generator
+          </h1>
         </div>
 
         {/* Action Buttons */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.5rem' }}>
+        <div className="module-top-actions">
           <button
             type="button"
             onClick={handleLoadSampleA20}
@@ -1245,8 +1197,8 @@ export default function VattaInvoiceGenerator({
                     <tr
                       key={l.id}
                       style={{
-                        borderBottom: '1px solid #e2e8f0',
-                        background: idx % 2 === 0 ? '#ffffff' : '#f8fafc'
+                        borderBottom: '1px solid var(--border-color, #e2e8f0)',
+                        background: idx % 2 === 0 ? 'var(--card-bg)' : 'var(--tag-bg)'
                       }}
                     >
                       <td style={{ padding: '0.5rem', fontWeight: 700, color: 'var(--text-primary, #0f172a)' }}>{l.item}</td>
@@ -1288,12 +1240,12 @@ export default function VattaInvoiceGenerator({
                     </tr>
                   ))}
                   {/* Totals Summary Row */}
-                  <tr style={{ background: '#eaf3ed', fontWeight: 800, color: '#1e3a2b', borderTop: '2px solid #1e3a2b' }}>
+                  <tr style={{ background: 'var(--tag-bg)', fontWeight: 800, color: 'var(--primary)', borderTop: '2px solid var(--primary)' }}>
                     <td style={{ padding: '0.65rem 0.5rem' }}>TOTALS</td>
                     <td style={{ padding: '0.65rem 0.5rem', textAlign: 'center', fontSize: '0.9rem' }}>
                       {calculated.totalBags} bags
                     </td>
-                    <td colSpan={2} style={{ padding: '0.65rem 0.5rem', color: '#1e3a2b' }}>
+                    <td colSpan={2} style={{ padding: '0.65rem 0.5rem', color: 'var(--text-primary)' }}>
                       To the Value of First Quality "Vatta" Wood Pencil Slats
                     </td>
                     <td style={{ padding: '0.65rem 0.5rem', textAlign: 'right', fontSize: '0.9rem' }}>

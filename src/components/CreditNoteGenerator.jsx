@@ -47,8 +47,6 @@ import { uploadPdfToStorage, isSupabaseConfigured, supabase } from '../lib/supab
 
 export default function CreditNoteGenerator({
   onBack,
-  onOpenVattaInvoice,
-  onOpenVattaMeasurement,
   initialRecord
 }) {
   // Saved Vatta Invoices list
@@ -419,118 +417,64 @@ export default function CreditNoteGenerator({
 
   return (
     <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '1.25rem 1rem 3rem' }}>
-      {/* Top Banner / Breadcrumbs */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          background: 'linear-gradient(135deg, #1e3a2b 0%, #2d6a4f 100%)',
-          borderRadius: '16px',
-          padding: '1.25rem 1.75rem',
-          color: '#ffffff',
-          marginBottom: '1.5rem',
-          boxShadow: '0 8px 24px rgba(30, 58, 43, 0.2)'
-        }}
-      >
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-            <span
-              style={{
-                background: 'rgba(255, 255, 255, 0.2)',
-                padding: '0.2rem 0.6rem',
-                borderRadius: '6px',
-                fontSize: '0.72rem',
-                fontWeight: 800,
-                letterSpacing: '0.5px'
-              }}
-            >
-              MODULE 06 • VATTA WOOD BUSINESS
-            </span>
-            <span
-              style={{
-                background: '#d4a373',
-                color: '#1e3a2b',
-                padding: '0.2rem 0.6rem',
-                borderRadius: '6px',
-                fontSize: '0.72rem',
-                fontWeight: 800
-              }}
-            >
-              Section 34 CGST Act
-            </span>
-          </div>
-          <h1 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, letterSpacing: '-0.5px' }}>
+      {/* Standardized Module Header */}
+      <div className="module-top-header">
+        <div className="module-top-left">
+          <button
+            type="button"
+            onClick={onBack}
+            className="module-back-btn"
+            aria-label="Back to Dashboard"
+          >
+            <ArrowLeft size={16} />
+            <span>Back to Dashboard</span>
+          </button>
+          <h1 className="module-page-title">
             Credit Note Generator
           </h1>
-          <p style={{ margin: '0.25rem 0 0', fontSize: '0.85rem', opacity: 0.9 }}>
-            Form GST Credit Note for Vatta wood pencil slats rejection, shortage, and rate adjustments
-          </p>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <div className="module-top-actions">
           <button
             type="button"
             onClick={handleLoadBenchmarkCN09}
             style={{
-              background: '#d4a373',
-              border: 'none',
-              color: '#1e3a2b',
-              padding: '0.55rem 1rem',
-              borderRadius: '8px',
-              fontSize: '0.82rem',
-              fontWeight: 800,
-              cursor: 'pointer',
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+              padding: '0.5rem 0.85rem',
+              borderRadius: '8px',
+              border: '1px solid var(--border-color)',
+              background: 'var(--tag-bg)',
+              color: 'var(--text-primary)',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              cursor: 'pointer'
             }}
           >
-            <Sparkles size={15} />
+            <Sparkles size={14} color="#d4a373" />
             Load Sample CN-09
           </button>
+
           <button
             type="button"
             onClick={() => setShowHistoryModal(true)}
             style={{
-              background: 'rgba(255, 255, 255, 0.15)',
-              border: '1px solid rgba(255, 255, 255, 0.35)',
-              color: '#ffffff',
-              padding: '0.55rem 1rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 0.85rem',
               borderRadius: '8px',
-              fontSize: '0.82rem',
+              border: '1px solid var(--border-color)',
+              background: 'var(--card-bg)',
+              color: 'var(--text-primary)',
               fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem'
+              fontSize: '0.8rem',
+              cursor: 'pointer'
             }}
           >
-            <History size={15} />
+            <History size={14} />
             History ({savedCreditNotesList.length})
-          </button>
-          <button
-            type="button"
-            onClick={onBack}
-            style={{
-              background: 'var(--card-bg, #ffffff)',
-              border: 'none',
-              color: '#1e3a2b',
-              padding: '0.55rem 1rem',
-              borderRadius: '8px',
-              fontSize: '0.82rem',
-              fontWeight: 800,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem'
-            }}
-          >
-            <ArrowLeft size={15} />
-            Back to Dashboard
           </button>
         </div>
       </div>
@@ -689,26 +633,26 @@ export default function CreditNoteGenerator({
                       style={{
                         padding: '0.85rem',
                         borderRadius: '10px',
-                        border: isSelected ? '2px solid #1e3a2b' : '1px solid #e2e8f0',
-                        background: isSelected ? '#f0fdf4' : '#ffffff',
+                        border: isSelected ? '2px solid var(--primary)' : '1px solid var(--border-color)',
+                        background: isSelected ? 'var(--tag-bg)' : 'var(--card-bg)',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease'
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                        <span style={{ fontWeight: 800, color: '#1e3a2b', fontSize: '0.9rem' }}>
+                        <span style={{ fontWeight: 800, color: 'var(--primary)', fontSize: '0.9rem' }}>
                           Invoice {data.invoiceNo}
                         </span>
-                        <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                           {formatCreditNoteDate(data.invoiceDate, '-')}
                         </span>
                       </div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '0.25rem' }}>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
                         {data.receiverName || 'Vatta Purchaser'}
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748b' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                         <span>Lorry: {data.vehicleNo || 'N/A'}</span>
-                        <strong style={{ color: 'var(--text-primary, #0f172a)' }}>
+                        <strong style={{ color: 'var(--text-primary)' }}>
                           ₹{formatIndianCurrency(inv.grandTotal || inv.totals?.grandTotal || 0)}
                         </strong>
                       </div>
@@ -1452,36 +1396,36 @@ export default function CreditNoteGenerator({
             {/* Calculations Summary Card */}
             <div
               style={{
-                background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-                border: '1px solid var(--border-color, #cbd5e1)',
+                background: 'var(--tag-bg)',
+                border: '1px solid var(--border-color)',
                 borderRadius: '12px',
                 padding: '1.25rem'
               }}
             >
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
                 <div>
-                  <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Taxable Amount:</span>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Taxable Amount:</span>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                     ₹{formatIndianCurrency(calculated.taxableAmount)}
                   </div>
                 </div>
                 <div>
-                  <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                     {calculated.taxTreatment === 'CGST_SGST' ? 'CGST + SGST (5%):' : 'IGST (5%):'}
                   </span>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                     ₹{formatIndianCurrency(calculated.totalGst)}
                   </div>
                 </div>
                 <div>
-                  <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Round Off:</span>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary, #0f172a)' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Round Off:</span>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                     {calculated.roundOff >= 0 ? `+${calculated.roundOff.toFixed(2)}` : calculated.roundOff.toFixed(2)}
                   </div>
                 </div>
                 <div>
-                  <span style={{ fontSize: '0.75rem', color: '#1e3a2b', fontWeight: 700 }}>Net Credit Value:</span>
-                  <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#1e3a2b' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--primary)', fontWeight: 700 }}>Net Credit Value:</span>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)' }}>
                     ₹{formatIndianCurrency(calculated.netValue)}
                   </div>
                 </div>
@@ -1489,12 +1433,12 @@ export default function CreditNoteGenerator({
 
               <div
                 style={{
-                  background: 'var(--card-bg, #ffffff)',
+                  background: 'var(--card-bg)',
                   padding: '0.65rem 0.85rem',
                   borderRadius: '8px',
-                  border: '1px solid var(--border-color, #e2e8f0)',
+                  border: '1px solid var(--border-color)',
                   fontSize: '0.8rem',
-                  color: '#334155'
+                  color: 'var(--text-primary)'
                 }}
               >
                 <strong>Total value in words:- </strong>

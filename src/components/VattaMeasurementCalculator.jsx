@@ -34,9 +34,7 @@ import { getSavedVattaInvoices } from '../data/vattaInvoiceSettings.js'
 import { generateVattaPdf } from '../utils/vattaPdfGenerator.js'
 
 export default function VattaMeasurementCalculator({
-  onBack,
-  onOpenInvoice,
-  onOpenSizeChart
+  onBack
 }) {
   // Stored persistent defaults (Lorry Reg No & Place)
   const [storedSettings, setStoredSettings] = useState(() => getStoredVattaSettings())
@@ -316,77 +314,24 @@ export default function VattaMeasurementCalculator({
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1.5rem 1rem 3rem' }}>
       
-      {/* Top Navigation & Action Controls */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-        <button
-          type="button"
-          onClick={onBack}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.6rem 1rem',
-            borderRadius: '8px',
-            border: '1px solid var(--border-color)',
-            background: 'var(--card-bg, #ffffff)',
-            color: 'var(--text-primary)',
-            fontWeight: 600,
-            fontSize: '0.875rem',
-            cursor: 'pointer',
-            boxShadow: 'var(--shadow-sm)'
-          }}
-        >
-          <ArrowLeft size={16} />
-          Back to Dashboard
-        </button>
+      {/* Standardized Module Header */}
+      <div className="module-top-header">
+        <div className="module-top-left">
+          <button
+            type="button"
+            onClick={onBack}
+            className="module-back-btn"
+            aria-label="Back to Dashboard"
+          >
+            <ArrowLeft size={16} />
+            <span>Back to Dashboard</span>
+          </button>
+          <h1 className="module-page-title">
+            Vatta Measurement Calculator
+          </h1>
+        </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-          {onOpenInvoice && (
-            <button
-              type="button"
-              onClick={onOpenInvoice}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.55rem 0.85rem',
-                borderRadius: '8px',
-                border: '1px solid var(--border-color, #cbd5e1)',
-                background: 'var(--card-bg, #ffffff)',
-                color: '#1e3a2b',
-                fontWeight: 700,
-                fontSize: '0.8rem',
-                cursor: 'pointer'
-              }}
-            >
-              <FileText size={14} />
-              GST Invoice
-            </button>
-          )}
-
-          {onOpenSizeChart && (
-            <button
-              type="button"
-              onClick={onOpenSizeChart}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.55rem 0.85rem',
-                borderRadius: '8px',
-                border: '1px solid var(--border-color, #cbd5e1)',
-                background: 'var(--card-bg, #ffffff)',
-                color: '#925c38',
-                fontWeight: 700,
-                fontSize: '0.8rem',
-                cursor: 'pointer'
-              }}
-            >
-              <Sparkles size={14} />
-              Size Chart
-            </button>
-          )}
-
+        <div className="module-top-actions">
           <button
             type="button"
             onClick={handleLoadSample}
@@ -394,18 +339,17 @@ export default function VattaMeasurementCalculator({
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              padding: '0.55rem 0.95rem',
+              padding: '0.5rem 0.85rem',
               borderRadius: '8px',
-              border: 'none',
-              background: '#925c38',
-              color: '#ffffff',
-              fontWeight: 800,
+              border: '1px solid var(--border-color)',
+              background: 'var(--tag-bg)',
+              color: 'var(--text-primary)',
+              fontWeight: 700,
               fontSize: '0.8rem',
-              cursor: 'pointer',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
+              cursor: 'pointer'
             }}
           >
-            <Sparkles size={14} />
+            <Sparkles size={14} color="#d4a373" />
             Test Sample (285 Bags)
           </button>
 
@@ -416,10 +360,10 @@ export default function VattaMeasurementCalculator({
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              padding: '0.55rem 0.85rem',
+              padding: '0.5rem 0.85rem',
               borderRadius: '8px',
               border: '1px solid var(--border-color)',
-              background: 'var(--card-bg, #ffffff)',
+              background: 'var(--card-bg)',
               color: 'var(--text-primary)',
               fontWeight: 700,
               fontSize: '0.8rem',
@@ -428,6 +372,71 @@ export default function VattaMeasurementCalculator({
           >
             <FolderOpen size={14} />
             Saved Sheets ({savedSheets.length})
+          </button>
+
+          <button
+            type="button"
+            onClick={handleReset}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 0.85rem',
+              borderRadius: '8px',
+              border: '1px solid var(--border-color)',
+              background: 'var(--card-bg)',
+              color: 'var(--text-primary)',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              cursor: 'pointer'
+            }}
+          >
+            <RotateCcw size={14} />
+            Reset
+          </button>
+
+          <button
+            type="button"
+            onClick={handleSaveSheet}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 0.85rem',
+              borderRadius: '8px',
+              border: '1px solid var(--border-color)',
+              background: 'var(--card-bg)',
+              color: 'var(--text-primary)',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              cursor: 'pointer'
+            }}
+          >
+            <Save size={14} />
+            Save Sheet
+          </button>
+
+          <button
+            type="button"
+            onClick={handleGeneratePdf}
+            disabled={isPdfGenerating}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 1rem',
+              borderRadius: '8px',
+              border: 'none',
+              background: 'var(--primary, #1e3a2b)',
+              color: '#ffffff',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              cursor: isPdfGenerating ? 'wait' : 'pointer',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
+            }}
+          >
+            <FileDown size={14} />
+            {isPdfGenerating ? 'Generating...' : 'Download PDF'}
           </button>
         </div>
       </div>
@@ -439,7 +448,7 @@ export default function VattaMeasurementCalculator({
             position: 'fixed',
             top: '1.5rem',
             right: '1.5rem',
-            backgroundColor: '#1e3a2b',
+            backgroundColor: 'var(--primary, #1e3a2b)',
             color: '#ffffff',
             padding: '0.85rem 1.4rem',
             borderRadius: '10px',
@@ -468,91 +477,6 @@ export default function VattaMeasurementCalculator({
           marginBottom: '2rem'
         }}
       >
-        {/* Module Header Bar */}
-        <div
-          style={{
-            background: 'linear-gradient(135deg, #1e3a2b 0%, #284c37 100%)',
-            color: '#ffffff',
-            padding: '1.5rem 1.5rem 1.75rem',
-            borderBottom: '3px solid #d4a373',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem'
-          }}
-        >
-          <div>
-            <span
-              style={{
-                fontSize: '0.725rem',
-                fontWeight: 800,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                background: 'rgba(255,255,255,0.15)',
-                color: '#d4a373',
-                padding: '0.25rem 0.6rem',
-                borderRadius: '6px',
-                display: 'inline-block',
-                marginBottom: '0.4rem'
-              }}
-            >
-              Module 02
-            </span>
-            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '0 0 0.35rem' }}>
-              Vatta Measurement Calculator
-            </h2>
-            <p style={{ margin: 0, fontSize: '0.875rem', color: '#e2e8f0', opacity: 0.9 }}>
-              Generate official A4 Vatta wood pencil slat measurement sheets with fixed standard ply dimensions & auto-CBM.
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
-            <button
-              type="button"
-              onClick={handleSaveSheet}
-              style={{
-                padding: '0.6rem 1rem',
-                borderRadius: '8px',
-                border: 'none',
-                background: '#d4a373',
-                color: '#1e3a2b',
-                fontSize: '0.825rem',
-                fontWeight: 800,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
-              }}
-            >
-              <Save size={15} />
-              Save Sheet
-            </button>
-            <button
-              type="button"
-              onClick={handleGeneratePdf}
-              disabled={isPdfGenerating}
-              style={{
-                padding: '0.6rem 1.25rem',
-                borderRadius: '8px',
-                border: 'none',
-                background: 'var(--card-bg, #ffffff)',
-                color: '#1e3a2b',
-                fontSize: '0.825rem',
-                fontWeight: 900,
-                cursor: isPdfGenerating ? 'wait' : 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.45rem',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
-              }}
-            >
-              <FileDown size={16} color="#1e3a2b" />
-              {isPdfGenerating ? 'Generating PDF...' : 'Generate A4 PDF'}
-            </button>
-          </div>
-        </div>
 
         {/* Validation Error Banner */}
         {validationError && (
@@ -838,20 +762,20 @@ export default function VattaMeasurementCalculator({
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
                 <thead>
-                  <tr style={{ background: '#f1f5f9', borderBottom: '2px solid #cbd5e1', textAlign: 'center', color: '#334155' }}>
+                  <tr style={{ background: 'var(--table-head-bg, #f1f5f9)', borderBottom: '2px solid var(--border-color)', textAlign: 'center', color: 'var(--text-primary)' }}>
                     <th style={{ padding: '0.65rem 0.5rem', width: '50px' }}>Sl No</th>
                     <th style={{ padding: '0.65rem 0.75rem' }}>Item</th>
-                    <th style={{ padding: '0.65rem 0.5rem', background: '#e2e8f0' }} colSpan={3}>
+                    <th style={{ padding: '0.65rem 0.5rem' }} colSpan={3}>
                       Measurement in "mm" (L × W × T)
                     </th>
-                    <th style={{ padding: '0.65rem 0.75rem', width: '130px', background: '#eaf3ed', color: 'var(--primary)' }}>
+                    <th style={{ padding: '0.65rem 0.75rem', width: '130px', color: 'var(--primary)' }}>
                       Total Bags *
                     </th>
                     <th style={{ padding: '0.65rem 0.5rem' }}>Each Contains</th>
                     <th style={{ padding: '0.65rem 0.75rem', textAlign: 'right' }}>Total Nos.</th>
                     <th style={{ padding: '0.65rem 0.75rem', textAlign: 'right' }}>Total CBM</th>
                   </tr>
-                  <tr style={{ background: 'var(--tag-bg, #f8fafc)', borderBottom: '1px solid #e2e8f0', fontSize: '0.75rem', color: '#64748b', textAlign: 'center' }}>
+                  <tr style={{ background: 'var(--tag-bg, #f8fafc)', borderBottom: '1px solid var(--border-color)', fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
                     <th colSpan={2}></th>
                     <th style={{ padding: '0.35rem 0.5rem' }}>Length</th>
                     <th style={{ padding: '0.35rem 0.5rem' }}>Width</th>
@@ -864,8 +788,8 @@ export default function VattaMeasurementCalculator({
                     <tr
                       key={row.slNo}
                       style={{
-                        borderBottom: '1px solid #e2e8f0',
-                        background: row.bags > 0 ? '#ffffff' : '#fafbfc',
+                        borderBottom: '1px solid var(--border-color, #e2e8f0)',
+                        background: row.bags > 0 ? 'var(--card-bg)' : 'var(--tag-bg)',
                         transition: 'background 0.15s ease'
                       }}
                     >
