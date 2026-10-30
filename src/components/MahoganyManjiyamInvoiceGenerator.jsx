@@ -27,6 +27,7 @@ import {
   saveStoredSettings,
   getSavedCustomers,
   saveCustomer,
+  deleteCustomer,
   getSavedInvoices,
   saveInvoiceRecord,
   deleteInvoiceRecord,
@@ -34,6 +35,14 @@ import {
 import { convertNumberToIndianWords } from '../utils/numberToWords.js'
 import { generateInvoicePdf } from '../utils/invoicePdfGenerator.js'
 import { getNextSuggestedInvoice } from '../utils/invoiceSequenceHelper.js'
+
+function getTodayFormattedDate() {
+  const d = new Date()
+  const day = String(d.getDate()).padStart(2, '0')
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const year = d.getFullYear()
+  return `${day}-${month}-${year}`
+}
 
 export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord }) {
   // Settings & Storage State
@@ -57,9 +66,9 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
       return 'A-22'
     }
   })
-  const [invoiceDate, setInvoiceDate] = useState('01-10-2026')
+  const [invoiceDate, setInvoiceDate] = useState(() => getTodayFormattedDate())
   const [vehicleNo, setVehicleNo] = useState('KL-02-AN-7779')
-  const [dateOfSupply, setDateOfSupply] = useState('01-10-2026')
+  const [dateOfSupply, setDateOfSupply] = useState(() => getTodayFormattedDate())
   const [transportationMode, setTransportationMode] = useState('')
   const [placeOfSupply, setPlaceOfSupply] = useState('Tamil Nadu')
   const [state, setState] = useState('Kerala')
@@ -253,6 +262,17 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
     notify('Customer saved to library!')
   }
 
+  // Delete saved customer from library
+  const handleDeleteCustomer = (cust, e) => {
+    if (e && e.stopPropagation) e.stopPropagation()
+    const targetName = cust.name || 'this receiver'
+    if (window.confirm(`Delete saved receiver "${targetName}" from library?`)) {
+      const updated = deleteCustomer(cust.id || cust.name)
+      setSavedCustomers(updated)
+      notify(`Deleted receiver: ${targetName}`)
+    }
+  }
+
   // Save full invoice record to localStorage
   const handleSaveInvoice = () => {
     if (!invoiceNo.trim()) {
@@ -329,7 +349,9 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
     setInvoiceId('inv_' + Date.now())
     const nextInv = suggestedSequence?.suggestedInvoiceNo || 'A-22'
     setInvoiceNo(nextInv)
-    setInvoiceDate(new Date().toLocaleDateString('en-GB').replace(/\//g, '-'))
+    const todayStr = getTodayFormattedDate()
+    setInvoiceDate(todayStr)
+    setDateOfSupply(todayStr)
     setMahoganyTaxableValue(0)
     setManjiyamTaxableValue(0)
     setFreight('')
@@ -812,37 +834,77 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
               </h3>
 
               {/* Saved Customers dropdown pills */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Saved Customers:</span>
-                {savedCustomers.map((c) => (
-                  <button
-                    key={c.id || c.name}
-                    type="button"
-                    onClick={() => handleSelectCustomer(c)}
-                    style={{
-                      padding: '0.2rem 0.55rem',
-                      fontSize: '0.75rem',
-                      fontWeight: 600,
-                      borderRadius: '5px',
-                      border: '1px solid var(--border-color, #cbd5e1)',
-                      background: receiverName === c.name ? '#eaf3ed' : '#ffffff',
-                      color: receiverName === c.name ? 'var(--primary)' : '#334155',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {c.name}
-                  </button>
-                ))}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary, #64748b)' }}>Saved Receivers:</span>
+                {savedCustomers.map((c) => {
+                  const isSelected = receiverName === c.name
+                  return (
+                    <div
+                      key={c.id || c.name}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        borderRadius: '6px',
+                        border: isSelected ? '1px solid var(--primary, #1e3a2b)' : '1px solid var(--border-color, #cbd5e1)',
+                        background: isSelected ? '#eaf3ed' : 'var(--card-bg, #ffffff)',
+                        color: isSelected ? 'var(--primary, #1e3a2b)' : 'var(--text-primary, #334155)',
+                        overflow: 'hidden',
+                        boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => handleSelectCustomer(c)}
+                        title={`Load details for ${c.name}`}
+                        style={{
+                          padding: '0.22rem 0.55rem',
+                          fontSize: '0.75rem',
+                          fontWeight: 600,
+                          background: 'transparent',
+                          border: 'none',
+                          cursor: 'pointer',
+                          color: 'inherit'
+                        }}
+                      >
+                        {c.name}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => handleDeleteCustomer(c, e)}
+                        title={`Delete saved receiver "${c.name}"`}
+                        aria-label={`Delete ${c.name}`}
+                        style={{
+                          padding: '0.22rem 0.35rem',
+                          fontSize: '0.75rem',
+                          background: 'transparent',
+                          border: 'none',
+                          borderLeft: '1px solid var(--border-color, #cbd5e1)',
+                          cursor: 'pointer',
+                          color: '#ef4444',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          opacity: 0.8
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.background = '#fee2e2' }}
+                        onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.8'; e.currentTarget.style.background = 'transparent' }}
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                  )
+                })}
                 <button
                   type="button"
                   onClick={handleSaveCurrentCustomer}
+                  title="Save current receiver form details to library"
                   style={{
-                    padding: '0.2rem 0.55rem',
+                    padding: '0.22rem 0.6rem',
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    borderRadius: '5px',
-                    border: '1px solid var(--border-color, #cbd5e1)',
-                    background: '#f1f5f9',
+                    borderRadius: '6px',
+                    border: '1px dashed var(--border-color, #cbd5e1)',
+                    background: 'var(--tag-bg, #f1f5f9)',
                     color: 'var(--text-secondary, #475569)',
                     cursor: 'pointer'
                   }}

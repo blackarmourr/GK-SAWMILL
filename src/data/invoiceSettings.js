@@ -117,6 +117,18 @@ export function saveCustomer(customer) {
   }
 }
 
+export function deleteCustomer(identifier) {
+  try {
+    const current = getSavedCustomers()
+    const updated = current.filter(c => c.id !== identifier && c.name !== identifier)
+    localStorage.setItem(SAVED_CUSTOMERS_KEY, JSON.stringify(updated))
+    return updated
+  } catch (err) {
+    console.error('Error deleting customer', err)
+    return []
+  }
+}
+
 /**
  * Saved Invoices Management
  */

@@ -28,13 +28,13 @@ export function generateInvoicePdf(invoiceData, save = true) {
 
     // Invoice details
     reverseCharge = '',
-    invoiceNo = 'A-19',
-    invoiceDate = '01-10-2026',
+    invoiceNo = 'A-22',
+    invoiceDate = '',
     state = 'Kerala',
     stateCode = '32',
     transportationMode = '',
     vehicleNo = 'KL-02-AN-7779',
-    dateOfSupply = '01-10-2026',
+    dateOfSupply = '',
     placeOfSupply = 'Tamil Nadu',
 
     // Receiver details

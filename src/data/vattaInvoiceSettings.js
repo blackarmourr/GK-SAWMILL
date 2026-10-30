@@ -115,8 +115,8 @@ export const DEFAULT_DESPATCHED_PROFILES = [
 export const SAMPLE_VATTA_INVOICE_A20 = {
   invoiceNo: 'A-20',
   purchaseOrderNo: '4100016589',
-  invoiceDate: '2026-10-10',
-  dateOfSupply: '2026-10-10',
+  invoiceDate: new Date().toISOString().split('T')[0],
+  dateOfSupply: new Date().toISOString().split('T')[0],
   state: 'KERALA',
   stateCode: '32',
   placeOfSupply: 'TAMILNADU',

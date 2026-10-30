@@ -83,9 +83,12 @@ export default function VattaInvoiceGenerator({
     } catch {
       nextInv = 'A-22'
     }
+    const today = new Date().toISOString().split('T')[0]
     return {
       ...SAMPLE_VATTA_INVOICE_A20,
       invoiceNo: nextInv,
+      invoiceDate: today,
+      dateOfSupply: today,
       bankDetails: businessSettings.bankDetails || '',
       accountNumber: businessSettings.accountNumber || '',
       branchIfsc: businessSettings.branchIfsc || '',
