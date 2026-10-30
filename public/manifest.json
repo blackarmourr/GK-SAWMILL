@@ -2,8 +2,9 @@
   "name": "G.K. SAWMILL - Industrial Timber Suite",
   "short_name": "GK Sawmill",
   "description": "G.K. Sawmill Invoicing, Vatta Wood Slat Calculator, Mahogany & Manjiyam Timber Suite, Credit & Debit Notes, GST Monthly Register",
-  "start_url": "/",
-  "scope": "/",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0b130e",
   "theme_color": "#1e3a2b",
@@ -12,19 +13,19 @@
   "categories": ["business", "finance", "productivity"],
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/logo.svg",
+      "src": "./logo.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
