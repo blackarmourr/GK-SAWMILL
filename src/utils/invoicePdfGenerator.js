@@ -160,24 +160,24 @@ export function generateInvoicePdf(invoiceData, save = true) {
   
   // Left: Business info (Serif matching original invoice)
   doc.setFont('times', 'bold')
-  doc.setFontSize(16.5)
+  doc.setFontSize(17.5)
   doc.text(businessName, margin, 16.5)
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.8)
+  doc.setFontSize(9.6)
   doc.text(addressLine1, margin, 21.8)
   doc.text(addressLine2, margin, 26.2)
 
   // Right: Contact info
   const rightX = margin + contentWidth
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8.8)
+  doc.setFontSize(9.6)
   doc.text(`Tel :- ${telephone}`, rightX, 16.5, { align: 'right' })
   doc.text(`E-mail :- ${email}`, rightX, 21.2, { align: 'right' })
   doc.text(`GSTIN :- ${gstin}`, rightX, 26.2, { align: 'right' })
 
   // Center Title
-  doc.setFontSize(12)
+  doc.setFontSize(13)
   doc.setFont('helvetica', 'bold')
   doc.text('FORM GST INVOICE - I', pageWidth / 2, 33.5, { align: 'center' })
 
@@ -191,7 +191,7 @@ export function generateInvoicePdf(invoiceData, save = true) {
   doc.rect(margin, boxTop, contentWidth, metaHeight)
   doc.line(midX, boxTop, midX, boxTop + metaHeight)
 
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.4)
   const lX = margin + 2.5
   const rX = midX + 2.5
 
@@ -222,12 +222,12 @@ export function generateInvoicePdf(invoiceData, save = true) {
   const subHeadH = 6.0
   doc.line(margin, recTop + subHeadH, rightX, recTop + subHeadH)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(9)
+  doc.setFontSize(9.8)
   doc.text('Details of Receiver', (margin + midX) / 2, recTop + 4.2, { align: 'center' })
   doc.text('Details of Dispatched', (midX + rightX) / 2, recTop + 4.2, { align: 'center' })
 
   // Receiver Data
-  doc.setFontSize(8.2)
+  doc.setFontSize(9.0)
   let recY = recTop + subHeadH + 4.5
   const maxRecW = (midX - 2.5) - (lX + 16) // ~72mm strictly within left box
   const maxDispW = (rightX - 2.5) - rX   // ~88mm strictly within right box
@@ -309,7 +309,7 @@ export function generateInvoicePdf(invoiceData, save = true) {
 
   // Header Texts
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.5)
   doc.text('Sl. No.', (margin + c1) / 2, tableTop + 4.8, { align: 'center' })
   doc.text('Description of Goods', (c1 + c2) / 2, tableTop + 4.8, { align: 'center' })
   doc.text('HSN Code', (c2 + c3) / 2, tableTop + 4.8, { align: 'center' })
@@ -324,7 +324,7 @@ export function generateInvoicePdf(invoiceData, save = true) {
   // Item 1: Mahogany
   if (mahoganyEnabled && mahogVal > 0) {
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8.5)
+    doc.setFontSize(9.5)
     doc.text(String(rowIdx), (margin + c1) / 2, curItemY, { align: 'center' })
     
     doc.setFont('helvetica', 'italic')
@@ -345,7 +345,7 @@ export function generateInvoicePdf(invoiceData, save = true) {
   // Item 2: Manjiyam
   if (manjiyamEnabled && manjVal > 0) {
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8.5)
+    doc.setFontSize(9.5)
     doc.text(String(rowIdx), (margin + c1) / 2, curItemY, { align: 'center' })
     
     doc.setFont('helvetica', 'italic')
@@ -365,7 +365,7 @@ export function generateInvoicePdf(invoiceData, save = true) {
 
   // Volume & E-Way Bill in description area (matching sample invoice)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.5)
   doc.text(`(Qty in CBM :- ${totalCbm.toFixed(2)})`, c1 + 2, curItemY + 2.5)
   if (ewayBillNo && ewayBillNo.trim()) {
     doc.text(`EWAY BILL :- ${ewayBillNo.trim()}`, c1 + 2, curItemY + 8.5)
@@ -411,7 +411,7 @@ export function generateInvoicePdf(invoiceData, save = true) {
 
   // Cell Content Rendering
   doc.setFont('helvetica', 'normal')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.4)
 
   // Row 1: Freight / Sub Total
   doc.text('Freight', margin + 2.5, y0 + 4.5)
@@ -471,26 +471,27 @@ export function generateInvoicePdf(invoiceData, save = true) {
   // Row 8: Authorised Signatory / GRAND TOTAL
   doc.text('Authorised Signatory (with status & seal)', (margin + c3) / 2, y7 + 4.5, { align: 'center' })
   doc.setFont('helvetica', 'bold')
+  doc.setFontSize(10.2)
   doc.text('GRAND TOTAL', c3 + 2.5, y7 + 4.5)
   doc.text(formatAmt(calculatedGrandTotal), rightX - 2.5, y7 + 4.5, { align: 'right' })
 
   // Row 9: Grand Total in Words (Full width)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.5)
   doc.text(`Grand Total in words :- ( ${grandTotalWords} )`, margin + 2.5, y8 + 5.0)
 
   // Row 10: Copies / Reverse Charge
   doc.setFont('helvetica', 'normal')
-  doc.setFontSize(8)
+  doc.setFontSize(8.8)
   doc.text('Orginal for Recipient, Duplicate for Transporter, Triplicate for Supplier', margin + 2.5, y9 + 4.5)
   const revChargeLabel = reverseCharge ? `GST Payable on Reverse Charge : ${reverseCharge}` : 'GST Payable on Reverse Charge'
   doc.text(revChargeLabel, c4 + 2.5, y9 + 4.5)
 
   // Section 5: Signature Block (Below outer box)
   doc.setFont('times', 'bold')
-  doc.setFontSize(10.5)
+  doc.setFontSize(11.5)
   doc.text(`For ${businessName}`, (c4 + rightX) / 2, y10 + 7.5, { align: 'center' })
-  doc.setFontSize(10)
+  doc.setFontSize(11.0)
   doc.text('Proprietor', (c4 + rightX) / 2, y10 + 20.0, { align: 'center' })
 
   // Trigger Download if requested

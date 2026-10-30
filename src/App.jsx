@@ -295,6 +295,7 @@ function App() {
       ) : currentView === 'vatta-measurement' ? (
         <main style={{ flex: 1 }}>
           <VattaMeasurementCalculator
+            initialRecord={docToLoad}
             onBack={handleGoHome}
           />
         </main>

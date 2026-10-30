@@ -151,7 +151,7 @@ export function generateVatPdf(data) {
         'Name & Address of the Consigner with',
         'TIN/CST RC No. Phone No. E-mail, PAN etc.'
       ],
-      valLines: f1Lines.length ? f1Lines : ['Anil Kumar.G', 'G.K. Saw Mill', 'Kattur, Nedumpana, Kollam', '32AHOPG1823G1ZP'],
+      valLines: f1Lines.length ? f1Lines : ['Anil Kumar G', 'G.K. Saw Mill', 'Kattur, Nedumpana, Kollam', '32AHOPG1823G1ZP'],
       valLinesRaw: f1Lines
     },
     {
@@ -277,7 +277,7 @@ export function generateVatPdf(data) {
 
   curY += 6
 
-  const consignerName = data.consignerName || 'G. Anil Kumar'
+  const consignerName = data.consignerName || 'Anil Kumar G'
   const businessName = data.consignerBusinessName || 'G.K. Saw Mill'
   const address = data.consignerAddress || 'Kattur, Nedumpana, Kollam'
   const pin = data.consignerPin ? ` - ${data.consignerPin}` : ' - 691576'
@@ -312,7 +312,7 @@ export function generateVatPdf(data) {
   const sigX = colValCenterX
   doc.text('Signature & Name', sigX, curY, { align: 'center' })
 
-  const signatory = data.signatoryName || consignerName || 'G. Anil Kumar'
+  const signatory = data.signatoryName || consignerName || 'Anil Kumar G'
   doc.setFont('times', 'bold')
   doc.setFontSize(10.5)
   // Generous vertical space for physical signature

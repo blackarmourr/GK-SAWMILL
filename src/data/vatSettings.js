@@ -18,7 +18,7 @@ export const STORAGE_KEYS = {
 
 export const DEFAULT_VAT_CONSIGNER = {
   id: 'default-consigner',
-  name: 'G. Anil Kumar',
+  name: 'Anil Kumar G',
   businessName: 'G.K. Saw Mill',
   address: 'Kattur, Nedumpana, Kollam',
   pinCode: '691576',
@@ -92,7 +92,7 @@ export const DEFAULT_VAT_SETTINGS = {
 
 export const SAMPLE_VAT_BILL = {
   // Field 1
-  consignerName: 'Anil Kumar.G',
+  consignerName: 'Anil Kumar G',
   consignerBusinessName: 'G.K. Saw Mill',
   consignerAddress: 'Kattur, Nedumpana, Kollam',
   consignerRegistration: '32AHOPG1823G1ZP',
@@ -146,7 +146,7 @@ export const SAMPLE_VAT_BILL = {
   // Declaration & Signature
   declarationDate: '2026-10-10',
   declarationPlace: 'Nedumpana',
-  signatoryName: 'G. Anil Kumar'
+  signatoryName: 'Anil Kumar G'
 }
 
 /**
@@ -204,7 +204,14 @@ export function formatDate(dateStr, separator = '-') {
 export function getVatConsignerProfile() {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.CONSIGNER)
-    if (raw) return { ...DEFAULT_VAT_CONSIGNER, ...JSON.parse(raw) }
+    if (raw) {
+      const parsed = JSON.parse(raw)
+      const res = { ...DEFAULT_VAT_CONSIGNER, ...parsed }
+      if (!res.name || res.name.includes('G. Anil') || res.name === 'Anil Kumar.G' || res.name.includes('Anil Kumar.')) {
+        res.name = 'Anil Kumar G'
+      }
+      return res
+    }
   } catch (err) {
     console.error('Failed to load VAT consigner profile:', err)
   }

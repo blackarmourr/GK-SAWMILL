@@ -357,7 +357,12 @@ export default function VattaInvoiceGenerator({
     const record = {
       id: invoiceForm.id || `vatta_inv_${Date.now()}`,
       title: `Invoice ${invoiceForm.invoiceNo} - ${invoiceForm.receiverName || 'Vatta Sale'}`,
-      invoiceData: { ...invoiceForm },
+      invoiceData: {
+        ...invoiceForm,
+        passNo: invoiceForm.forestPassNo || invoiceForm.passNo || '',
+        forestPassNo: invoiceForm.forestPassNo || invoiceForm.passNo || ''
+      },
+      forest_pass_no: invoiceForm.forestPassNo || invoiceForm.passNo || '',
       totals: { ...calculated },
       productsSnapshot: [...products],
       grandTotal: calculated.grandTotal
@@ -392,7 +397,12 @@ export default function VattaInvoiceGenerator({
       const record = {
         id: invoiceForm.id || `vatta_inv_${Date.now()}`,
         title: `Invoice ${invoiceForm.invoiceNo} - ${invoiceForm.receiverName || 'Vatta Sale'}`,
-        invoiceData: { ...invoiceForm },
+        invoiceData: {
+          ...invoiceForm,
+          passNo: invoiceForm.forestPassNo || invoiceForm.passNo || '',
+          forestPassNo: invoiceForm.forestPassNo || invoiceForm.passNo || ''
+        },
+        forest_pass_no: invoiceForm.forestPassNo || invoiceForm.passNo || '',
         totals: { ...calculated },
         productsSnapshot: [...products],
         grandTotal: calculated.grandTotal

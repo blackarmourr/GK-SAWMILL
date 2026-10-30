@@ -108,24 +108,24 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
      ========================================================================= */
   // Left: Business Title & Address
   doc.setFont('times', 'bold')
-  doc.setFontSize(15.5)
+  doc.setFontSize(16.5)
   doc.text(sellerName, margin, 16.5)
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(9)
+  doc.setFontSize(9.6)
   doc.text(sellerAddressLine1, margin, 21.5)
   doc.text(sellerAddressLine2, margin, 26.2)
 
   // Right: Telephone, Email, GST No
   doc.setFont('times', 'bold')
-  doc.setFontSize(9)
+  doc.setFontSize(9.6)
   doc.text(`Tele : ${telephone}`, rightEdge, 16.5, { align: 'right' })
   doc.text(`Email : ${email}`, rightEdge, 21.5, { align: 'right' })
   doc.text(`GST No: ${sellerGstin}`, rightEdge, 26.2, { align: 'right' })
 
   // Centered Title: FORM GST INVOICE-I
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(12)
+  doc.setFontSize(13)
   doc.text('FORM GST INVOICE-I', pageWidth / 2, 33.8, { align: 'center' })
 
   /* =========================================================================
@@ -144,7 +144,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   const rightTextX = midX + 2.5
 
   doc.setFont('times', 'normal')
-  doc.setFontSize(8.8)
+  doc.setFontSize(9.5)
 
   if (hasPo) {
     // 5 Rows spaced gracefully at 4.9mm steps
@@ -220,7 +220,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   const partyHeadH = 6.2
   doc.line(margin, partyTop + partyHeadH, rightEdge, partyTop + partyHeadH)
   doc.setFont('times', 'bold')
-  doc.setFontSize(9.5)
+  doc.setFontSize(10.2)
   doc.text('Details of Receiver', (margin + midX) / 2, partyTop + 4.4, { align: 'center' })
   doc.text('Details of Despatched', (midX + rightEdge) / 2, partyTop + 4.4, { align: 'center' })
 
@@ -228,7 +228,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   let rY = partyTop + partyHeadH + 4.5
   const maxRecW = (midX - 2.5) - (leftTextX + 18) // 70 mm strictly within left column
   doc.setFont('times', 'bold')
-  doc.setFontSize(9)
+  doc.setFontSize(9.8)
   doc.text('Name', leftTextX, rY)
   const rNameLines = doc.splitTextToSize((receiverName || '').trim(), maxRecW)
   rNameLines.forEach((line, i) => {
@@ -314,7 +314,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
 
   doc.rect(margin, vehTop, contentWidth, vehHeight)
   doc.setFont('times', 'bold')
-  doc.setFontSize(9)
+  doc.setFontSize(9.8)
   doc.text(`VEHICLE NO:- ${vehicleNo || ''}`, pageWidth / 2, vehTop + 4.7, { align: 'center' })
 
   /* =========================================================================
@@ -341,7 +341,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   }
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.8)
+  doc.setFontSize(9.5)
   doc.text('Items', (colX[0] + colX[1]) / 2, tableTop + 4.5, { align: 'center' })
   doc.text('Bags', (colX[1] + colX[2]) / 2, tableTop + 4.5, { align: 'center' })
   doc.text('Description of Goods', (colX[2] + colX[3]) / 2, tableTop + 4.5, { align: 'center' })
@@ -359,7 +359,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
     doc.line(colX[i], subHeadTop, colX[i], subHeadTop + subHeadHeight)
   }
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.2)
+  doc.setFontSize(9.0)
   doc.text('To the Value of First Quality', (colX[2] + colX[3]) / 2, subHeadTop + 3.8, { align: 'center' })
   doc.text('" Vatta " Wood Pencils Slats', (colX[2] + colX[3]) / 2, subHeadTop + 7.6, { align: 'center' })
 
@@ -375,7 +375,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
 
     const midY = curRowTop + 4.6
     doc.setFont('times', 'normal')
-    doc.setFontSize(8.5)
+    doc.setFontSize(9.5)
 
     // Items (e.g. "8 - Ply")
     doc.text(l.item, (colX[0] + colX[1]) / 2, midY, { align: 'center' })
@@ -413,7 +413,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   }
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(9)
+  doc.setFontSize(9.8)
   // Total Bags
   doc.text(totalBags > 0 ? String(totalBags) : '', (colX[1] + colX[2]) / 2, totalRowTop + 4.5, { align: 'center' })
   // Total Pieces
@@ -432,7 +432,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   // --- Left Sub-Block: Forest Pass, E-Way Bill & Charges ---
   let leftY = splitTop + 4.6
   doc.setFont('times', 'italic')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.4)
   doc.text(`Forest Pass No:- ${forestPassNo || ''}`, leftTextX + 12, leftY)
 
   leftY += 4.8
@@ -449,7 +449,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   // Charges Section on Left
   let feeY = line1Y + 3.8
   doc.setFont('times', 'normal')
-  doc.setFontSize(8.2)
+  doc.setFontSize(8.8)
   doc.text(`Freight ${freight ? `: ₹${formatIndianCurrency(freight)}` : ''}`, leftTextX, feeY)
   feeY += 4.0
   doc.text(`Insurance ${insurance ? `: ₹${formatIndianCurrency(insurance)}` : ''}`, leftTextX, feeY)
@@ -464,7 +464,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   // Bank Details Section on Left
   let bankY = bankLineY + 4.0
   doc.setFont('times', 'bold')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.4)
   doc.text(`Bank Details ${bankDetails ? `: ${bankDetails}` : ''}`, leftTextX, bankY)
   bankY += 4.0
   doc.setFont('times', 'normal')
@@ -477,7 +477,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   doc.line(margin, termsTop, splitColX, termsTop)
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(8)
+  doc.setFontSize(8.8)
   doc.text('Terms and Conditions:', leftTextX, termsTop + 4.5)
 
   // Authorised Signatory vertical block
@@ -523,7 +523,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
 
     const midTextY = rowY + (finRowH / 2) + 1.2
     doc.setFont('times', r.isBold ? 'bold' : 'normal')
-    doc.setFontSize(r.isBold ? 9 : 8.5)
+    doc.setFontSize(r.isBold ? 10.2 : 9.5)
 
     // Left label in financial cell
     doc.text(r.label, splitColX + 2.5, midTextY)
@@ -545,7 +545,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   doc.rect(margin, wordsTop, contentWidth, wordsHeight)
 
   doc.setFont('times', 'normal')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.5)
   const grandWords = formatInvoiceGrandTotalWords(grandTotal)
   doc.text(`Grand Total In words:- ${grandWords}`, leftTextX, wordsTop + 5.0)
 
@@ -557,7 +557,7 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
   doc.rect(margin, footerStripTop, contentWidth, footerStripH)
 
   doc.setFont('times', 'normal')
-  doc.setFontSize(8.5)
+  doc.setFontSize(9.2)
   doc.text('Orginal for Recipient, Duplicate for Transporter, Triplicate for Supplier', leftTextX, footerStripTop + 4.7)
   doc.text('GST Payable on Reverse Charge', rightEdge - 2.5, footerStripTop + 4.7, { align: 'right' })
 
@@ -566,11 +566,11 @@ export function generateVattaInvoicePdf(invoiceData, save = true) {
      ========================================================================= */
   const signTop = footerStripTop + footerStripH + 7.5
   doc.setFont('times', 'bolditalic')
-  doc.setFontSize(11)
+  doc.setFontSize(12)
   doc.text('For .G.K. Saw Mill', rightEdge - 6, signTop, { align: 'right' })
 
   doc.setFont('times', 'bold')
-  doc.setFontSize(10)
+  doc.setFontSize(11)
   doc.text('Proprietor', rightEdge - 12, signTop + 16.5, { align: 'right' })
 
   // Trigger download if requested

@@ -34,7 +34,8 @@ import { getSavedVattaInvoices } from '../data/vattaInvoiceSettings.js'
 import { generateVattaPdf } from '../utils/vattaPdfGenerator.js'
 
 export default function VattaMeasurementCalculator({
-  onBack
+  onBack,
+  initialRecord = null
 }) {
   // Stored persistent defaults (Lorry Reg No & Place)
   const [storedSettings, setStoredSettings] = useState(() => getStoredVattaSettings())
@@ -111,6 +112,32 @@ export default function VattaMeasurementCalculator({
     } catch {}
   }, [])
 
+  // Auto-load initialRecord if passed as prop
+  useEffect(() => {
+    if (initialRecord) {
+      const data = initialRecord.invoiceData || initialRecord
+      if (data.bagQuantities) {
+        setBagQuantities({
+          1: data.bagQuantities[1] !== undefined && data.bagQuantities[1] !== '' ? Number(data.bagQuantities[1]) : '',
+          2: data.bagQuantities[2] !== undefined && data.bagQuantities[2] !== '' ? Number(data.bagQuantities[2]) : '',
+          3: data.bagQuantities[3] !== undefined && data.bagQuantities[3] !== '' ? Number(data.bagQuantities[3]) : '',
+          4: data.bagQuantities[4] !== undefined && data.bagQuantities[4] !== '' ? Number(data.bagQuantities[4]) : '',
+          5: data.bagQuantities[5] !== undefined && data.bagQuantities[5] !== '' ? Number(data.bagQuantities[5]) : '',
+          6: data.bagQuantities[6] !== undefined && data.bagQuantities[6] !== '' ? Number(data.bagQuantities[6]) : ''
+        })
+      }
+      if (data.invoiceNo) {
+        const inv = String(data.invoiceNo).trim()
+        setInvoiceNo(inv.includes('/') ? inv : `${inv}/2026-27`)
+      }
+      if (data.vehicleNo) setLorryRegNo(data.vehicleNo)
+      if (data.invoiceDate) setDate(data.invoiceDate)
+      if (data.placeOfSupply) setPlace(data.placeOfSupply)
+      const pass = data.forestPassNo || data.passNo || data.forest_pass_no || initialRecord.forest_pass_no || ''
+      if (pass) setPassNo(String(pass).trim())
+    }
+  }, [initialRecord])
+
   const handleLoadFromVattaInvoice = (invId) => {
     setSelectedInvoiceId(invId)
     if (!invId) return
@@ -130,7 +157,8 @@ export default function VattaMeasurementCalculator({
       }
       // 2. Invoice number
       if (data.invoiceNo) {
-        setInvoiceNo(`${data.invoiceNo}/2026-27`)
+        const inv = String(data.invoiceNo).trim()
+        setInvoiceNo(inv.includes('/') ? inv : `${inv}/2026-27`)
       }
       // 3. Vehicle / Lorry Reg No
       if (data.vehicleNo) {
@@ -143,6 +171,11 @@ export default function VattaMeasurementCalculator({
       // 5. Place
       if (data.placeOfSupply) {
         setPlace(data.placeOfSupply)
+      }
+      // 6. Forest Pass Number
+      const pass = data.forestPassNo || data.passNo || data.forest_pass_no || found.forest_pass_no || ''
+      if (pass) {
+        setPassNo(String(pass).trim())
       }
       notify(`Loaded Invoice ${data.invoiceNo}: ${found.totals?.totalBags || 0} Bags & ${data.vehicleNo || 'Vehicle'}!`)
     }

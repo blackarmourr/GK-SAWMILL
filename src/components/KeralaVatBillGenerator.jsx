@@ -161,7 +161,7 @@ export default function KeralaVatBillGenerator({
     const today = new Date().toISOString().split('T')[0]
     return {
       // Field 1
-      consignerName: consignerProfile.name || 'Anil Kumar.G',
+      consignerName: consignerProfile.name || 'Anil Kumar G',
       consignerBusinessName: consignerProfile.businessName || 'G.K. Saw Mill',
       consignerAddress: consignerProfile.address || 'Kattur, Nedumpana, Kollam',
       consignerPin: consignerProfile.pinCode || '691576',
@@ -223,7 +223,7 @@ export default function KeralaVatBillGenerator({
       // Declaration & Bottom
       declarationDate: today,
       declarationPlace: vatSettings.place || 'Nedumpana',
-      signatoryName: consignerProfile.name || 'G. Anil Kumar'
+      signatoryName: consignerProfile.name && !consignerProfile.name.includes('G. Anil') ? consignerProfile.name : 'Anil Kumar G'
     }
   })
 
@@ -726,7 +726,7 @@ export default function KeralaVatBillGenerator({
     const field10 = tName ? `${tName}${field10Extra}` : ''
 
     // Declaration text
-    const cName = billData.consignerName || 'G. Anil Kumar'
+    const cName = billData.consignerName || 'Anil Kumar G'
     const bName = billData.consignerBusinessName || 'G.K. Saw Mill'
     const addr = billData.consignerAddress || 'Kattur, Nedumpana, Kollam'
     const pin = billData.consignerPin ? ` - ${billData.consignerPin}` : ' - 691576'
@@ -1061,7 +1061,7 @@ export default function KeralaVatBillGenerator({
                   type="text"
                   value={billData.consignerName}
                   onChange={(e) => handleFieldChange('consignerName', e.target.value)}
-                  placeholder="e.g. Anil Kumar.G"
+                  placeholder="e.g. Anil Kumar G"
                   style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem' }}
                 />
               </div>
@@ -1706,7 +1706,7 @@ export default function KeralaVatBillGenerator({
                   type="text"
                   value={billData.signatoryName}
                   onChange={(e) => handleFieldChange('signatoryName', e.target.value)}
-                  placeholder="e.g. G. Anil Kumar"
+                  placeholder="e.g. Anil Kumar G"
                   style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700 }}
                 />
               </div>
@@ -1933,7 +1933,7 @@ export default function KeralaVatBillGenerator({
               <div style={{ textAlign: 'center', fontSize: '0.875rem' }}>
                 <div>Signature & Name</div>
                 <div style={{ marginTop: '1.8rem', fontWeight: 'bold' }}>
-                  {billData.signatoryName || billData.consignerName || 'G. Anil Kumar'}
+                  {billData.signatoryName || billData.consignerName || 'Anil Kumar G'}
                 </div>
               </div>
             </div>
