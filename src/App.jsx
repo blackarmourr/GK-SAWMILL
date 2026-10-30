@@ -199,13 +199,13 @@ function App() {
               className="brand-logo-title"
               onClick={handleGoHome}
               style={{ cursor: 'pointer' }}
-              title="G.K. SAWMILL - Return to Home"
+              title="GK SAWMILL - Return to Home"
             >
-              <div className="logo-icon-wrapper" style={{ padding: 0, overflow: 'hidden', background: 'transparent', border: 'none' }}>
-                <SawmillLogo size={34} />
+              <div className="logo-icon-wrapper" style={{ padding: '2px', overflow: 'hidden', background: 'rgba(255, 255, 255, 0.95)', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.25)', boxShadow: '0 2px 5px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <SawmillLogo size={36} useEmblem={true} />
               </div>
               <div className="brand-titles">
-                <h1>G.K. SAWMILL</h1>
+                <h1>GK SAWMILL</h1>
               </div>
             </div>
 

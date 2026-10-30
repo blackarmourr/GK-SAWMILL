@@ -1,13 +1,17 @@
 // G.K. Sawmill - Progressive Web App Service Worker
-const CACHE_NAME = 'gk-sawmill-cache-v2';
+const CACHE_NAME = 'gk-sawmill-cache-v3';
 const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.json',
+  './logo.png',
+  './logo-transparent.png',
   './logo.svg',
+  './favicon.ico',
   './favicon.svg',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {
