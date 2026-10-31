@@ -139,20 +139,36 @@ export default function MahoganyManjiyamChartGenerator({ onBack }) {
     }
   }
 
-  // Determine active template rows based on user wood selection & row count
+  // Determine active template rows based on user wood selection & row count (supports any number of rows)
   const activeTemplateRows = useMemo(() => {
     if (woodType === 'mahogany') {
-      const count = Math.min(Math.max(1, mahoganyRowCount), 15)
-      return MAHOGANY_STANDARD_ROWS.slice(0, count)
+      const count = Math.max(1, parseInt(mahoganyRowCount, 10) || 15)
+      if (count <= MAHOGANY_STANDARD_ROWS.length) {
+        return MAHOGANY_STANDARD_ROWS.slice(0, count)
+      }
+      return Array.from({ length: count }, (_, i) => {
+        const base = MAHOGANY_STANDARD_ROWS[i % MAHOGANY_STANDARD_ROWS.length]
+        return {
+          ...base,
+          slNo: i + 1,
+        }
+      })
     } else {
-      if (manjiyamRowCount === 7) {
+      const count = Math.max(1, parseInt(manjiyamRowCount, 10) || 7)
+      if (count === 7) {
         return MANJIYAM_STANDARD_ROWS_7
-      } else if (manjiyamRowCount === 10) {
+      } else if (count === 10) {
         return MANJIYAM_STANDARD_ROWS_10
-      } else {
-        const count = Math.min(Math.max(1, manjiyamRowCount), 10)
+      } else if (count <= MANJIYAM_STANDARD_ROWS_10.length) {
         return MANJIYAM_STANDARD_ROWS_10.slice(0, count)
       }
+      return Array.from({ length: count }, (_, i) => {
+        const base = MANJIYAM_STANDARD_ROWS_10[i % MANJIYAM_STANDARD_ROWS_10.length]
+        return {
+          ...base,
+          slNo: i + 1,
+        }
+      })
     }
   }, [woodType, mahoganyRowCount, manjiyamRowCount])
 
@@ -238,8 +254,6 @@ export default function MahoganyManjiyamChartGenerator({ onBack }) {
     URL.revokeObjectURL(url)
   }
 
-  const isExceedingManjiyamRows = woodType === 'manjiyam' && parseInt(customRowCountInput, 10) > 10
-  const isExceedingMahoganyRows = woodType === 'mahogany' && parseInt(customMahoganyInput, 10) > 15
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1.5rem 1rem 3rem' }}>
@@ -660,239 +674,130 @@ export default function MahoganyManjiyamChartGenerator({ onBack }) {
             {/* Row Count Selector (Configurable for both Mahogany and Manjiyam) */}
             <div>
               <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
-                Number of Rows ({woodType === 'mahogany' ? '1 to 15' : '1 to 10'})
+                Number of Rows ({woodType === 'mahogany' ? `${mahoganyRowCount} Selected` : `${manjiyamRowCount} Selected`})
               </label>
 
               {woodType === 'mahogany' ? (
                 <div>
-                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMahoganyRowCount(15)
-                        setCustomMahoganyInput('15')
-                      }}
-                      style={{
-                        padding: '0.7rem 0.65rem',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border-color, #cbd5e1)',
-                        background: mahoganyRowCount === 15 ? 'var(--primary)' : 'var(--card-bg)',
-                        color: mahoganyRowCount === 15 ? '#ffffff' : 'var(--text-primary)',
-                        fontWeight: 700,
-                        fontSize: '0.85rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      15 Rows (All)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMahoganyRowCount(12)
-                        setCustomMahoganyInput('12')
-                      }}
-                      style={{
-                        padding: '0.7rem 0.65rem',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border-color, #cbd5e1)',
-                        background: mahoganyRowCount === 12 ? 'var(--primary)' : 'var(--card-bg)',
-                        color: mahoganyRowCount === 12 ? '#ffffff' : 'var(--text-primary)',
-                        fontWeight: 700,
-                        fontSize: '0.85rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      12 Rows
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMahoganyRowCount(10)
-                        setCustomMahoganyInput('10')
-                      }}
-                      style={{
-                        padding: '0.7rem 0.65rem',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border-color, #cbd5e1)',
-                        background: mahoganyRowCount === 10 ? 'var(--primary)' : 'var(--card-bg)',
-                        color: mahoganyRowCount === 10 ? '#ffffff' : 'var(--text-primary)',
-                        fontWeight: 700,
-                        fontSize: '0.85rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      10 Rows
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMahoganyRowCount(7)
-                        setCustomMahoganyInput('7')
-                      }}
-                      style={{
-                        padding: '0.7rem 0.65rem',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border-color, #cbd5e1)',
-                        background: mahoganyRowCount === 7 ? 'var(--primary)' : 'var(--card-bg)',
-                        color: mahoganyRowCount === 7 ? '#ffffff' : 'var(--text-primary)',
-                        fontWeight: 700,
-                        fontSize: '0.85rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      7 Rows
-                    </button>
-                    <input
-                      type="number"
-                      min="1"
-                      max="15"
-                      value={customMahoganyInput}
-                      onChange={(e) => {
-                        const val = e.target.value
-                        setCustomMahoganyInput(val)
-                        const parsed = parseInt(val, 10)
-                        if (!isNaN(parsed) && parsed >= 1 && parsed <= 15) {
-                          setMahoganyRowCount(parsed)
-                        }
-                      }}
-                      placeholder="Custom"
-                      title="Enter custom Mahogany rows (1-15)"
-                      style={{
-                        width: '75px',
-                        padding: '0.7rem 0.4rem',
-                        borderRadius: '8px',
-                        border: isExceedingMahoganyRows ? '2px solid #ef4444' : '1px solid #cbd5e1',
-                        background: 'var(--card-bg, #ffffff)',
-                        textAlign: 'center',
-                        fontWeight: 700,
-                        fontSize: '0.9rem'
-                      }}
-                    />
+                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                    {[7, 10, 12, 15, 20, 25].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => {
+                          setMahoganyRowCount(preset)
+                          setCustomMahoganyInput(String(preset))
+                        }}
+                        style={{
+                          padding: '0.65rem 0.65rem',
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color, #cbd5e1)',
+                          background: mahoganyRowCount === preset ? 'var(--primary)' : 'var(--card-bg)',
+                          color: mahoganyRowCount === preset ? '#ffffff' : 'var(--text-primary)',
+                          fontWeight: 700,
+                          fontSize: '0.85rem',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {preset === 15 ? '15 (All)' : `${preset} Rows`}
+                      </button>
+                    ))}
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', marginLeft: 'auto' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}>Custom:</span>
+                      <input
+                        type="number"
+                        min="1"
+                        value={customMahoganyInput}
+                        onChange={(e) => {
+                          const val = e.target.value
+                          setCustomMahoganyInput(val)
+                          const parsed = parseInt(val, 10)
+                          if (!isNaN(parsed) && parsed >= 1) {
+                            setMahoganyRowCount(parsed)
+                          }
+                        }}
+                        placeholder="e.g. 18"
+                        title="Enter any number of rows"
+                        style={{
+                          width: '75px',
+                          padding: '0.65rem 0.4rem',
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color, #cbd5e1)',
+                          background: 'var(--card-bg, #ffffff)',
+                          color: 'var(--text-primary)',
+                          textAlign: 'center',
+                          fontWeight: 700,
+                          fontSize: '0.9rem'
+                        }}
+                      />
+                    </div>
                   </div>
                   <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.4rem' }}>
-                    Standard Mahogany dimensions are preserved. Quantities will recalculate to fit your selected row count and target CFT.
+                    Select preset rows or enter any custom number of rows. Quantities will optimize automatically to match your target CFT.
                   </p>
                 </div>
               ) : (
                 <div>
-                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setManjiyamRowCount(7)
-                        setCustomRowCountInput('7')
-                      }}
-                      style={{
-                        flex: 1,
-                        padding: '0.7rem 0.5rem',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border-color, #cbd5e1)',
-                        background: manjiyamRowCount === 7 ? 'var(--wood-accent)' : 'var(--card-bg)',
-                        color: manjiyamRowCount === 7 ? '#ffffff' : 'var(--text-primary)',
-                        fontWeight: 700,
-                        fontSize: '0.9rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      7 Rows
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setManjiyamRowCount(10)
-                        setCustomRowCountInput('10')
-                      }}
-                      style={{
-                        flex: 1,
-                        padding: '0.7rem 0.5rem',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border-color, #cbd5e1)',
-                        background: manjiyamRowCount === 10 ? 'var(--wood-accent)' : 'var(--card-bg)',
-                        color: manjiyamRowCount === 10 ? '#ffffff' : 'var(--text-primary)',
-                        fontWeight: 700,
-                        fontSize: '0.9rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      10 Rows
-                    </button>
-                    <input
-                      type="number"
-                      min="1"
-                      max="10"
-                      value={customRowCountInput}
-                      onChange={(e) => {
-                        const val = e.target.value
-                        setCustomRowCountInput(val)
-                        const parsed = parseInt(val, 10)
-                        if (!isNaN(parsed) && parsed > 0 && parsed <= 10) {
-                          setManjiyamRowCount(parsed)
-                        }
-                      }}
-                      placeholder="Custom"
-                      title="Enter custom row count up to 10"
-                      style={{
-                        width: '85px',
-                        padding: '0.7rem 0.5rem',
-                        borderRadius: '8px',
-                        border: isExceedingManjiyamRows ? '2px solid #ef4444' : '1px solid #cbd5e1',
-                        background: 'var(--card-bg, #ffffff)',
-                        textAlign: 'center',
-                        fontWeight: 700,
-                        fontSize: '0.9rem'
-                      }}
-                    />
+                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                    {[7, 10, 15, 20].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => {
+                          setManjiyamRowCount(preset)
+                          setCustomRowCountInput(String(preset))
+                        }}
+                        style={{
+                          padding: '0.65rem 0.75rem',
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color, #cbd5e1)',
+                          background: manjiyamRowCount === preset ? 'var(--wood-accent)' : 'var(--card-bg)',
+                          color: manjiyamRowCount === preset ? '#ffffff' : 'var(--text-primary)',
+                          fontWeight: 700,
+                          fontSize: '0.85rem',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {preset === 7 ? '7 (Standard)' : preset === 10 ? '10 (Standard)' : `${preset} Rows`}
+                      </button>
+                    ))}
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', marginLeft: 'auto' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}>Custom:</span>
+                      <input
+                        type="number"
+                        min="1"
+                        value={customRowCountInput}
+                        onChange={(e) => {
+                          const val = e.target.value
+                          setCustomRowCountInput(val)
+                          const parsed = parseInt(val, 10)
+                          if (!isNaN(parsed) && parsed >= 1) {
+                            setManjiyamRowCount(parsed)
+                          }
+                        }}
+                        placeholder="e.g. 12"
+                        title="Enter any number of rows"
+                        style={{
+                          width: '75px',
+                          padding: '0.65rem 0.4rem',
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color, #cbd5e1)',
+                          background: 'var(--card-bg, #ffffff)',
+                          color: 'var(--text-primary)',
+                          textAlign: 'center',
+                          fontWeight: 700,
+                          fontSize: '0.9rem'
+                        }}
+                      />
+                    </div>
                   </div>
                   <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.4rem' }}>
-                    Select standard 7-row or 10-row Manjiyam cutting schedule.
+                    Select preset rows or enter any custom number of rows. Quantities will optimize automatically to match your target CFT.
                   </p>
                 </div>
               )}
             </div>
           </div>
-
-          {/* Exceeding Rows Warning Alerts */}
-          {isExceedingManjiyamRows && (
-            <div
-              style={{
-                marginTop: '1rem',
-                background: '#fef2f2',
-                border: '1px solid #fecaca',
-                borderRadius: '8px',
-                padding: '0.75rem 1rem',
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '0.75rem',
-                color: '#991b1b'
-              }}
-            >
-              <AlertCircle size={20} style={{ flexShrink: 0, marginTop: '0.1rem' }} />
-              <div style={{ fontSize: '0.85rem' }}>
-                <strong>Standard Dimension Limit Notice:</strong> The entered row count ({customRowCountInput}) exceeds the 10 available standard Manjiyam dimensions. Standard dimensions must be preserved and not randomly generated. Please configure additional standard rows before selecting more than 10 rows.
-              </div>
-            </div>
-          )}
-
-          {isExceedingMahoganyRows && (
-            <div
-              style={{
-                marginTop: '1rem',
-                background: '#fef2f2',
-                border: '1px solid #fecaca',
-                borderRadius: '8px',
-                padding: '0.75rem 1rem',
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '0.75rem',
-                color: '#991b1b'
-              }}
-            >
-              <AlertCircle size={20} style={{ flexShrink: 0, marginTop: '0.1rem' }} />
-              <div style={{ fontSize: '0.85rem' }}>
-                <strong>Standard Dimension Limit Notice:</strong> Mahogany has 15 standard dimensions. Please choose a row count between 1 and 15.
-              </div>
-            </div>
-          )}
 
           {/* Validation Error Banner */}
           {validationError && (

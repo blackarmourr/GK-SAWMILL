@@ -179,8 +179,14 @@ export function generateSizeChartPdf({
   })
 
   // --- 6. FOOTER: SIGNATURE AREA ---
-  const finalY = doc.lastAutoTable.finalY + 12
+  let finalY = doc.lastAutoTable.finalY + 12
   const signatureX = pageWidth - margin - 45
+
+  // Ensure signature does not overflow off the page when row count is large
+  if (finalY + 25 > pageHeight - margin) {
+    doc.addPage()
+    finalY = margin + 15
+  }
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(9.5)
