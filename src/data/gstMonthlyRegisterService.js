@@ -120,6 +120,8 @@ function normalizeVattaInvoice(inv) {
   const sgst = Number(totals.sgstAmount ?? data.sgst_amount ?? 0)
   const grandTotal = Number(inv.grandTotal ?? totals.grandTotal ?? data.grand_total ?? (taxable + igst + cgst + sgst))
 
+  const totalBagsNum = Number(totals.totalBags ?? data.total_bags ?? 0)
+
   return {
     id: inv.id || `vatta_${data.invoiceNo || Date.now()}`,
     sourceType: 'VATTA',
@@ -135,7 +137,8 @@ function normalizeVattaInvoice(inv) {
     placeOfSupply: data.placeOfSupply || inv.place_of_supply || 'GUJARAT',
     hsnCode: '44219140',
     description: 'Vatta Slat Wood (8-ply, 7-ply, 6-ply)',
-    quantity: `${totals.totalBags || data.total_bags || 0} Bags`,
+    quantity: `${totalBagsNum} Bags`,
+    totalBags: totalBagsNum,
     taxableAmount: taxable,
     taxTreatment: data.taxTreatment || inv.tax_treatment || 'IGST',
     gstRate: Number(data.gstRate || inv.gst_rate || 5),
@@ -200,6 +203,8 @@ function normalizeTimberInvoice(inv) {
     hsnCode: '4407',
     description: 'Mahogany & Manjiyam Sawn Timber',
     quantity: `${cftTotal.toFixed(2)} CFT`,
+    totalCft: cftTotal,
+    totalCbm: Number((cftTotal * 0.0283168466).toFixed(2)),
     taxableAmount: taxable,
     taxTreatment: isInterstate ? 'IGST' : 'CGST_SGST',
     gstRate: gstRate,

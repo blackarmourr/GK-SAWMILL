@@ -7,6 +7,7 @@ import {
   ArrowRight,
   FileText,
   FolderArchive,
+  FileSpreadsheet,
   Sun,
   Moon
 } from 'lucide-react'
@@ -18,6 +19,7 @@ import VattaInvoiceGenerator from './components/VattaInvoiceGenerator'
 import CreditNoteGenerator from './components/CreditNoteGenerator'
 import DebitNoteGenerator from './components/DebitNoteGenerator'
 import GstMonthlyFilingRegister from './components/GstMonthlyFilingRegister'
+import HsnSummaryDocumentsGenerator from './components/HsnSummaryDocumentsGenerator'
 import SawmillLogo from './components/SawmillLogo'
 import AuthModal from './components/AuthModal'
 import { supabase, isSupabaseConfigured } from './lib/supabaseClient'
@@ -78,6 +80,13 @@ const MODULES = [
     title: 'GST Monthly Invoices & Filing (GSTR-1)',
     icon: FolderArchive,
     themeColor: '#1b4332'
+  },
+  {
+    id: 'hsn-summary-documents',
+    number: 'Module 09',
+    title: 'HSN Summary & Documents Issued',
+    icon: FileSpreadsheet,
+    themeColor: '#2d6a4f'
   }
 ]
 
@@ -93,7 +102,8 @@ function App() {
         'kerala-vat',
         'credit-note',
         'debit-note',
-        'gst-monthly-filing'
+        'gst-monthly-filing',
+        'hsn-summary-documents'
       ]
       return validViews.includes(hash) ? hash : 'home'
     } catch {
@@ -169,7 +179,9 @@ function App() {
   const handleCardClick = (mod) => {
     setDocToLoad(null)
     let view = 'home'
-    if (mod.id === 'gst-monthly-filing') {
+    if (mod.id === 'hsn-summary-documents') {
+      view = 'hsn-summary-documents'
+    } else if (mod.id === 'gst-monthly-filing') {
       view = 'gst-monthly-filing'
     } else if (mod.id === 'debit-note') {
       view = 'debit-note'
@@ -238,10 +250,17 @@ function App() {
       </header>
 
       {/* Main Container */}
-      {currentView === 'gst-monthly-filing' ? (
+      {currentView === 'hsn-summary-documents' ? (
+        <main style={{ flex: 1 }}>
+          <HsnSummaryDocumentsGenerator
+            onBack={handleGoHome}
+          />
+        </main>
+      ) : currentView === 'gst-monthly-filing' ? (
         <main style={{ flex: 1 }}>
           <GstMonthlyFilingRegister
             onBack={handleGoHome}
+            onOpenHsnSummary={() => navigateToView('hsn-summary-documents')}
             onOpenVattaInvoice={(rec) => {
               setDocToLoad(rec)
               navigateToView('vatta-invoice')

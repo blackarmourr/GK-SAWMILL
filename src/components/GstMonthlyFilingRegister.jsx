@@ -52,6 +52,7 @@ import { isSupabaseConfigured } from '../lib/supabaseClient.js'
 
 export default function GstMonthlyFilingRegister({
   onBack,
+  onOpenHsnSummary,
   onOpenVattaInvoice,
   onOpenTimberInvoice,
   onOpenCreditNote,
@@ -388,6 +389,30 @@ export default function GstMonthlyFilingRegister({
             <RefreshCw size={14} className={refreshing ? 'spin-icon' : ''} />
             <span>{refreshing ? 'Syncing...' : 'Sync Cloud'}</span>
           </button>
+
+          {onOpenHsnSummary && (
+            <button
+              type="button"
+              onClick={onOpenHsnSummary}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                padding: '0.55rem 0.95rem',
+                borderRadius: '8px',
+                border: '1.5px solid #1e3a2b',
+                background: '#1e3a2b',
+                color: '#ffffff',
+                fontWeight: 800,
+                fontSize: '0.82rem',
+                cursor: 'pointer'
+              }}
+              title="Open GSTR-1 Table 12 HSN Summary & Table 13 Documents Issued"
+            >
+              <FileSpreadsheet size={15} style={{ color: '#4ade80' }} />
+              <span>HSN & Docs (Tables 12 & 13)</span>
+            </button>
+          )}
 
           <button
             type="button"
