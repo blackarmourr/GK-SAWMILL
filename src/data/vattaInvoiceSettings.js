@@ -499,7 +499,10 @@ export function saveVattaInvoiceRecord(record) {
       id,
       savedAt: new Date().toISOString()
     }
-    const index = current.findIndex(inv => inv.id === id)
+    const index = current.findIndex(inv =>
+      inv.id === id ||
+      (inv.invoiceData?.invoiceNo && invData.invoiceNo && String(inv.invoiceData.invoiceNo).trim().toUpperCase() === String(invData.invoiceNo).trim().toUpperCase())
+    )
     let updated
     if (index >= 0) {
       updated = [...current]

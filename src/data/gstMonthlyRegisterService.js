@@ -109,25 +109,30 @@ export function getFinancialYearFromKey(yearMonthKey) {
  * Normalizes a Vatta invoice into a standardized GST document record
  */
 function normalizeVattaInvoice(inv) {
-  const data = inv.invoiceData || inv
-  const totals = inv.totals || {}
-  const rawDate = data.invoiceDate || inv.invoice_date || ''
+  const data = inv.invoiceData || inv.full_payload?.invoiceData || inv.full_payload || inv
+  const totals = inv.totals || inv.full_payload?.totals || {}
+  const rawDate = data.invoiceDate || inv.invoiceDate || inv.invoice_date || ''
   const yearMonth = getYearMonthKey(rawDate)
 
-  const taxable = Number(totals.taxableValue ?? data.taxable_value ?? 0)
-  const igst = Number(totals.igstAmount ?? data.igst_amount ?? 0)
-  const cgst = Number(totals.cgstAmount ?? data.cgst_amount ?? 0)
-  const sgst = Number(totals.sgstAmount ?? data.sgst_amount ?? 0)
-  const grandTotal = Number(inv.grandTotal ?? totals.grandTotal ?? data.grand_total ?? (taxable + igst + cgst + sgst))
+  const taxable = Number(totals.taxableValue ?? data.taxable_value ?? data.taxableValue ?? 0)
+  const igst = Number(totals.igstAmount ?? data.igst_amount ?? data.igstAmount ?? 0)
+  const cgst = Number(totals.cgstAmount ?? data.cgst_amount ?? data.cgstAmount ?? 0)
+  const sgst = Number(totals.sgstAmount ?? data.sgst_amount ?? data.sgstAmount ?? 0)
+  const totalTax = igst + cgst + sgst
 
-  const totalBagsNum = Number(totals.totalBags ?? data.total_bags ?? 0)
+  let grandTotal = Number(inv.grandTotal ?? totals.grandTotal ?? data.grand_total ?? data.grandTotal ?? 0)
+  if (grandTotal === 0 || (grandTotal <= taxable && totalTax > 0)) {
+    grandTotal = Math.round((taxable + totalTax) * 100) / 100
+  }
+
+  const totalBagsNum = Number(totals.totalBags ?? data.total_bags ?? data.totalBags ?? 0)
 
   return {
     id: inv.id || `vatta_${data.invoiceNo || Date.now()}`,
     sourceType: 'VATTA',
     sourceLabel: 'Vatta Wood Invoice',
     gstDocType: 'Tax Invoice (B2B)',
-    docNo: data.invoiceNo || inv.invoice_no || 'Draft',
+    docNo: data.invoiceNo || inv.invoice_no || inv.docNo || 'Draft',
     docDate: rawDate,
     yearMonth,
     receiverName: data.receiverName || inv.receiver_name || 'Hindustan Pencils Pvt Ltd',
@@ -145,7 +150,7 @@ function normalizeVattaInvoice(inv) {
     igstAmount: igst,
     cgstAmount: cgst,
     sgstAmount: sgst,
-    totalTax: igst + cgst + sgst,
+    totalTax: totalTax,
     grandTotal: grandTotal,
     ewayBillNo: data.ewayBillNo || inv.eway_bill_no || '',
     vehicleNo: data.vehicleNo || inv.vehicle_no || '',
@@ -159,21 +164,38 @@ function normalizeVattaInvoice(inv) {
  * Normalizes a Timber invoice (Mahogany & Manjiyam)
  */
 function normalizeTimberInvoice(inv) {
-  const rawDate = inv.invoiceDate || inv.invoice_date || inv.date || ''
+  const data = inv.full_payload || inv
+  const rawDate = data.invoiceDate || inv.invoiceDate || inv.invoice_date || inv.date || ''
   const yearMonth = getYearMonthKey(rawDate)
 
-  const mahoganyTaxable = Number(inv.mahoganyTaxableValue ?? inv.mahogany_taxable ?? 0)
-  const manjiyamTaxable = Number(inv.manjiyamTaxableValue ?? inv.manjiyam_taxable ?? 0)
-  const taxable = Number(inv.taxableValue ?? inv.taxable_value ?? (mahoganyTaxable + manjiyamTaxable))
+  const mahoganyEnabled = data.mahoganyEnabled !== undefined
+    ? Boolean(data.mahoganyEnabled)
+    : (inv.mahogany_enabled !== undefined ? Boolean(inv.mahogany_enabled) : true)
 
-  const gstRate = Number(inv.gstRate ?? inv.gst_rate ?? 5)
-  const isInterstate = String(inv.placeOfSupply || inv.receiverState || '').toUpperCase().includes('TAMIL') ||
-    String(inv.placeOfSupply || inv.receiverState || '').toUpperCase().includes('GUJARAT') ||
-    String(inv.placeOfSupply || inv.receiverState || '').toUpperCase().includes('MAHARASHTRA')
+  const manjiyamEnabled = data.manjiyamEnabled !== undefined
+    ? Boolean(data.manjiyamEnabled)
+    : (inv.manjiyam_enabled !== undefined ? Boolean(inv.manjiyam_enabled) : true)
 
-  let igst = Number(inv.igstAmount ?? inv.igst_amount ?? 0)
-  let cgst = Number(inv.cgstAmount ?? inv.cgst_amount ?? 0)
-  let sgst = Number(inv.sgstAmount ?? inv.sgst_amount ?? 0)
+  const mahoganyTaxable = mahoganyEnabled
+    ? Number(data.mahoganyTaxableValue ?? inv.mahogany_taxable ?? 0)
+    : 0
+
+  const manjiyamTaxable = manjiyamEnabled
+    ? Number(data.manjiyamTaxableValue ?? inv.manjiyam_taxable ?? 0)
+    : 0
+
+  const subTotal = mahoganyTaxable + manjiyamTaxable
+  const discount = Number(data.discount ?? inv.discount ?? 0)
+  const taxable = Number(data.taxableValue ?? inv.taxable_value ?? Math.max(0, subTotal - discount))
+
+  const gstRate = Number(data.gstRate ?? inv.gst_rate ?? inv.gstRate ?? 18)
+  const isInterstate = String(data.placeOfSupply || inv.place_of_supply || data.receiverState || inv.receiver_state || '').toUpperCase().includes('TAMIL') ||
+    String(data.placeOfSupply || inv.place_of_supply || data.receiverState || inv.receiver_state || '').toUpperCase().includes('GUJARAT') ||
+    String(data.placeOfSupply || inv.place_of_supply || data.receiverState || inv.receiver_state || '').toUpperCase().includes('MAHARASHTRA')
+
+  let igst = Number(data.igstAmount ?? inv.igst_amount ?? 0)
+  let cgst = Number(data.cgstAmount ?? inv.cgst_amount ?? 0)
+  let sgst = Number(data.sgstAmount ?? inv.sgst_amount ?? 0)
 
   if (taxable > 0 && igst === 0 && cgst === 0 && sgst === 0) {
     if (isInterstate) {
@@ -184,21 +206,32 @@ function normalizeTimberInvoice(inv) {
     }
   }
 
-  const grandTotal = Number(inv.grandTotal ?? inv.grand_total ?? (taxable + igst + cgst + sgst))
-  const cftTotal = Number(inv.totalCft ?? inv.total_cft ?? (Number(inv.mahoganyCft || 0) + Number(inv.manjiyamCft || 0)))
+  const freight = Number(data.freight ?? inv.freight ?? 0)
+  const insurance = Number(data.insurance ?? inv.insurance ?? 0)
+  const packing = Number(data.packingCharge ?? inv.packing_charge ?? 0)
+  const roundOff = Number(data.roundOff ?? inv.round_off ?? 0)
+
+  let grandTotal = Number(data.grandTotal ?? inv.grand_total ?? 0)
+  if (grandTotal === 0 || (grandTotal <= taxable && (igst + cgst + sgst) > 0)) {
+    grandTotal = Math.round((taxable + igst + cgst + sgst + freight + insurance + packing + roundOff) * 100) / 100
+  }
+
+  const mahogCft = mahoganyEnabled ? Number(data.mahoganyCft ?? inv.mahogany_cft ?? 0) : 0
+  const manjCft = manjiyamEnabled ? Number(data.manjiyamCft ?? inv.manjiyam_cft ?? 0) : 0
+  const cftTotal = Number(data.totalCft ?? inv.total_cft ?? (mahogCft + manjCft))
 
   return {
     id: inv.id || `timber_${inv.invoiceNo || Date.now()}`,
     sourceType: 'TIMBER',
     sourceLabel: 'Mahogany & Manjiyam',
     gstDocType: 'Tax Invoice (B2B)',
-    docNo: inv.invoiceNo || inv.invoice_no || 'Draft',
+    docNo: inv.invoiceNo || inv.invoice_no || data.invoiceNo || 'Draft',
     docDate: rawDate,
     yearMonth,
-    receiverName: inv.receiverName || inv.customerName || inv.receiver_name || 'Timber Customer',
-    receiverGstin: inv.receiverGstin || inv.receiver_gstin || '',
-    receiverState: inv.receiverState || inv.receiver_state || 'Kerala',
-    receiverStateCode: inv.receiverStateCode || inv.state_code || '32',
+    receiverName: inv.receiverName || inv.customerName || inv.receiver_name || data.receiverName || 'Timber Customer',
+    receiverGstin: inv.receiverGstin || inv.receiver_gstin || data.receiverGstin || '',
+    receiverState: inv.receiverState || inv.receiver_state || data.receiverState || 'Kerala',
+    receiverStateCode: inv.receiverStateCode || inv.state_code || data.receiverStateCode || '32',
     placeOfSupply: inv.placeOfSupply || inv.place_of_supply || inv.receiverState || 'Kerala',
     hsnCode: '4407',
     description: 'Mahogany & Manjiyam Sawn Timber',
@@ -213,11 +246,11 @@ function normalizeTimberInvoice(inv) {
     sgstAmount: sgst,
     totalTax: igst + cgst + sgst,
     grandTotal: grandTotal,
-    ewayBillNo: inv.ewayBillNo || inv.eway_bill_no || '',
-    vehicleNo: inv.vehicleNo || inv.vehicle_no || '',
+    ewayBillNo: inv.ewayBillNo || inv.eway_bill_no || data.ewayBillNo || '',
+    vehicleNo: inv.vehicleNo || inv.vehicle_no || data.vehicleNo || '',
     reverseCharge: inv.reverseCharge || inv.reverse_charge || 'No',
     referenceNo: '',
-    rawRecord: inv
+    rawRecord: { ...inv, ...data }
   }
 }
 

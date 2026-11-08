@@ -163,15 +163,15 @@ export function parseInvoiceNumber(invoiceNoStr) {
 }
 
 /**
- * Baseline last invoice benchmark: A-21 (Last recorded load of current FY)
+ * Baseline last invoice benchmark: A-23 (Last recorded load of current FY October)
  */
 const BASELINE_LAST_INVOICE = {
   type: 'TIMBER',
   typeLabel: 'Mahogany & Manjiyam',
-  invoiceNo: 'A-21',
-  invoiceDate: '10-10-2026',
+  invoiceNo: 'A-23',
+  invoiceDate: '31-10-2026',
   receiverName: 'Sree Amman Traders',
-  grandTotal: 125175
+  grandTotal: 165200
 }
 
 /**
@@ -179,9 +179,9 @@ const BASELINE_LAST_INVOICE = {
  * for the current Financial Year.
  *
  * Current FY Rule:
- * - A-21 was the last invoice sent.
- * - Next invoice defaults to A-22.
- * - If user saves A-22, it seamlessly rolls over to A-23, A-24, etc.
+ * - A-23 was the last invoice sent.
+ * - Next invoice defaults to A-24.
+ * - If user saves A-24, it seamlessly rolls over to A-25, A-26, etc.
  * - On April 1st of a fresh FY, series refreshes to A-1.
  */
 export function getNextSuggestedInvoice(targetDate = new Date()) {
@@ -194,8 +194,8 @@ export function getNextSuggestedInvoice(targetDate = new Date()) {
     return getFinancialYear(inv.invoiceDate) === currentFy
   })
 
-  // Baseline is A-21 as confirmed by user
-  let maxNum = 21
+  // Baseline is A-23 as confirmed by user
+  let maxNum = 23
   let lastInvoice = BASELINE_LAST_INVOICE
 
   fyInvoices.forEach((inv) => {

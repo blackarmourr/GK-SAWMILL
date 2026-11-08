@@ -170,7 +170,10 @@ export function saveInvoiceRecord(invoiceData) {
       savedAt: new Date().toISOString()
     }
     
-    const existingIndex = current.findIndex(inv => inv.id === id)
+    const existingIndex = current.findIndex(inv =>
+      inv.id === id ||
+      (inv.invoiceNo && recordToSave.invoiceNo && String(inv.invoiceNo).trim().toUpperCase() === String(recordToSave.invoiceNo).trim().toUpperCase())
+    )
     let updated
     if (existingIndex >= 0) {
       updated = [...current]
@@ -220,6 +223,14 @@ export function deleteInvoiceRecord(id) {
 export async function syncTimberInvoiceToSupabase(record) {
   if (!isSupabaseConfigured || !supabase) return null
 
+  const mahoganyEnabled = Boolean(record.mahoganyEnabled)
+  const manjiyamEnabled = Boolean(record.manjiyamEnabled)
+
+  const mahogTaxable = mahoganyEnabled ? (Number(record.mahoganyTaxableValue) || 0) : 0
+  const manjTaxable = manjiyamEnabled ? (Number(record.manjiyamTaxableValue) || 0) : 0
+  const mahogCft = mahoganyEnabled ? (Number(record.mahoganyCft) || 0) : 0
+  const manjCft = manjiyamEnabled ? (Number(record.manjiyamCft) || 0) : 0
+
   const row = {
     id: record.id,
     invoice_no: record.invoiceNo || 'Draft',
@@ -237,20 +248,28 @@ export async function syncTimberInvoiceToSupabase(record) {
     receiver_gstin: record.receiverGstin || null,
     receiver_state: record.receiverState || null,
 
-    mahogany_enabled: Boolean(record.mahoganyEnabled),
-    mahogany_cft: Number(record.mahoganyCft) || 0,
+    mahogany_enabled: mahoganyEnabled,
+    mahogany_cft: mahogCft,
     mahogany_rate: Number(record.mahoganyRate) || 0,
-    mahogany_taxable: Number(record.mahoganyTaxableValue) || 0,
+    mahogany_taxable: mahogTaxable,
 
-    manjiyam_enabled: Boolean(record.manjiyamEnabled),
-    manjiyam_cft: Number(record.manjiyamCft) || 0,
+    manjiyam_enabled: manjiyamEnabled,
+    manjiyam_cft: manjCft,
     manjiyam_rate: Number(record.manjiyamRate) || 0,
-    manjiyam_taxable: Number(record.manjiyamTaxableValue) || 0,
+    manjiyam_taxable: manjTaxable,
 
-    total_cft: Number(record.totalCft) || 0,
+    total_cft: Number(record.totalCft) || (mahogCft + manjCft),
     grand_total: Number(record.grandTotal) || 0,
 
-    full_payload: record,
+    full_payload: {
+      ...record,
+      mahoganyEnabled,
+      manjiyamEnabled,
+      mahoganyTaxableValue: mahogTaxable,
+      manjiyamTaxableValue: manjTaxable,
+      mahoganyCft: mahogCft,
+      manjiyamCft: manjCft
+    },
     updated_at: new Date().toISOString()
   }
 

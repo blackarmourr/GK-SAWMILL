@@ -148,8 +148,8 @@ function App() {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
-  const navigateToView = (view) => {
-    setDocToLoad(null)
+  const navigateToView = (view, doc = null) => {
+    setDocToLoad(doc)
     setCurrentView(view)
     window.history.pushState({ view }, '', view === 'home' ? '#' : `#${view}`)
   }
@@ -262,24 +262,19 @@ function App() {
             onBack={handleGoHome}
             onOpenHsnSummary={() => navigateToView('hsn-summary-documents')}
             onOpenVattaInvoice={(rec) => {
-              setDocToLoad(rec)
-              navigateToView('vatta-invoice')
+              navigateToView('vatta-invoice', rec)
             }}
             onOpenTimberInvoice={(rec) => {
-              setDocToLoad(rec)
-              navigateToView('invoice-generator')
+              navigateToView('invoice-generator', rec)
             }}
             onOpenCreditNote={(rec) => {
-              setDocToLoad(rec)
-              navigateToView('credit-note')
+              navigateToView('credit-note', rec)
             }}
             onOpenDebitNote={(rec) => {
-              setDocToLoad(rec)
-              navigateToView('debit-note')
+              navigateToView('debit-note', rec)
             }}
             onOpenKeralaVat={(rec) => {
-              setDocToLoad(rec)
-              navigateToView('kerala-vat')
+              navigateToView('kerala-vat', rec)
             }}
           />
         </main>
