@@ -3,6 +3,7 @@
  */
 
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+import { formatToYmd, checkDuplicateInvoiceNumber } from '../utils/invoiceSequenceHelper.js'
 
 export const DEFAULT_BUSINESS_SETTINGS = {
   businessName: 'G.K. SAW MILL',
@@ -149,6 +150,20 @@ export function saveInvoiceRecord(invoiceData) {
   try {
     const current = getSavedInvoices()
     const id = invoiceData.id || 'inv_' + Date.now()
+
+    // Enforce duplicate invoice number prevention per financial year
+    const invNo = invoiceData.invoiceNo || invoiceData.invoice_no
+    const invDate = invoiceData.invoiceDate || invoiceData.invoice_date
+    const dupCheck = checkDuplicateInvoiceNumber({
+      invoiceNo: invNo,
+      invoiceDate: invDate,
+      currentId: id,
+      docTypeLabel: 'Timber Invoice'
+    })
+    if (dupCheck.isDuplicate) {
+      throw new Error(dupCheck.message)
+    }
+
     const recordToSave = {
       ...invoiceData,
       id,
@@ -176,7 +191,7 @@ export function saveInvoiceRecord(invoiceData) {
     return recordToSave
   } catch (err) {
     console.error('Error saving invoice record', err)
-    return invoiceData
+    throw err
   }
 }
 
@@ -208,9 +223,9 @@ export async function syncTimberInvoiceToSupabase(record) {
   const row = {
     id: record.id,
     invoice_no: record.invoiceNo || 'Draft',
-    invoice_date: record.invoiceDate || new Date().toISOString().split('T')[0],
+    invoice_date: formatToYmd(record.invoiceDate) || new Date().toISOString().split('T')[0],
     vehicle_no: record.vehicleNo || null,
-    date_of_supply: record.dateOfSupply || null,
+    date_of_supply: formatToYmd(record.dateOfSupply) || null,
     place_of_supply: record.placeOfSupply || null,
     state: record.state || 'Kerala',
     state_code: record.stateCode || '32',

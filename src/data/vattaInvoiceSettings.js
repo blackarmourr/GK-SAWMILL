@@ -5,6 +5,7 @@
  */
 
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+import { formatToYmd, checkDuplicateInvoiceNumber } from '../utils/invoiceSequenceHelper.js'
 
 export const STORAGE_KEYS = {
   BUSINESS: 'gk_sawmill_vatta_inv_business',
@@ -478,6 +479,21 @@ export function saveVattaInvoiceRecord(record) {
   try {
     const current = getSavedVattaInvoices()
     const id = record.id || `vatta_inv_${Date.now()}`
+
+    // Duplicate Invoice Check: Enforce uniqueness across financial year
+    const invData = record.invoiceData || record
+    const invNo = invData.invoiceNo || record.invoiceNo
+    const invDate = invData.invoiceDate || record.invoiceDate
+    const dupCheck = checkDuplicateInvoiceNumber({
+      invoiceNo: invNo,
+      invoiceDate: invDate,
+      currentId: id,
+      docTypeLabel: 'Vatta Wood Invoice'
+    })
+    if (dupCheck.isDuplicate) {
+      throw new Error(dupCheck.message)
+    }
+
     const recordToSave = {
       ...record,
       id,
@@ -503,7 +519,7 @@ export function saveVattaInvoiceRecord(record) {
     return updated
   } catch (err) {
     console.error('Error saving Vatta invoice record:', err)
-    return null
+    throw err
   }
 }
 
@@ -539,8 +555,8 @@ export async function syncVattaInvoiceToSupabase(record) {
     id: record.id,
     invoice_no: data.invoiceNo || 'Draft',
     purchase_order_no: data.purchaseOrderNo || null,
-    invoice_date: data.invoiceDate || new Date().toISOString().split('T')[0],
-    date_of_supply: data.dateOfSupply || null,
+    invoice_date: formatToYmd(data.invoiceDate) || new Date().toISOString().split('T')[0],
+    date_of_supply: formatToYmd(data.dateOfSupply) || null,
     state: data.state || 'KERALA',
     state_code: data.stateCode || '32',
     place_of_supply: data.placeOfSupply || null,

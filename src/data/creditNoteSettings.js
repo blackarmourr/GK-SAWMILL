@@ -7,6 +7,7 @@
 
 import { formatCreditNoteWords } from '../utils/numberToWords.js'
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+import { formatToYmd, checkDuplicateCreditNote } from '../utils/invoiceSequenceHelper.js'
 
 export const CREDIT_NOTE_STORAGE_KEYS = {
   CREDIT_NOTES: 'gk_sawmill_credit_notes_records'
@@ -227,6 +228,17 @@ export function saveCreditNoteRecord(record) {
   try {
     const current = getSavedCreditNotes()
     const id = record.id || `cn_${Date.now()}`
+
+    // Duplicate check within financial year
+    const dup = checkDuplicateCreditNote({
+      creditNoteNo: record.creditNoteNo,
+      creditNoteDate: record.creditNoteDate,
+      currentId: id
+    })
+    if (dup.isDuplicate) {
+      throw new Error(dup.message)
+    }
+
     const recordToSave = {
       ...record,
       id,
@@ -256,7 +268,7 @@ export function saveCreditNoteRecord(record) {
     return updated
   } catch (err) {
     console.error('Error saving credit note record:', err)
-    return null
+    throw err
   }
 }
 
@@ -288,11 +300,11 @@ export async function syncCreditNoteToSupabase(record) {
   const row = {
     id: record.id,
     credit_note_no: record.creditNoteNo,
-    credit_note_date: record.creditNoteDate,
+    credit_note_date: formatToYmd(record.creditNoteDate) || new Date().toISOString().split('T')[0],
     reference_no: record.referenceNo || null,
     original_invoice_id: record.originalInvoiceId,
     original_invoice_no: record.originalInvoiceNo,
-    original_invoice_date: record.originalInvoiceDate,
+    original_invoice_date: formatToYmd(record.originalInvoiceDate) || null,
 
     receiver_name: record.receiverName,
     receiver_address: record.receiverAddress,

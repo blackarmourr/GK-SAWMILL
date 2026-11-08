@@ -34,7 +34,13 @@ import {
 } from '../data/invoiceSettings.js'
 import { convertNumberToIndianWords } from '../utils/numberToWords.js'
 import { generateInvoicePdf } from '../utils/invoicePdfGenerator.js'
-import { getNextSuggestedInvoice } from '../utils/invoiceSequenceHelper.js'
+import {
+  getNextSuggestedInvoice,
+  checkDuplicateInvoiceNumber,
+  formatToDmy,
+  formatToYmd,
+  parseDateFlexible
+} from '../utils/invoiceSequenceHelper.js'
 
 function getTodayFormattedDate() {
   const d = new Date()
@@ -233,6 +239,16 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
     return getNextSuggestedInvoice(target)
   }, [invoiceDate, savedInvoices])
 
+  // Real-time duplicate check within Financial Year (Rule 46 CGST Act)
+  const duplicateCheck = useMemo(() => {
+    return checkDuplicateInvoiceNumber({
+      invoiceNo: invoiceNo,
+      invoiceDate: invoiceDate,
+      currentId: invoiceId,
+      docTypeLabel: 'Mahogany/Manjiyam Timber Invoice'
+    })
+  }, [invoiceNo, invoiceDate, invoiceId, savedInvoices])
+
   // Select customer from saved list
   const handleSelectCustomer = (cust) => {
     setReceiverName(cust.name || '')
@@ -273,68 +289,91 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
     }
   }
 
-  // Save full invoice record to localStorage
+  // Save full invoice record to localStorage & Supabase
   const handleSaveInvoice = () => {
+    setValidationError('')
     if (!invoiceNo.trim()) {
       setValidationError('Please enter an Invoice Number.')
       return
     }
+    if (duplicateCheck.isDuplicate) {
+      setValidationError(`Cannot save: ${duplicateCheck.message}`)
+      return
+    }
 
-    const currentInvoiceData = getCurrentInvoiceDataObject()
-    const saved = saveInvoiceRecord(currentInvoiceData)
-    setSavedInvoices(getSavedInvoices())
-    notify(`Invoice ${saved.invoiceNo} saved successfully!`)
+    try {
+      const currentInvoiceData = getCurrentInvoiceDataObject()
+      const saved = saveInvoiceRecord(currentInvoiceData)
+      setSavedInvoices(getSavedInvoices())
+      notify(`Invoice ${saved.invoiceNo} saved successfully!`)
+    } catch (err) {
+      console.error('Error saving invoice:', err)
+      setValidationError(err.message || 'Failed to save invoice.')
+    }
   }
 
-  // Load a saved invoice record into form
+  // Load a saved invoice record into form (supports LocalStorage, Supabase, and Register records)
   const handleLoadInvoice = (inv) => {
-    setInvoiceId(inv.id || 'inv_' + Date.now())
-    setInvoiceNo(inv.invoiceNo || '')
-    setInvoiceDate(inv.invoiceDate || '')
-    setVehicleNo(inv.vehicleNo || '')
-    setDateOfSupply(inv.dateOfSupply || '')
-    setTransportationMode(inv.transportationMode || '')
-    setPlaceOfSupply(inv.placeOfSupply || '')
-    setState(inv.state || 'Kerala')
-    setStateCode(inv.stateCode || '32')
-    setReverseCharge(inv.reverseCharge || '')
-    setEwayBillNo(inv.ewayBillNo || '')
+    if (!inv) return
+    const raw = inv.invoiceData || inv.full_payload?.invoiceData || inv.full_payload || inv
+    setInvoiceId(raw.id || inv.id || 'inv_' + Date.now())
+    setInvoiceNo(raw.invoiceNo || raw.invoice_no || inv.docNo || '')
 
-    setReceiverName(inv.receiverName || '')
-    setReceiverAddress(inv.receiverAddress || '')
-    setReceiverGstin(inv.receiverGstin || '')
-    setReceiverState(inv.receiverState || '')
-    setReceiverStateCode(inv.receiverStateCode || '')
-    setDispatchedDetails(inv.dispatchedDetails || '')
+    // Date formatting: Ensure DD-MM-YYYY in Timber form without month-day confusion
+    const rawInvDate = raw.invoiceDate || raw.invoice_date || inv.docDate || ''
+    const rawSupplyDate = raw.dateOfSupply || raw.date_of_supply || rawInvDate || ''
+    setInvoiceDate(rawInvDate ? formatToDmy(rawInvDate) : getTodayFormattedDate())
+    setDateOfSupply(rawSupplyDate ? formatToDmy(rawSupplyDate) : (rawInvDate ? formatToDmy(rawInvDate) : getTodayFormattedDate()))
 
-    setMahoganyEnabled(inv.mahoganyEnabled ?? true)
-    setMahoganyDesc(inv.mahoganyDesc || 'Mahogany Rejected size\nAll size')
-    setMahoganyHsn(inv.mahoganyHsn || '4407')
-    setMahoganyRate(inv.mahoganyRate || 215)
-    setMahoganyTaxableValue(inv.mahoganyTaxableValue || 0)
+    setVehicleNo(raw.vehicleNo || raw.vehicle_no || '')
+    setTransportationMode(raw.transportationMode || raw.transportation_mode || '')
+    setPlaceOfSupply(raw.placeOfSupply || raw.place_of_supply || '')
+    setState(raw.state || 'Kerala')
+    setStateCode(raw.stateCode || raw.state_code || '32')
+    setReverseCharge(raw.reverseCharge || raw.reverse_charge || '')
+    setEwayBillNo(raw.ewayBillNo || raw.eway_bill_no || '')
 
-    setManjiyamEnabled(inv.manjiyamEnabled ?? true)
-    setManjiyamDesc(inv.manjiyamDesc || 'Manjiyam Rejected Size\nAll size')
-    setManjiyamHsn(inv.manjiyamHsn || '4407')
-    setManjiyamRate(inv.manjiyamRate || 210)
-    setManjiyamTaxableValue(inv.manjiyamTaxableValue || 0)
+    setReceiverName(raw.receiverName || raw.receiver_name || raw.customerName || '')
+    setReceiverAddress(raw.receiverAddress || raw.receiver_address || '')
+    setReceiverGstin(raw.receiverGstin || raw.receiver_gstin || '')
+    setReceiverState(raw.receiverState || raw.receiver_state || '')
+    setReceiverStateCode(raw.receiverStateCode || raw.receiver_state_code || raw.state_code || '')
+    setDispatchedDetails(raw.dispatchedDetails || raw.dispatched_details || '')
 
-    setTaxTreatment(inv.taxTreatment || 'IGST')
-    setGstRate(inv.gstRate || 18)
-    setFreight(inv.freight || '')
-    setInsurance(inv.insurance || '')
-    setPackingCharge(inv.packingCharge || '')
-    setDiscount(inv.discount || '')
-    setRoundOff(inv.roundOff || '')
-    setCbmOverride(inv.cbmOverride || '')
+    const hasMahogany = raw.mahoganyEnabled !== undefined
+      ? raw.mahoganyEnabled
+      : (Number(raw.mahoganyTaxableValue ?? raw.mahogany_taxable ?? 0) > 0 || Number(raw.mahoganyCft ?? raw.mahogany_cft ?? 0) > 0 || true)
+    setMahoganyEnabled(Boolean(hasMahogany))
+    setMahoganyDesc(raw.mahoganyDesc || raw.mahogany_desc || 'Mahogany Rejected size\nAll size')
+    setMahoganyHsn(raw.mahoganyHsn || raw.mahogany_hsn || '4407')
+    setMahoganyRate(raw.mahoganyRate || raw.mahogany_rate || 215)
+    setMahoganyTaxableValue(raw.mahoganyTaxableValue ?? raw.mahogany_taxable ?? 0)
 
-    setBankDetails(inv.bankDetails || '')
-    setAccountNumber(inv.accountNumber || '')
-    setBranchIfsc(inv.branchIfsc || '')
-    setTermsAndConditions(inv.termsAndConditions || '')
+    const hasManjiyam = raw.manjiyamEnabled !== undefined
+      ? raw.manjiyamEnabled
+      : (Number(raw.manjiyamTaxableValue ?? raw.manjiyam_taxable ?? 0) > 0 || Number(raw.manjiyamCft ?? raw.manjiyam_cft ?? 0) > 0 || true)
+    setManjiyamEnabled(Boolean(hasManjiyam))
+    setManjiyamDesc(raw.manjiyamDesc || raw.manjiyam_desc || 'Manjiyam Rejected Size\nAll size')
+    setManjiyamHsn(raw.manjiyamHsn || raw.manjiyam_hsn || '4407')
+    setManjiyamRate(raw.manjiyamRate || raw.manjiyam_rate || 210)
+    setManjiyamTaxableValue(raw.manjiyamTaxableValue ?? raw.manjiyam_taxable ?? 0)
+
+    setTaxTreatment(raw.taxTreatment || raw.tax_treatment || 'IGST')
+    setGstRate(raw.gstRate ?? raw.gst_rate ?? 18)
+    setFreight(raw.freight ?? '')
+    setInsurance(raw.insurance ?? '')
+    setPackingCharge(raw.packingCharge ?? raw.packing_charge ?? '')
+    setDiscount(raw.discount ?? '')
+    setRoundOff(raw.roundOff ?? raw.round_off ?? '')
+    setCbmOverride(raw.cbmOverride ?? raw.cbm_override ?? '')
+
+    setBankDetails(raw.bankDetails || raw.bank_details || '')
+    setAccountNumber(raw.accountNumber || raw.account_number || '')
+    setBranchIfsc(raw.branchIfsc || raw.branch_ifsc || '')
+    setTermsAndConditions(raw.termsAndConditions || raw.terms_and_conditions || '')
 
     setShowSavedInvoicesModal(false)
-    notify(`Loaded Invoice ${inv.invoiceNo}`)
+    notify(`Loaded Invoice ${raw.invoiceNo || raw.invoice_no || inv.docNo || ''}`)
   }
 
   // Preload initial record if opened from GST Monthly Register
@@ -446,6 +485,11 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
       return
     }
 
+    if (duplicateCheck.isDuplicate) {
+      setValidationError(`Cannot generate PDF: ${duplicateCheck.message}`)
+      return
+    }
+
     try {
       const invoiceData = getCurrentInvoiceDataObject()
       generateInvoicePdf(invoiceData, true)
@@ -455,7 +499,7 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
       notify('Invoice PDF generated, downloaded & saved to register!')
     } catch (err) {
       console.error('Invoice PDF error:', err)
-      setValidationError('Error generating Invoice PDF. Please check your inputs.')
+      setValidationError(`Error generating Invoice PDF: ${err.message || 'Please check your inputs.'}`)
     }
   }
 
@@ -668,8 +712,37 @@ export default function MahoganyManjiyamInvoiceGenerator({ onBack, initialRecord
                   value={invoiceNo}
                   onChange={(e) => setInvoiceNo(e.target.value)}
                   placeholder="e.g. A-22"
-                  style={{ width: '100%', padding: '0.65rem 0.8rem', borderRadius: '7px', border: '1px solid var(--border-color, #cbd5e1)', fontWeight: 700, boxSizing: 'border-box' }}
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.8rem',
+                    borderRadius: '7px',
+                    border: duplicateCheck.isDuplicate ? '2px solid #ef4444' : '1px solid var(--border-color, #cbd5e1)',
+                    background: duplicateCheck.isDuplicate ? '#fff5f5' : 'transparent',
+                    fontWeight: 700,
+                    boxSizing: 'border-box'
+                  }}
                 />
+                {duplicateCheck.isDuplicate && (
+                  <div
+                    style={{
+                      marginTop: '0.35rem',
+                      padding: '0.45rem 0.65rem',
+                      borderRadius: '6px',
+                      background: '#fef2f2',
+                      border: '1px solid #f87171',
+                      color: '#b91c1c',
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.35rem',
+                      lineHeight: 1.35
+                    }}
+                  >
+                    <AlertCircle size={14} style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <span>{duplicateCheck.message}</span>
+                  </div>
+                )}
                 {suggestedSequence && (
                   <div
                     style={{

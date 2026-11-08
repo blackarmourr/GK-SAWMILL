@@ -426,21 +426,49 @@ export async function fetchAllGstDocuments() {
       ])
 
       if (vattaRes.data) {
+        let localVatta = []
+        try { localVatta = getSavedVattaInvoices() } catch {}
+        let vattaChanged = false
+
         vattaRes.data.forEach(inv => {
           const fullPayload = inv.full_payload || inv
           const norm = normalizeVattaInvoice(fullPayload)
           norm.id = inv.id
           docMap.set(`VATTA_${inv.id}`, norm)
+
+          const exists = localVatta.some(l => l.id === inv.id || l.invoiceData?.invoiceNo === inv.invoice_no)
+          if (!exists && inv.full_payload) {
+            localVatta.push(inv.full_payload)
+            vattaChanged = true
+          }
         })
+
+        if (vattaChanged) {
+          try { localStorage.setItem('gk_sawmill_vatta_inv_records', JSON.stringify(localVatta)) } catch {}
+        }
       }
 
       if (timberRes.data) {
+        let localTimber = []
+        try { localTimber = getSavedTimberInvoices() } catch {}
+        let timberChanged = false
+
         timberRes.data.forEach(inv => {
           const fullPayload = inv.full_payload || inv
           const norm = normalizeTimberInvoice(fullPayload)
           norm.id = inv.id
           docMap.set(`TIMBER_${inv.id}`, norm)
+
+          const exists = localTimber.some(l => l.id === inv.id || l.invoiceNo === inv.invoice_no)
+          if (!exists && inv.full_payload) {
+            localTimber.push(inv.full_payload)
+            timberChanged = true
+          }
         })
+
+        if (timberChanged) {
+          try { localStorage.setItem('gk_sawmill_saved_invoices', JSON.stringify(localTimber)) } catch {}
+        }
       }
 
       if (cnRes.data) {

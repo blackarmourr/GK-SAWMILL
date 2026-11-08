@@ -49,6 +49,7 @@ import { generateDebitNotePdf } from '../utils/debitNotePdfGenerator.js'
 import { downloadVatPdf } from '../utils/vatPdfGenerator.js'
 import { DEFAULT_VATTA_BUSINESS_SETTINGS } from '../data/vattaInvoiceSettings.js'
 import { isSupabaseConfigured } from '../lib/supabaseClient.js'
+import { formatToDmy } from '../utils/invoiceSequenceHelper.js'
 
 export default function GstMonthlyFilingRegister({
   onBack,
@@ -202,18 +203,38 @@ export default function GstMonthlyFilingRegister({
   const handleDownloadPdf = (doc) => {
     try {
       if (doc.sourceType === 'VATTA') {
-        const payload = doc.rawRecord.invoiceData
-          ? { ...DEFAULT_VATTA_BUSINESS_SETTINGS, ...doc.rawRecord.invoiceData, ...doc.rawRecord.totals }
-          : doc.rawRecord
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        const data = full.invoiceData || doc.rawRecord?.invoiceData || full
+        const totals = full.totals || doc.rawRecord?.totals || {}
+        const payload = {
+          ...DEFAULT_VATTA_BUSINESS_SETTINGS,
+          ...data,
+          ...totals,
+          invoiceNo: data.invoiceNo || data.invoice_no || doc.docNo,
+          invoiceDate: data.invoiceDate || data.invoice_date || doc.docDate,
+          receiverName: data.receiverName || data.receiver_name || doc.receiverName
+        }
         generateVattaInvoicePdf(payload, true)
       } else if (doc.sourceType === 'TIMBER') {
-        generateInvoicePdf(doc.rawRecord, true)
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        const payload = {
+          ...full,
+          invoiceNo: full.invoiceNo || full.invoice_no || doc.docNo,
+          invoiceDate: formatToDmy(full.invoiceDate || full.invoice_date || doc.docDate),
+          dateOfSupply: formatToDmy(full.dateOfSupply || full.date_of_supply || doc.docDate),
+          receiverName: full.receiverName || full.receiver_name || doc.receiverName,
+          receiverGstin: full.receiverGstin || full.receiver_gstin || doc.receiverGstin
+        }
+        generateInvoicePdf(payload, true)
       } else if (doc.sourceType === 'CREDIT_NOTE') {
-        generateCreditNotePdf(doc.rawRecord, true)
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        generateCreditNotePdf(full, true)
       } else if (doc.sourceType === 'DEBIT_NOTE') {
-        generateDebitNotePdf(doc.rawRecord, true)
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        generateDebitNotePdf(full, true)
       } else if (doc.sourceType === 'KERALA_VAT') {
-        downloadVatPdf(doc.rawRecord)
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        downloadVatPdf(full)
       }
       showToast(`Downloading PDF for ${doc.docNo}...`)
     } catch (err) {
@@ -227,17 +248,36 @@ export default function GstMonthlyFilingRegister({
     try {
       let docInstance = null
       if (doc.sourceType === 'VATTA') {
-        const payload = doc.rawRecord.invoiceData
-          ? { ...DEFAULT_VATTA_BUSINESS_SETTINGS, ...doc.rawRecord.invoiceData, ...doc.rawRecord.totals }
-          : doc.rawRecord
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        const data = full.invoiceData || doc.rawRecord?.invoiceData || full
+        const totals = full.totals || doc.rawRecord?.totals || {}
+        const payload = {
+          ...DEFAULT_VATTA_BUSINESS_SETTINGS,
+          ...data,
+          ...totals,
+          invoiceNo: data.invoiceNo || data.invoice_no || doc.docNo,
+          invoiceDate: data.invoiceDate || data.invoice_date || doc.docDate,
+          receiverName: data.receiverName || data.receiver_name || doc.receiverName
+        }
         docInstance = generateVattaInvoicePdf(payload, false)
       } else if (doc.sourceType === 'TIMBER') {
-        docInstance = generateInvoicePdf(doc.rawRecord, false)
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        const payload = {
+          ...full,
+          invoiceNo: full.invoiceNo || full.invoice_no || doc.docNo,
+          invoiceDate: formatToDmy(full.invoiceDate || full.invoice_date || doc.docDate),
+          dateOfSupply: formatToDmy(full.dateOfSupply || full.date_of_supply || doc.docDate),
+          receiverName: full.receiverName || full.receiver_name || doc.receiverName,
+          receiverGstin: full.receiverGstin || full.receiver_gstin || doc.receiverGstin
+        }
+        docInstance = generateInvoicePdf(payload, false)
       } else if (doc.sourceType === 'CREDIT_NOTE') {
-        const res = generateCreditNotePdf(doc.rawRecord, false)
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        const res = generateCreditNotePdf(full, false)
         docInstance = res.doc || res
       } else if (doc.sourceType === 'DEBIT_NOTE') {
-        const res = generateDebitNotePdf(doc.rawRecord, false)
+        const full = doc.rawRecord?.full_payload || doc.rawRecord || {}
+        const res = generateDebitNotePdf(full, false)
         docInstance = res.doc || res
       }
 
@@ -256,16 +296,26 @@ export default function GstMonthlyFilingRegister({
 
   // Open document in its respective editor/generator
   const handleOpenDoc = (doc) => {
+    const enriched = {
+      ...(doc.rawRecord || {}),
+      id: doc.id || doc.rawRecord?.id,
+      docNo: doc.docNo,
+      docDate: doc.docDate,
+      receiverName: doc.receiverName,
+      receiverGstin: doc.receiverGstin,
+      vehicleNo: doc.vehicleNo,
+      ewayBillNo: doc.ewayBillNo
+    }
     if (doc.sourceType === 'VATTA') {
-      if (onOpenVattaInvoice) onOpenVattaInvoice(doc.rawRecord)
+      if (onOpenVattaInvoice) onOpenVattaInvoice(enriched)
     } else if (doc.sourceType === 'TIMBER') {
-      if (onOpenTimberInvoice) onOpenTimberInvoice(doc.rawRecord)
+      if (onOpenTimberInvoice) onOpenTimberInvoice(enriched)
     } else if (doc.sourceType === 'CREDIT_NOTE') {
-      if (onOpenCreditNote) onOpenCreditNote(doc.rawRecord)
+      if (onOpenCreditNote) onOpenCreditNote(enriched)
     } else if (doc.sourceType === 'DEBIT_NOTE') {
-      if (onOpenDebitNote) onOpenDebitNote(doc.rawRecord)
+      if (onOpenDebitNote) onOpenDebitNote(enriched)
     } else if (doc.sourceType === 'KERALA_VAT') {
-      if (onOpenKeralaVat) onOpenKeralaVat(doc.rawRecord)
+      if (onOpenKeralaVat) onOpenKeralaVat(enriched)
     }
   }
 

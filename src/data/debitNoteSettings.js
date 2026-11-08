@@ -6,6 +6,7 @@
 
 import { formatInvoiceGrandTotalWords } from '../utils/numberToWords.js'
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+import { formatToYmd, checkDuplicateDebitNote } from '../utils/invoiceSequenceHelper.js'
 
 export const DEBIT_NOTE_STORAGE_KEYS = {
   DEBIT_NOTES: 'gk_sawmill_debit_notes_records'
@@ -276,6 +277,18 @@ export function saveDebitNoteRecord(record) {
   try {
     const current = getSavedDebitNotes()
     const id = record.id || `dn_${Date.now()}`
+
+    // Duplicate check within Financial Year (Rule 46 CGST Act)
+    const dupCheck = checkDuplicateDebitNote({
+      debitNoteNo: record.debitNoteNo,
+      debitNoteDate: record.debitNoteDate,
+      currentId: id
+    })
+    if (dupCheck.isDuplicate) {
+      console.error('Cannot save duplicate Debit Note:', dupCheck.message)
+      throw new Error(dupCheck.message)
+    }
+
     const recordToSave = {
       ...record,
       id,
@@ -305,7 +318,7 @@ export function saveDebitNoteRecord(record) {
     return updated
   } catch (err) {
     console.error('Error saving debit note record:', err)
-    return null
+    throw err
   }
 }
 
@@ -336,7 +349,7 @@ export async function syncDebitNoteToSupabase(record) {
   const row = {
     id: record.id,
     debit_note_no: record.debitNoteNo,
-    debit_note_date: record.debitNoteDate,
+    debit_note_date: formatToYmd(record.debitNoteDate),
     reference_no: record.referenceNo || null,
 
     receiver_name: record.receiverName,

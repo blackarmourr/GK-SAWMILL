@@ -55,7 +55,12 @@ import {
 } from '../data/vattaInvoiceSettings.js'
 import { generateVattaInvoicePdf } from '../utils/vattaInvoicePdfGenerator.js'
 import { formatInvoiceGrandTotalWords } from '../utils/numberToWords.js'
-import { getNextSuggestedInvoice } from '../utils/invoiceSequenceHelper.js'
+import {
+  getNextSuggestedInvoice,
+  checkDuplicateInvoiceNumber,
+  formatToYmd,
+  getFinancialYear
+} from '../utils/invoiceSequenceHelper.js'
 
 export default function VattaInvoiceGenerator({
   onBack,
@@ -96,15 +101,84 @@ export default function VattaInvoiceGenerator({
     }
   })
 
+  // Normalize & extract full Vatta data from any record (LocalStorage, Supabase row, or Register doc)
+  const mapVattaRecordToForm = (rec) => {
+    if (!rec) return null
+    const raw = rec.invoiceData || rec.full_payload?.invoiceData || rec.full_payload || rec
+    const id = rec.id || raw.id || `vatta_inv_${Date.now()}`
+
+    // Unify bags
+    let bagQuantities = raw.bagQuantities || raw.bag_quantities
+    if (!bagQuantities && raw.items_payload) {
+      bagQuantities = raw.items_payload
+    }
+    if (!bagQuantities && typeof raw.bag_quantities === 'string') {
+      try { bagQuantities = JSON.parse(raw.bag_quantities) } catch {}
+    }
+    bagQuantities = bagQuantities || { ...SAMPLE_VATTA_INVOICE_A20.bagQuantities }
+
+    // Normalize dates to YYYY-MM-DD for HTML5 date inputs
+    const invDateRaw = raw.invoiceDate || raw.invoice_date || rec.invoice_date || rec.docDate || ''
+    const supplyDateRaw = raw.dateOfSupply || raw.date_of_supply || rec.date_of_supply || invDateRaw || ''
+    const invoiceDate = invDateRaw ? formatToYmd(invDateRaw) : new Date().toISOString().split('T')[0]
+    const dateOfSupply = supplyDateRaw ? formatToYmd(supplyDateRaw) : invoiceDate
+
+    const pass = raw.forestPassNo || raw.passNo || raw.forest_pass_no || rec.forest_pass_no || ''
+
+    return {
+      id,
+      invoiceNo: raw.invoiceNo || raw.invoice_no || rec.invoice_no || rec.docNo || '',
+      invoiceDate,
+      dateOfSupply,
+      purchaseOrderNo: raw.purchaseOrderNo || raw.purchase_order_no || rec.purchase_order_no || rec.referenceNo || '',
+      state: raw.state || 'KERALA',
+      stateCode: raw.stateCode || raw.state_code || '32',
+      placeOfSupply: raw.placeOfSupply || raw.place_of_supply || rec.place_of_supply || '',
+      transportationMode: raw.transportationMode || raw.transportation_mode || '',
+      vehicleNo: raw.vehicleNo || raw.vehicle_no || rec.vehicle_no || '',
+      forestPassNo: pass,
+      passNo: pass,
+      totalMeasurement: raw.totalMeasurement || raw.total_measurement || '',
+      ewayBillNo: raw.ewayBillNo || raw.eway_bill_no || rec.eway_bill_no || '',
+      reverseCharge: raw.reverseCharge !== undefined ? raw.reverseCharge : (raw.reverse_charge || 'No'),
+      receiverName: raw.receiverName || raw.receiver_name || rec.receiver_name || '',
+      receiverAddress: raw.receiverAddress || raw.receiver_address || rec.receiver_address || '',
+      receiverPinNo: raw.receiverPinNo || raw.receiver_pin_no || '',
+      receiverMobileNo: raw.receiverMobileNo || raw.receiver_mobile_no || '',
+      receiverGstin: raw.receiverGstin || raw.receiver_gstin || rec.receiver_gstin || '',
+      receiverState: raw.receiverState || raw.receiver_state || rec.receiver_state || '',
+      receiverStateCode: raw.receiverStateCode || raw.receiver_state_code || rec.receiver_state_code || '',
+      despatchedName: raw.despatchedName || raw.despatched_name || '',
+      despatchedAddress: raw.despatchedAddress || raw.despatched_address || '',
+      despatchedPinNo: raw.despatchedPinNo || raw.despatched_pin_no || '',
+      despatchedMobileNo: raw.despatchedMobileNo || raw.despatched_mobile_no || '',
+      despatchedGstin: raw.despatchedGstin || raw.despatched_gstin || '',
+      despatchedState: raw.despatchedState || raw.despatched_state || '',
+      despatchedStateCode: raw.despatchedStateCode || raw.despatched_state_code || '',
+      taxTreatment: raw.taxTreatment || raw.tax_treatment || rec.tax_treatment || 'IGST',
+      gstRate: Number(raw.gstRate ?? raw.gst_rate ?? rec.gst_rate ?? 5),
+      discount: raw.discount ?? '',
+      freight: raw.freight ?? '',
+      insurance: raw.insurance ?? '',
+      packingCharge: raw.packingCharge ?? raw.packing_charge ?? '',
+      roundOff: raw.roundOff ?? raw.round_off ?? 0,
+      roundOffMode: raw.roundOffMode ?? raw.round_off_mode ?? 'exact',
+      bankDetails: raw.bankDetails || raw.bank_details || businessSettings.bankDetails || '',
+      accountNumber: raw.accountNumber || raw.account_number || businessSettings.accountNumber || '',
+      branchIfsc: raw.branchIfsc || raw.branch_ifsc || businessSettings.branchIfsc || '',
+      termsAndConditions: raw.termsAndConditions || raw.terms_and_conditions || businessSettings.termsAndConditions || '',
+      bagQuantities
+    }
+  }
+
   // Load initial record if opened from GST Monthly Register
   useEffect(() => {
     if (initialRecord) {
-      if (initialRecord.invoiceData) {
-        setInvoiceForm({ ...initialRecord.invoiceData })
-      } else {
-        setInvoiceForm(prev => ({ ...prev, ...initialRecord }))
+      const mapped = mapVattaRecordToForm(initialRecord)
+      if (mapped) {
+        setInvoiceForm(mapped)
+        showNotification(`Loaded Invoice ${mapped.invoiceNo || 'record'}`)
       }
-      showNotification(`Loaded Invoice ${initialRecord.invoice_no || initialRecord.docNo || initialRecord.invoiceData?.invoiceNo || ''}`)
     }
   }, [initialRecord])
 
@@ -174,6 +248,16 @@ export default function VattaInvoiceGenerator({
   const suggestedSequence = useMemo(() => {
     return getNextSuggestedInvoice(invoiceForm.invoiceDate || new Date())
   }, [invoiceForm.invoiceDate, savedInvoices])
+
+  // Real-time duplicate check within Financial Year (Rule 46 CGST Act)
+  const duplicateCheck = useMemo(() => {
+    return checkDuplicateInvoiceNumber({
+      invoiceNo: invoiceForm.invoiceNo,
+      invoiceDate: invoiceForm.invoiceDate,
+      currentId: invoiceForm.id,
+      docTypeLabel: 'Vatta Invoice'
+    })
+  }, [invoiceForm.invoiceNo, invoiceForm.invoiceDate, invoiceForm.id, savedInvoices])
 
   // Select Receiver from dropdown
   const handleSelectReceiver = (id) => {
@@ -353,27 +437,37 @@ export default function VattaInvoiceGenerator({
 
   // Save current invoice record to history
   const handleSaveInvoiceRecord = () => {
+    setValidationError('')
     if (!invoiceForm.invoiceNo.trim()) {
       setValidationError('Please enter an Invoice Number before saving.')
       return
     }
-    const record = {
-      id: invoiceForm.id || `vatta_inv_${Date.now()}`,
-      title: `Invoice ${invoiceForm.invoiceNo} - ${invoiceForm.receiverName || 'Vatta Sale'}`,
-      invoiceData: {
-        ...invoiceForm,
-        passNo: invoiceForm.forestPassNo || invoiceForm.passNo || '',
-        forestPassNo: invoiceForm.forestPassNo || invoiceForm.passNo || ''
-      },
-      forest_pass_no: invoiceForm.forestPassNo || invoiceForm.passNo || '',
-      totals: { ...calculated },
-      productsSnapshot: [...products],
-      grandTotal: calculated.grandTotal
+    if (duplicateCheck.isDuplicate) {
+      setValidationError(`Cannot save: ${duplicateCheck.message}`)
+      return
     }
-    const updated = saveVattaInvoiceRecord(record)
-    if (updated) {
-      setSavedInvoices(updated)
-      showNotification(`Saved Invoice ${invoiceForm.invoiceNo} to local history!`)
+    try {
+      const record = {
+        id: invoiceForm.id || `vatta_inv_${Date.now()}`,
+        title: `Invoice ${invoiceForm.invoiceNo} - ${invoiceForm.receiverName || 'Vatta Sale'}`,
+        invoiceData: {
+          ...invoiceForm,
+          passNo: invoiceForm.forestPassNo || invoiceForm.passNo || '',
+          forestPassNo: invoiceForm.forestPassNo || invoiceForm.passNo || ''
+        },
+        forest_pass_no: invoiceForm.forestPassNo || invoiceForm.passNo || '',
+        totals: { ...calculated },
+        productsSnapshot: [...products],
+        grandTotal: calculated.grandTotal
+      }
+      const updated = saveVattaInvoiceRecord(record)
+      if (updated) {
+        setSavedInvoices(updated)
+        showNotification(`Saved Invoice ${invoiceForm.invoiceNo} to local history!`)
+      }
+    } catch (err) {
+      console.error('Error saving invoice:', err)
+      setValidationError(err.message || 'Failed to save invoice.')
     }
   }
 
@@ -382,6 +476,10 @@ export default function VattaInvoiceGenerator({
     setValidationError('')
     if (!invoiceForm.invoiceNo.trim()) {
       setValidationError('Invoice Number is required to generate the invoice.')
+      return
+    }
+    if (duplicateCheck.isDuplicate) {
+      setValidationError(`Cannot generate PDF: ${duplicateCheck.message}`)
       return
     }
     if (calculated.totalBags <= 0) {
@@ -427,6 +525,10 @@ export default function VattaInvoiceGenerator({
     setValidationError('')
     if (!invoiceForm.invoiceNo.trim()) {
       setValidationError('Invoice Number is required.')
+      return
+    }
+    if (duplicateCheck.isDuplicate) {
+      setValidationError(`Cannot print: ${duplicateCheck.message}`)
       return
     }
     try {
@@ -766,8 +868,37 @@ export default function VattaInvoiceGenerator({
                   value={invoiceForm.invoiceNo}
                   onChange={(e) => handleFieldChange('invoiceNo', e.target.value)}
                   placeholder="e.g. A-22"
-                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color, #cbd5e1)', fontSize: '0.85rem', fontWeight: 700 }}
+                  style={{
+                    width: '100%',
+                    padding: '0.5rem 0.65rem',
+                    borderRadius: '6px',
+                    border: duplicateCheck.isDuplicate ? '2px solid #ef4444' : '1px solid var(--border-color, #cbd5e1)',
+                    background: duplicateCheck.isDuplicate ? '#fff5f5' : 'transparent',
+                    fontSize: '0.85rem',
+                    fontWeight: 700
+                  }}
                 />
+                {duplicateCheck.isDuplicate && (
+                  <div
+                    style={{
+                      marginTop: '0.35rem',
+                      padding: '0.45rem 0.65rem',
+                      borderRadius: '6px',
+                      background: '#fef2f2',
+                      border: '1px solid #f87171',
+                      color: '#b91c1c',
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.35rem',
+                      lineHeight: 1.35
+                    }}
+                  >
+                    <AlertCircle size={14} style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <span>{duplicateCheck.message}</span>
+                  </div>
+                )}
                 {suggestedSequence && (
                   <div
                     style={{
@@ -1846,9 +1977,12 @@ export default function VattaInvoiceGenerator({
                       <button
                         type="button"
                         onClick={() => {
-                          setInvoiceForm({ ...inv.invoiceData })
-                          setShowSavedModal(false)
-                          showNotification(`Loaded Invoice: ${inv.invoiceData.invoiceNo}`)
+                          const mapped = mapVattaRecordToForm(inv)
+                          if (mapped) {
+                            setInvoiceForm(mapped)
+                            setShowSavedModal(false)
+                            showNotification(`Loaded Invoice: ${mapped.invoiceNo}`)
+                          }
                         }}
                         style={{
                           background: '#1e3a2b',

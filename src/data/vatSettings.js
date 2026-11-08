@@ -4,6 +4,7 @@
  */
 
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient.js'
+import { formatToYmd, checkDuplicateVatBill } from '../utils/invoiceSequenceHelper.js'
 
 export const STORAGE_KEYS = {
   CONSIGNER: 'gk_vat_consigner_profile',
@@ -452,6 +453,18 @@ export function saveVatBillRecord(billData, title) {
   try {
     const list = getSavedVatBills()
     const id = billData.id || `vat-bill-${Date.now()}`
+
+    // Duplicate check within Financial Year (Rule 46 CGST Act)
+    const dupCheck = checkDuplicateVatBill({
+      billNo: billData.billNo,
+      billDate: billData.billDate,
+      currentId: id
+    })
+    if (dupCheck.isDuplicate) {
+      console.error('Cannot save duplicate VAT Bill:', dupCheck.message)
+      throw new Error(dupCheck.message)
+    }
+
     const record = {
       id,
       title: title || `Bill ${billData.billNo || 'Draft'} - ${billData.consigneeName || 'Consignee'}`,
@@ -476,7 +489,7 @@ export function saveVatBillRecord(billData, title) {
     return { list, record }
   } catch (err) {
     console.error('Failed to save VAT bill record:', err)
-    return null
+    throw err
   }
 }
 
@@ -510,7 +523,7 @@ export async function syncVatBillToSupabase(record) {
   const row = {
     id: record.id,
     bill_no: bill.billNo || 'Draft',
-    bill_date: bill.billDate || new Date().toISOString().split('T')[0],
+    bill_date: formatToYmd(bill.billDate),
     bill_value: Number(bill.billValue) || 0,
     eway_bill_no: bill.ewayBillNo || null,
     vehicle_no: bill.vehicleNo || null,

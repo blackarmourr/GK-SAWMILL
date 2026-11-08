@@ -2,9 +2,9 @@ import { createClient } from '@supabase/supabase-js'
 
 const env = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env : (typeof process !== 'undefined' ? process.env : {})
 
-// Retrieve Supabase URL and Publishable/Anon Key from environment variables
+// Retrieve Supabase URL and Key from environment variables (supports service role secret or publishable key)
 const supabaseUrl = env.VITE_SUPABASE_URL || 'https://njeohgetjjyvblwnttqv.supabase.co'
-const supabaseKey = env.VITE_SUPABASE_PUBLISHABLE_KEY || env.VITE_SUPABASE_ANON_KEY || ''
+const supabaseKey = env.VITE_SUPABASE_SERVICE_ROLE_KEY || env.VITE_SUPABASE_PUBLISHABLE_KEY || env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_uISYs09bl1s4BsTBymFnqA_G9Z2ZkSe'
 
 export const isSupabaseConfigured = Boolean(
   supabaseUrl &&
