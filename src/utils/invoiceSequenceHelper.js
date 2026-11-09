@@ -219,6 +219,152 @@ export function getNextSuggestedInvoice(targetDate = new Date()) {
 }
 
 /**
+ * Generic document number parser: extracts prefix, number, and padding length
+ * e.g. "CN-09" -> { prefix: "CN-", num: 9, padLength: 2 }
+ * e.g. "AA-09" -> { prefix: "AA-", num: 9, padLength: 2 }
+ * e.g. "DN-05" -> { prefix: "DN-", num: 5, padLength: 2 }
+ */
+export function parseGenericDocNumber(docNoStr, defaultPrefix = 'CN-', defaultPad = 2) {
+  if (!docNoStr) return { prefix: defaultPrefix, num: 0, padLength: defaultPad }
+  const match = String(docNoStr).trim().match(/^([A-Za-z]+[-_/]?)?(\d+)$/)
+  if (match) {
+    const rawDigits = match[2]
+    return {
+      prefix: match[1] || defaultPrefix,
+      num: parseInt(rawDigits, 10),
+      padLength: rawDigits.length
+    }
+  }
+  return { prefix: defaultPrefix, num: 0, padLength: defaultPad }
+}
+
+/**
+ * Baseline last credit note benchmark: CN-09 (Issued October 17, 2026 in current FY 2026-27)
+ */
+const BASELINE_LAST_CREDIT_NOTE = {
+  creditNoteNo: 'CN-09',
+  creditNoteDate: '2026-10-17',
+  receiverName: 'M/S. HINDUSTAN PENCILS PVT.LTD'
+}
+
+/**
+ * Get latest credit note and suggest next consecutive credit note number for the Financial Year.
+ * - In FY 2026-27, baseline is CN-09 -> next defaults to CN-10.
+ * - If CN-10 is saved, rolls over to CN-11, etc.
+ * - On fresh FY start (e.g. April 1), starts from CN-01.
+ */
+export function getNextSuggestedCreditNote(targetDate = new Date()) {
+  const currentFy = getFinancialYear(targetDate)
+  let allNotes = []
+  try {
+    allNotes = getSavedCreditNotes()
+  } catch (err) {
+    console.warn('Error reading saved credit notes for sequence tracking:', err)
+  }
+
+  // Filter notes belonging to current financial year
+  const fyNotes = allNotes.filter((cn) => {
+    const d = cn.creditNoteDate || cn.credit_note_date
+    if (!d) return true
+    return getFinancialYear(d) === currentFy
+  })
+
+  // Baseline is CN-09 in FY 2026-27 as confirmed by user records
+  let maxNum = currentFy === '2026-27' ? 9 : 0
+  let lastNote = currentFy === '2026-27' ? BASELINE_LAST_CREDIT_NOTE : null
+  let detectedPrefix = 'CN-'
+  let padLength = 2
+
+  fyNotes.forEach((cn) => {
+    const no = cn.creditNoteNo || cn.credit_note_no
+    if (no) {
+      const parsed = parseGenericDocNumber(no, 'CN-', 2)
+      if (parsed.num >= maxNum) {
+        maxNum = parsed.num
+        lastNote = cn
+        detectedPrefix = parsed.prefix
+        padLength = Math.max(padLength, parsed.padLength)
+      }
+    }
+  })
+
+  const nextNum = maxNum + 1
+  const formattedNum = String(nextNum).padStart(padLength, '0')
+  const suggestedCreditNoteNo = `${detectedPrefix}${formattedNum}`
+
+  return {
+    currentFy,
+    lastCreditNote: lastNote,
+    maxNum,
+    nextNum,
+    suggestedCreditNoteNo
+  }
+}
+
+/**
+ * Baseline last debit note benchmark: AA-09 (Issued March 31, 2026)
+ */
+const BASELINE_LAST_DEBIT_NOTE = {
+  debitNoteNo: 'AA-09',
+  debitNoteDate: '2026-03-31',
+  receiverName: 'HINDUSTAN PENCILS Pvt Ltd'
+}
+
+/**
+ * Get latest debit note and suggest next consecutive debit note number for the Financial Year.
+ * - Baseline in current records is AA-09 -> next defaults to AA-10.
+ * - If user uses DN- prefix (e.g. DN-05), suggests DN-06.
+ * - If AA-10 is saved, rolls over to AA-11, etc.
+ */
+export function getNextSuggestedDebitNote(targetDate = new Date()) {
+  const currentFy = getFinancialYear(targetDate)
+  let allNotes = []
+  try {
+    allNotes = getSavedDebitNotes()
+  } catch (err) {
+    console.warn('Error reading saved debit notes for sequence tracking:', err)
+  }
+
+  // Filter notes belonging to current financial year
+  const fyNotes = allNotes.filter((dn) => {
+    const d = dn.debitNoteDate || dn.debit_note_date
+    if (!d) return true
+    return getFinancialYear(d) === currentFy
+  })
+
+  // Baseline is AA-09 as confirmed by user records
+  let maxNum = 9
+  let lastNote = BASELINE_LAST_DEBIT_NOTE
+  let detectedPrefix = 'AA-'
+  let padLength = 2
+
+  fyNotes.forEach((dn) => {
+    const no = dn.debitNoteNo || dn.debit_note_no
+    if (no) {
+      const parsed = parseGenericDocNumber(no, 'AA-', 2)
+      if (parsed.num >= maxNum) {
+        maxNum = parsed.num
+        lastNote = dn
+        detectedPrefix = parsed.prefix
+        padLength = Math.max(padLength, parsed.padLength)
+      }
+    }
+  })
+
+  const nextNum = maxNum + 1
+  const formattedNum = String(nextNum).padStart(padLength, '0')
+  const suggestedDebitNoteNo = `${detectedPrefix}${formattedNum}`
+
+  return {
+    currentFy,
+    lastDebitNote: lastNote,
+    maxNum,
+    nextNum,
+    suggestedDebitNoteNo
+  }
+}
+
+/**
  * DUPLICATE INVOICE VALIDATION
  * Rule: No two documents can have the same invoice number within a Financial Year.
  *

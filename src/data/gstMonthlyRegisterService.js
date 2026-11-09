@@ -505,21 +505,49 @@ export async function fetchAllGstDocuments() {
       }
 
       if (cnRes.data) {
+        let localCn = []
+        try { localCn = getSavedCreditNotes() } catch {}
+        let cnChanged = false
+
         cnRes.data.forEach(cn => {
           const fullPayload = cn.full_payload || cn
           const norm = normalizeCreditNote(fullPayload)
           norm.id = cn.id
           docMap.set(`CN_${cn.id}`, norm)
+
+          const exists = localCn.some(l => l.id === cn.id || l.creditNoteNo === cn.credit_note_no)
+          if (!exists && cn.full_payload) {
+            localCn.push(cn.full_payload)
+            cnChanged = true
+          }
         })
+
+        if (cnChanged) {
+          try { localStorage.setItem('gk_sawmill_credit_notes_records', JSON.stringify(localCn)) } catch {}
+        }
       }
 
       if (dnRes.data) {
+        let localDn = []
+        try { localDn = getSavedDebitNotes() } catch {}
+        let dnChanged = false
+
         dnRes.data.forEach(dn => {
           const fullPayload = dn.full_payload || dn
           const norm = normalizeDebitNote(fullPayload)
           norm.id = dn.id
           docMap.set(`DN_${dn.id}`, norm)
+
+          const exists = localDn.some(l => l.id === dn.id || l.debitNoteNo === dn.debit_note_no)
+          if (!exists && dn.full_payload) {
+            localDn.push(dn.full_payload)
+            dnChanged = true
+          }
         })
+
+        if (dnChanged) {
+          try { localStorage.setItem('gk_sawmill_debit_notes_records', JSON.stringify(localDn)) } catch {}
+        }
       }
 
       if (vatRes.data) {

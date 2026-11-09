@@ -10,6 +10,7 @@ import {
   RotateCcw,
   CheckCircle2,
   AlertTriangle,
+  AlertCircle,
   Building,
   Hash,
   Calendar,
@@ -40,6 +41,11 @@ import {
 import { getSavedVattaInvoices } from '../data/vattaInvoiceSettings.js'
 import { generateDebitNotePdf } from '../utils/debitNotePdfGenerator.js'
 import { isSupabaseConfigured, supabase } from '../lib/supabaseClient.js'
+import {
+  getNextSuggestedDebitNote,
+  checkDuplicateDebitNote,
+  getFinancialYear
+} from '../utils/invoiceSequenceHelper.js'
 
 export default function DebitNoteGenerator({
   onBack,
@@ -50,49 +56,59 @@ export default function DebitNoteGenerator({
   const [invoicePickerModalOpen, setInvoicePickerModalOpen] = useState(false)
   const [invoiceSearchQuery, setInvoiceSearchQuery] = useState('')
 
-  // Debit Note Form State (Initialized with sample AA-09 from reference PDF)
-  const [form, setForm] = useState(() => ({
-    id: `dn_${Date.now()}`,
-    debitNoteNo: 'AA-09',
-    debitNoteDate: new Date().toISOString().split('T')[0],
-    referenceNo: '',
-
-    // Seller info (defaults from sawmill)
-    sellerName: DEFAULT_DEBIT_NOTE_SETTINGS.sellerName,
-    sellerAddressLine: DEFAULT_DEBIT_NOTE_SETTINGS.sellerAddressLine,
-    sellerGstin: DEFAULT_DEBIT_NOTE_SETTINGS.sellerGstin,
-    mobile: DEFAULT_DEBIT_NOTE_SETTINGS.mobile,
-    email: DEFAULT_DEBIT_NOTE_SETTINGS.email,
-
-    // Consignee / Receiver
-    receiverName: 'HINDUSTAN PENCILS Pvt Ltd',
-    receiverAddress: 'Plot No:-1 TO 15, ACHHAD INDUSTRIAL ESTATE, ACHHAD, TALUKA, TALASARI, PALGHAR, MAHARASHTRA-401606',
-    receiverState: 'MAHARASHTRA',
-    receiverStateCode: '27',
-    receiverGstin: '27AAACH0401R1ZN',
-
-    // Main header description & HSN
-    goodsDescription: 'Annual Bonus - Vatta & Elave Slats for March 2026',
-    hsnCode: '44219140',
-
-    // Tax configuration
-    taxTreatment: 'IGST', // 'IGST' | 'CGST_SGST'
-    gstRate: 5,
-
-    // Bill line items
-    items: [
-      {
-        id: 'item-1',
-        slNo: 1,
-        description: 'Annual Bonus - Vatta & Elave Slats for March 2026',
-        hsnCode: '44219140',
-        billNo: 'A-48',
-        billDate: '2026-03-11',
-        bagsQty: 300,
-        ratePerBag: 100
+  // Debit Note Form State (Initialized with consecutive sequential number)
+  const [form, setForm] = useState(() => {
+    let nextDn = 'AA-10'
+    try {
+      const seq = getNextSuggestedDebitNote()
+      if (seq && seq.suggestedDebitNoteNo) {
+        nextDn = seq.suggestedDebitNoteNo
       }
-    ]
-  }))
+    } catch (e) {}
+
+    return {
+      id: `dn_${Date.now()}`,
+      debitNoteNo: nextDn,
+      debitNoteDate: new Date().toISOString().split('T')[0],
+      referenceNo: '',
+
+      // Seller info (defaults from sawmill)
+      sellerName: DEFAULT_DEBIT_NOTE_SETTINGS.sellerName,
+      sellerAddressLine: DEFAULT_DEBIT_NOTE_SETTINGS.sellerAddressLine,
+      sellerGstin: DEFAULT_DEBIT_NOTE_SETTINGS.sellerGstin,
+      mobile: DEFAULT_DEBIT_NOTE_SETTINGS.mobile,
+      email: DEFAULT_DEBIT_NOTE_SETTINGS.email,
+
+      // Consignee / Receiver
+      receiverName: 'HINDUSTAN PENCILS Pvt Ltd',
+      receiverAddress: 'Plot No:-1 TO 15, ACHHAD INDUSTRIAL ESTATE, ACHHAD, TALUKA, TALASARI, PALGHAR, MAHARASHTRA-401606',
+      receiverState: 'MAHARASHTRA',
+      receiverStateCode: '27',
+      receiverGstin: '27AAACH0401R1ZN',
+
+      // Main header description & HSN
+      goodsDescription: 'Annual Bonus - Vatta & Elave Slats',
+      hsnCode: '44219140',
+
+      // Tax configuration
+      taxTreatment: 'IGST', // 'IGST' | 'CGST_SGST'
+      gstRate: 5,
+
+      // Bill line items
+      items: [
+        {
+          id: 'item-1',
+          slNo: 1,
+          description: 'Annual Bonus - Vatta & Elave Slats',
+          hsnCode: '44219140',
+          billNo: 'A-48',
+          billDate: '2026-03-11',
+          bagsQty: 300,
+          ratePerBag: 100
+        }
+      ]
+    }
+  })
 
   // Modals & UI states
   const [showPreviewModal, setShowPreviewModal] = useState(false)
@@ -102,6 +118,20 @@ export default function DebitNoteGenerator({
   const [notification, setNotification] = useState('')
   const [validationError, setValidationError] = useState('')
   const [isSavingCloud, setIsSavingCloud] = useState(false)
+
+  // Sequential number tracking based on Financial Year
+  const suggestedSequence = useMemo(() => {
+    return getNextSuggestedDebitNote(form.debitNoteDate || new Date())
+  }, [form.debitNoteDate, savedDebitNotesList])
+
+  // Real-time duplicate check within Financial Year
+  const duplicateCheck = useMemo(() => {
+    return checkDuplicateDebitNote({
+      debitNoteNo: form.debitNoteNo,
+      debitNoteDate: form.debitNoteDate,
+      currentId: form.id
+    })
+  }, [form.debitNoteNo, form.debitNoteDate, form.id, savedDebitNotesList])
 
   // Load saved invoices & debit notes on mount
   useEffect(() => {
@@ -276,6 +306,10 @@ export default function DebitNoteGenerator({
       setValidationError('Please enter a Debit Note Number (e.g. AA-09, DN-05).')
       return false
     }
+    if (duplicateCheck.isDuplicate) {
+      setValidationError(`Cannot proceed: ${duplicateCheck.message}`)
+      return false
+    }
     if (!form.receiverName.trim()) {
       setValidationError('Please enter the Consignee / Receiver Company Name.')
       return false
@@ -356,12 +390,59 @@ export default function DebitNoteGenerator({
     }
   }
 
+  // Start a fresh new Debit Note with next consecutive sequential number
+  const handleNewDebitNote = () => {
+    const seq = getNextSuggestedDebitNote(new Date())
+    const nextNo = seq?.suggestedDebitNoteNo || 'AA-10'
+    setForm({
+      id: `dn_${Date.now()}`,
+      debitNoteNo: nextNo,
+      debitNoteDate: new Date().toISOString().split('T')[0],
+      referenceNo: '',
+
+      sellerName: DEFAULT_DEBIT_NOTE_SETTINGS.sellerName,
+      sellerAddressLine: DEFAULT_DEBIT_NOTE_SETTINGS.sellerAddressLine,
+      sellerGstin: DEFAULT_DEBIT_NOTE_SETTINGS.sellerGstin,
+      mobile: DEFAULT_DEBIT_NOTE_SETTINGS.mobile,
+      email: DEFAULT_DEBIT_NOTE_SETTINGS.email,
+
+      receiverName: '',
+      receiverAddress: '',
+      receiverState: 'MAHARASHTRA',
+      receiverStateCode: '27',
+      receiverGstin: '',
+
+      goodsDescription: DEFAULT_INCENTIVE_DESCRIPTIONS[0] || 'Annual Bonus - Vatta & Elave Slats',
+      hsnCode: '44219140',
+
+      taxTreatment: 'IGST',
+      gstRate: 5,
+
+      items: [
+        {
+          id: 'item-1',
+          slNo: 1,
+          description: DEFAULT_INCENTIVE_DESCRIPTIONS[0] || 'Annual Bonus - Vatta & Elave Slats',
+          hsnCode: '44219140',
+          billNo: '',
+          billDate: new Date().toISOString().split('T')[0],
+          bagsQty: 0,
+          ratePerBag: 100
+        }
+      ]
+    })
+    setValidationError('')
+    notify(`Started new Debit Note (${nextNo})`)
+  }
+
   // Reset Form to initial clean state
   const handleReset = () => {
     if (window.confirm('Reset this Debit Note form to defaults?')) {
+      const seq = getNextSuggestedDebitNote(new Date())
+      const nextNo = seq?.suggestedDebitNoteNo || 'AA-10'
       setForm({
         id: `dn_${Date.now()}`,
-        debitNoteNo: 'AA-09',
+        debitNoteNo: nextNo,
         debitNoteDate: new Date().toISOString().split('T')[0],
         referenceNo: '',
 
@@ -377,7 +458,7 @@ export default function DebitNoteGenerator({
         receiverStateCode: '27',
         receiverGstin: '',
 
-        goodsDescription: 'Annual Bonus - Vatta & Elave Slats for March 2026',
+        goodsDescription: DEFAULT_INCENTIVE_DESCRIPTIONS[0] || 'Annual Bonus - Vatta & Elave Slats',
         hsnCode: '44219140',
 
         taxTreatment: 'IGST',
@@ -387,16 +468,17 @@ export default function DebitNoteGenerator({
           {
             id: 'item-1',
             slNo: 1,
-            description: 'Annual Bonus - Vatta & Elave Slats for March 2026',
+            description: DEFAULT_INCENTIVE_DESCRIPTIONS[0] || 'Annual Bonus - Vatta & Elave Slats',
             hsnCode: '44219140',
             billNo: '',
             billDate: new Date().toISOString().split('T')[0],
-            bagsQty: 300,
+            bagsQty: 0,
             ratePerBag: 100
           }
         ]
       })
-      notify('Form reset.')
+      setValidationError('')
+      notify(`Reset form with next Debit Note ${nextNo}`)
     }
   }
 
@@ -474,6 +556,27 @@ export default function DebitNoteGenerator({
 
         {/* Action Buttons Toolbar */}
         <div className="module-top-actions">
+          <button
+            type="button"
+            onClick={handleNewDebitNote}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 0.85rem',
+              borderRadius: '8px',
+              border: '1px solid #166534',
+              background: '#166534',
+              color: '#ffffff',
+              cursor: 'pointer',
+              fontWeight: 700,
+              fontSize: '0.825rem'
+            }}
+          >
+            <Plus size={15} />
+            + New Debit Note
+          </button>
+
           <button
             type="button"
             onClick={() => setShowHistoryModal(true)}
@@ -730,24 +833,106 @@ export default function DebitNoteGenerator({
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '0.85rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.25rem' }}>
-                  Debit Note No *
-                </label>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary, #475569)' }}>
+                    Debit Note No *
+                  </label>
+                  {suggestedSequence && (
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 700,
+                        background: '#eaf3ed',
+                        color: '#166534',
+                        padding: '0.1rem 0.4rem',
+                        borderRadius: '4px'
+                      }}
+                      title="Indian Financial Year runs from April 1 to March 31."
+                    >
+                      FY {suggestedSequence.currentFy}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   value={form.debitNoteNo}
                   onChange={(e) => handleInputChange('debitNoteNo', e.target.value)}
-                  placeholder="e.g. AA-09"
+                  placeholder="e.g. AA-10"
                   style={{
                     width: '100%',
                     padding: '0.45rem 0.65rem',
-                    border: '1px solid var(--border-color, #cbd5e1)',
+                    border: duplicateCheck.isDuplicate ? '2px solid #ef4444' : '1px solid var(--border-color, #cbd5e1)',
+                    background: duplicateCheck.isDuplicate ? '#fff5f5' : 'transparent',
                     borderRadius: '6px',
                     fontSize: '0.85rem',
                     fontWeight: 700,
-                    color: 'var(--text-primary, #0f172a)'
+                    color: 'var(--text-primary, #0f172a)',
+                    boxSizing: 'border-box'
                   }}
                 />
+                {duplicateCheck.isDuplicate && (
+                  <div
+                    style={{
+                      marginTop: '0.35rem',
+                      padding: '0.45rem 0.65rem',
+                      borderRadius: '6px',
+                      background: '#fef2f2',
+                      border: '1px solid #f87171',
+                      color: '#b91c1c',
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.35rem',
+                      lineHeight: 1.35
+                    }}
+                  >
+                    <AlertCircle size={14} style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <span>{duplicateCheck.message}</span>
+                  </div>
+                )}
+                {suggestedSequence && (
+                  <div
+                    style={{
+                      marginTop: '0.35rem',
+                      fontSize: '0.7rem',
+                      color: 'var(--text-secondary, #475569)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                      gap: '0.25rem'
+                    }}
+                  >
+                    <span>
+                      {suggestedSequence.lastDebitNote ? (
+                        <>
+                          Last: <strong>{suggestedSequence.lastDebitNote.debitNoteNo || suggestedSequence.lastDebitNote.debit_note_no}</strong>
+                        </>
+                      ) : (
+                        <span>Fresh FY start</span>
+                      )}
+                    </span>
+                    {form.debitNoteNo !== suggestedSequence.suggestedDebitNoteNo && (
+                      <button
+                        type="button"
+                        onClick={() => handleInputChange('debitNoteNo', suggestedSequence.suggestedDebitNoteNo)}
+                        style={{
+                          background: '#eaf3ed',
+                          border: '1px solid #b7d6c2',
+                          color: '#1e3a2b',
+                          borderRadius: '4px',
+                          padding: '0.15rem 0.45rem',
+                          fontSize: '0.7rem',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Suggest: {suggestedSequence.suggestedDebitNoteNo}
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div>

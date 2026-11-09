@@ -10,12 +10,14 @@ import {
   RotateCcw,
   CheckCircle2,
   AlertTriangle,
+  AlertCircle,
   Building,
   Truck,
   Hash,
   Calendar,
   Layers,
   Sparkles,
+  Plus,
   ChevronRight,
   Trash2,
   ExternalLink,
@@ -44,6 +46,11 @@ import {
 } from '../data/vattaInvoiceSettings.js'
 import { generateCreditNotePdf } from '../utils/creditNotePdfGenerator.js'
 import { uploadPdfToStorage, isSupabaseConfigured, supabase } from '../lib/supabaseClient.js'
+import {
+  getNextSuggestedCreditNote,
+  checkDuplicateCreditNote,
+  getFinancialYear
+} from '../utils/invoiceSequenceHelper.js'
 
 export default function CreditNoteGenerator({
   onBack,
@@ -57,47 +64,57 @@ export default function CreditNoteGenerator({
   const [selectedInvoice, setSelectedInvoice] = useState(null)
 
   // Credit Note Form State
-  const [creditNoteForm, setCreditNoteForm] = useState({
-    id: '',
-    creditNoteNo: 'CN-09',
-    creditNoteDate: new Date().toISOString().split('T')[0],
-    referenceNo: '',
+  const [creditNoteForm, setCreditNoteForm] = useState(() => {
+    let nextCn = 'CN-10'
+    try {
+      const seq = getNextSuggestedCreditNote()
+      if (seq && seq.suggestedCreditNoteNo) {
+        nextCn = seq.suggestedCreditNoteNo
+      }
+    } catch (e) {}
 
-    // Original Invoice links
-    originalInvoiceId: '',
-    originalInvoiceNo: '',
-    originalInvoiceDate: '',
+    return {
+      id: `cn_${Date.now()}`,
+      creditNoteNo: nextCn,
+      creditNoteDate: new Date().toISOString().split('T')[0],
+      referenceNo: '',
 
-    // Receiver
-    receiverName: '',
-    receiverAddress: '',
-    receiverPinNo: '',
-    receiverMobileNo: '',
-    receiverGstin: '',
-    receiverState: '',
-    receiverStateCode: '',
+      // Original Invoice links
+      originalInvoiceId: '',
+      originalInvoiceNo: '',
+      originalInvoiceDate: '',
 
-    // Despatched
-    despatchedName: '',
-    despatchedAddress: '',
-    despatchedPinNo: '',
-    despatchedMobileNo: '',
-    despatchedGstin: '',
-    despatchedState: '',
-    despatchedStateCode: '',
+      // Receiver
+      receiverName: '',
+      receiverAddress: '',
+      receiverPinNo: '',
+      receiverMobileNo: '',
+      receiverGstin: '',
+      receiverState: '',
+      receiverStateCode: '',
 
-    // Goods & Reason (with Ply specification)
-    ply: '8-Ply',
-    goodsDescription: 'Vatta wood Pencil Slats (8-Ply)\n(Short Width of 8-Ply)',
-    creditReason: 'Short Width of 8-Ply',
-    hsnCode: '44219140',
+      // Despatched
+      despatchedName: '',
+      despatchedAddress: '',
+      despatchedPinNo: '',
+      despatchedMobileNo: '',
+      despatchedGstin: '',
+      despatchedState: '',
+      despatchedStateCode: '',
 
-    // Financial Inputs
-    creditMode: 'direct', // 'direct' | 'itemized'
-    directTaxableAmount: '1301.64',
-    itemRejections: {}, // { [productId]: rejectedPieces }
-    taxTreatment: 'IGST',
-    gstRate: 5
+      // Goods & Reason (with Ply specification)
+      ply: '8-Ply',
+      goodsDescription: 'Vatta wood Pencil Slats (8-Ply)\n(Short Width of 8-Ply)',
+      creditReason: 'Short Width of 8-Ply',
+      hsnCode: '44219140',
+
+      // Financial Inputs
+      creditMode: 'direct', // 'direct' | 'itemized'
+      directTaxableAmount: '1301.64',
+      itemRejections: {}, // { [productId]: rejectedPieces }
+      taxTreatment: 'IGST',
+      gstRate: 5
+    }
   })
 
   // Modals & Notifications
@@ -108,6 +125,20 @@ export default function CreditNoteGenerator({
   const [notification, setNotification] = useState('')
   const [validationError, setValidationError] = useState('')
   const [isSavingCloud, setIsSavingCloud] = useState(false)
+
+  // Sequential number tracking based on Financial Year
+  const suggestedSequence = useMemo(() => {
+    return getNextSuggestedCreditNote(creditNoteForm.creditNoteDate || new Date())
+  }, [creditNoteForm.creditNoteDate, savedCreditNotesList])
+
+  // Real-time duplicate check within Financial Year
+  const duplicateCheck = useMemo(() => {
+    return checkDuplicateCreditNote({
+      creditNoteNo: creditNoteForm.creditNoteNo,
+      creditNoteDate: creditNoteForm.creditNoteDate,
+      currentId: creditNoteForm.id
+    })
+  }, [creditNoteForm.creditNoteNo, creditNoteForm.creditNoteDate, creditNoteForm.id, savedCreditNotesList])
 
   // Load saved Vatta invoices & credit notes on mount
   useEffect(() => {
@@ -172,13 +203,13 @@ export default function CreditNoteGenerator({
     setSelectedInvoice(invRecord)
     const data = invRecord.invoiceData || {}
 
-    // Determine default credit note number based on existing count
-    const existing = getSavedCreditNotes()
-    const nextCnNo = `CN-${String(existing.length + 1).padStart(2, '0')}`
+    // Determine default credit note number based on sequential helper
+    const seq = getNextSuggestedCreditNote(creditNoteForm.creditNoteDate || new Date())
+    const nextCnNo = seq?.suggestedCreditNoteNo || 'CN-10'
 
     setCreditNoteForm((prev) => ({
       ...prev,
-      id: `cn_${Date.now()}`,
+      id: prev.id || `cn_${Date.now()}`,
       creditNoteNo: prev.creditNoteNo || nextCnNo,
       originalInvoiceId: invRecord.id,
       originalInvoiceNo: data.invoiceNo || '',
@@ -259,6 +290,52 @@ export default function CreditNoteGenerator({
   const remainingCreditableBalance = Math.max(0, originalInvoiceGrandTotal - priorCredits.totalCredited)
   const isOverCredited = originalInvoiceGrandTotal > 0 && calculated.netValue > remainingCreditableBalance
 
+  // Start a fresh new Credit Note with consecutive sequential number
+  const handleNewCreditNote = () => {
+    const seq = getNextSuggestedCreditNote(new Date())
+    const nextNo = seq?.suggestedCreditNoteNo || 'CN-10'
+    setCreditNoteForm({
+      id: `cn_${Date.now()}`,
+      creditNoteNo: nextNo,
+      creditNoteDate: new Date().toISOString().split('T')[0],
+      referenceNo: '',
+
+      originalInvoiceId: '',
+      originalInvoiceNo: '',
+      originalInvoiceDate: '',
+
+      receiverName: '',
+      receiverAddress: '',
+      receiverPinNo: '',
+      receiverMobileNo: '',
+      receiverGstin: '',
+      receiverState: '',
+      receiverStateCode: '',
+
+      despatchedName: '',
+      despatchedAddress: '',
+      despatchedPinNo: '',
+      despatchedMobileNo: '',
+      despatchedGstin: '',
+      despatchedState: '',
+      despatchedStateCode: '',
+
+      ply: '8-Ply',
+      goodsDescription: 'Vatta wood Pencil Slats (8-Ply)\n(Short Width of 8-Ply)',
+      creditReason: 'Short Width of 8-Ply',
+      hsnCode: '44219140',
+
+      creditMode: 'direct',
+      directTaxableAmount: '0',
+      itemRejections: {},
+      taxTreatment: 'IGST',
+      gstRate: 5
+    })
+    setSelectedInvoice(null)
+    setValidationError('')
+    showToast(`Started new Credit Note (${nextNo})`)
+  }
+
   // Load benchmark sample CN-09
   const handleLoadBenchmarkCN09 = () => {
     setCreditNoteForm((prev) => ({
@@ -275,6 +352,10 @@ export default function CreditNoteGenerator({
     setValidationError('')
     if (!creditNoteForm.creditNoteNo.trim()) {
       setValidationError('Please enter a Credit Note Number.')
+      return
+    }
+    if (duplicateCheck.isDuplicate) {
+      setValidationError(`Cannot save: ${duplicateCheck.message}`)
       return
     }
     if (!creditNoteForm.originalInvoiceNo.trim()) {
@@ -368,6 +449,10 @@ export default function CreditNoteGenerator({
       setValidationError('Please enter a Credit Note Number.')
       return
     }
+    if (duplicateCheck.isDuplicate) {
+      setValidationError(`Cannot download PDF: ${duplicateCheck.message}`)
+      return
+    }
     const fullPayload = {
       ...creditNoteForm,
       ...calculated
@@ -435,6 +520,27 @@ export default function CreditNoteGenerator({
         </div>
 
         <div className="module-top-actions">
+          <button
+            type="button"
+            onClick={handleNewCreditNote}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 0.85rem',
+              borderRadius: '8px',
+              border: '1px solid #166534',
+              background: '#166534',
+              color: '#ffffff',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              cursor: 'pointer'
+            }}
+          >
+            <Plus size={14} />
+            + New Credit Note
+          </button>
+
           <button
             type="button"
             onClick={handleLoadBenchmarkCN09}
@@ -796,24 +902,105 @@ export default function CreditNoteGenerator({
             {/* Row 1: Document Reference Numbers */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)', marginBottom: '0.3rem' }}>
-                  Credit Note No *
-                </label>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
+                  <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary, #475569)' }}>
+                    Credit Note No *
+                  </label>
+                  {suggestedSequence && (
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 700,
+                        background: '#eaf3ed',
+                        color: '#166534',
+                        padding: '0.1rem 0.4rem',
+                        borderRadius: '4px'
+                      }}
+                      title="Indian Financial Year runs from April 1 to March 31."
+                    >
+                      FY {suggestedSequence.currentFy}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   value={creditNoteForm.creditNoteNo}
                   onChange={(e) => setCreditNoteForm({ ...creditNoteForm, creditNoteNo: e.target.value })}
-                  placeholder="CN-09"
+                  placeholder="e.g. CN-10"
                   style={{
                     width: '100%',
                     padding: '0.55rem 0.75rem',
                     borderRadius: '8px',
-                    border: '1px solid var(--border-color, #cbd5e1)',
+                    border: duplicateCheck.isDuplicate ? '2px solid #ef4444' : '1px solid var(--border-color, #cbd5e1)',
+                    background: duplicateCheck.isDuplicate ? '#fff5f5' : 'transparent',
                     fontSize: '0.85rem',
                     fontWeight: 700,
                     boxSizing: 'border-box'
                   }}
                 />
+                {duplicateCheck.isDuplicate && (
+                  <div
+                    style={{
+                      marginTop: '0.35rem',
+                      padding: '0.45rem 0.65rem',
+                      borderRadius: '6px',
+                      background: '#fef2f2',
+                      border: '1px solid #f87171',
+                      color: '#b91c1c',
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.35rem',
+                      lineHeight: 1.35
+                    }}
+                  >
+                    <AlertCircle size={14} style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <span>{duplicateCheck.message}</span>
+                  </div>
+                )}
+                {suggestedSequence && (
+                  <div
+                    style={{
+                      marginTop: '0.35rem',
+                      fontSize: '0.7rem',
+                      color: 'var(--text-secondary, #475569)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                      gap: '0.25rem'
+                    }}
+                  >
+                    <span>
+                      {suggestedSequence.lastCreditNote ? (
+                        <>
+                          Last: <strong>{suggestedSequence.lastCreditNote.creditNoteNo || suggestedSequence.lastCreditNote.credit_note_no}</strong>
+                        </>
+                      ) : (
+                        <span>Fresh FY start</span>
+                      )}
+                    </span>
+                    {creditNoteForm.creditNoteNo !== suggestedSequence.suggestedCreditNoteNo && (
+                      <button
+                        type="button"
+                        onClick={() => setCreditNoteForm({ ...creditNoteForm, creditNoteNo: suggestedSequence.suggestedCreditNoteNo })}
+                        style={{
+                          background: '#eaf3ed',
+                          border: '1px solid #b7d6c2',
+                          color: '#1e3a2b',
+                          borderRadius: '4px',
+                          padding: '0.15rem 0.45rem',
+                          fontSize: '0.7rem',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Suggest: {suggestedSequence.suggestedCreditNoteNo}
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div>
